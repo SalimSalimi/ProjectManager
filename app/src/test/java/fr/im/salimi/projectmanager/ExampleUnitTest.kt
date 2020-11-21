@@ -1,4 +1,4 @@
-package fr.im.salimi.teammanager
+package fr.im.salimi.projectmanager
 
 import org.junit.Test
 

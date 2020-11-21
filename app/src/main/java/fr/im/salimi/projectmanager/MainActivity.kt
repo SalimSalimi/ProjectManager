@@ -1,4 +1,4 @@
-package fr.im.salimi.teammanager
+package fr.im.salimi.projectmanager
 
 import android.os.Bundle
 import com.google.android.material.floatingactionbutton.FloatingActionButton
