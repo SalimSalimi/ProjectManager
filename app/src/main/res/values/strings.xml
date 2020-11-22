@@ -9,4 +9,13 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="last_name">Last Name</string>
+    <string name="first_name">First Name</string>
+    <string name="email_address">Email Address</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="road_number">Road Number</string>
+    <string name="postal_code">Postal code</string>
+    <string name="road_name">Road Name</string>
+    <string name="city">City</string>
+    <string name="country">Country</string>
 </resources>

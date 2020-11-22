@@ -7,13 +7,15 @@
 
         <variable
             name="viewModel"
-            type="fr.im.salimi.projectmanager.ui.editDeveloper.EditDeveloperViewModel" />
+            type="fr.im.salimi.projectmanager.ui.developerEdit.DeveloperEditViewModel" />
     </data>
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.editDeveloper.EditDeveloperFragment">
+        tools:context=".ui.developerEdit.DeveloperEditFragment">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout2"
@@ -51,7 +53,8 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/first_name"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:text="@={viewModel.developer.firstName}"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -69,7 +72,8 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/phone_number"
-                android:inputType="phone" />
+                android:inputType="phone"
+                android:text="@={viewModel.developer.phoneNumber}"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -87,7 +91,8 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/email_address"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                android:text="@={viewModel.developer.email}"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -108,7 +113,8 @@
                 android:ems="4"
                 android:maxLength="3"
                 android:hint="@string/road_number"
-                android:inputType="number"/>
+                android:inputType="number"
+                android:text="@={viewModel.developer.address.roadNumber}"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -126,7 +132,8 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/postal_code"
-                android:inputType="number" />
+                android:inputType="number"
+                android:text="@={viewModel.developer.address.postalCode}"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -143,7 +150,8 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/road_name"
-            android:inputType="text" />
+            android:inputType="text"
+            android:text="@={viewModel.developer.address.roadName}"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -161,7 +169,8 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/city"
-                android:inputType="textCapSentences" />
+                android:inputType="textCapSentences"
+                android:text="@={viewModel.developer.address.city}"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -178,8 +187,20 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/country"
-                android:inputType="textCapSentences" />
+                android:inputType="textCapSentences"
+                android:text="@={viewModel.developer.address.country}"/>
         </com.google.android.material.textfield.TextInputLayout>
 
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout8"
+            android:onClick="@{() -> viewModel.onAddClick()}"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>
