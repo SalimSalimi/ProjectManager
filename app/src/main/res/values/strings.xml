@@ -18,4 +18,5 @@
     <string name="road_name">Road Name</string>
     <string name="city">City</string>
     <string name="country">Country</string>
+    <string name="post">Post</string>
 </resources>

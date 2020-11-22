@@ -7,14 +7,14 @@
 
         <variable
             name="viewModel"
-            type="fr.im.salimi.projectmanager.ui.developerEdit.DeveloperEditViewModel" />
+            type="fr.im.salimi.projectmanager.ui.developerEdit.DeveloperEditViewModel"/>
     </data>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         tools:context=".ui.developerEdit.DeveloperEditFragment">
 
         <com.google.android.material.textfield.TextInputLayout
@@ -95,6 +95,27 @@
                 android:text="@={viewModel.developer.email}"/>
         </com.google.android.material.textfield.TextInputLayout>
 
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout10"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/post"
+            app:layout_constraintEnd_toEndOf="@+id/textInputLayout4"
+            app:layout_constraintStart_toStartOf="@+id/textInputLayout4"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout4">
+
+            <AutoCompleteTextView
+                android:id="@+id/spinnerPost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:text="@={viewModel.developer.post}"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout5"
             android:layout_width="0dp"
@@ -104,17 +125,17 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="@+id/textInputLayout4"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout4">
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout10">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextRoadNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="4"
-                android:maxLength="3"
                 android:hint="@string/road_number"
                 android:inputType="number"
-                android:text="@={viewModel.developer.address.roadNumber}"/>
+                android:maxLength="3"
+                android:text="@={viewModel.developer.address.roadNumber}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -124,7 +145,7 @@
             app:layout_constraintEnd_toEndOf="@+id/textInputLayout4"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/textInputLayout5"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout4">
+            app:layout_constraintTop_toTopOf="@+id/textInputLayout5">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextPostalCode"
@@ -133,7 +154,7 @@
                 android:ems="10"
                 android:hint="@string/postal_code"
                 android:inputType="number"
-                android:text="@={viewModel.developer.address.postalCode}"/>
+                android:text="@={viewModel.developer.address.postalCode}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -195,11 +216,12 @@
             android:id="@+id/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="@{() -> viewModel.onAddClick()}"
             android:text="Button"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout8"
-            android:onClick="@{() -> viewModel.onAddClick()}"/>
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout8" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

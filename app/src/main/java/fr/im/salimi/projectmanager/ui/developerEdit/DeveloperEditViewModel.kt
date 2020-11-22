@@ -18,5 +18,6 @@ class DeveloperEditViewModel : ViewModel() {
 
     fun onAddClick() {
         Log.d("DeveloperViewModel", _developer.value!!.toString())
+        Log.d("DeveloperViewModel", _developer.value!!.post.toString())
     }
 }
