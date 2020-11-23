@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 class DeveloperRepository(private val developerDao: DeveloperDao) {
 
-    val developers: Flow<List<Developer>> = developerDao.getAll()
+    val allDevelopers: Flow<List<Developer>> = developerDao.getAll()
 
     suspend fun insert(developer: Developer) {
         developerDao.insert(developer)
