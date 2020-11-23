@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 interface DeveloperDao {
 
     @Query("SELECT * FROM developers")
-    suspend fun getAll(): Flow<List<Developer>>
+    fun getAll(): Flow<List<Developer>>
 
     @Insert
     suspend fun insert(developer: Developer)
