@@ -4,9 +4,12 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import fr.im.salimi.projectmanager.data.entities.Developer
+import fr.im.salimi.projectmanager.data.repositories.DeveloperRepository
+import kotlinx.coroutines.launch
 
-class DeveloperEditViewModel : ViewModel() {
+class DeveloperEditViewModel(private val repository: DeveloperRepository) : ViewModel() {
 
     private val _developer = MutableLiveData<Developer>()
     val developer: LiveData<Developer>
@@ -17,7 +20,11 @@ class DeveloperEditViewModel : ViewModel() {
     }
 
     fun onAddClick() {
-        Log.d("DeveloperViewModel", _developer.value!!.toString())
-        Log.d("DeveloperViewModel", _developer.value!!.post.toString())
+        Log.d("DeveloperViewModel", "Clicked")
+        insert(_developer.value!!)
+    }
+
+    private fun insert(developer: Developer) = viewModelScope.launch {
+        repository.insert(developer)
     }
 }
