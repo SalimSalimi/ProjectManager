@@ -5,7 +5,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.developerList.DeveloperListFragment">
+        tools:context=".ui.developerList.DeveloperListFragment"
+        android:background="@color/light_gray_background">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/developersList"

@@ -22,4 +22,12 @@
     <style name="Theme.TeamManager.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.TeamManager.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <!-- Rounded Image Style-->
+    <style name="circleImageView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+        <item name="android:padding">8dp</item>
+    </style>
+
 </resources>
