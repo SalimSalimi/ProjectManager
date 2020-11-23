@@ -9,7 +9,9 @@ import fr.im.salimi.projectmanager.data.entities.Developer
 import fr.im.salimi.projectmanager.databinding.DeveloperListItemBinding
 import fr.im.salimi.projectmanager.ui.developerList.DeveloperListAdapter.ViewHolder.Companion.create
 
-class DeveloperListAdapter(private val developers: List<Developer>): RecyclerView.Adapter<DeveloperListAdapter.ViewHolder>() {
+class DeveloperListAdapter: RecyclerView.Adapter<DeveloperListAdapter.ViewHolder>() {
+
+    var developers: List<Developer> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return create(parent)
