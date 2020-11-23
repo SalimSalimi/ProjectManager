@@ -9,8 +9,11 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import fr.im.salimi.projectmanager.R
+import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
 import fr.im.salimi.projectmanager.data.helpers.Post
+import fr.im.salimi.projectmanager.data.repositories.DeveloperRepository
 import fr.im.salimi.projectmanager.databinding.DeveloperEditFragmentBinding
 
 class DeveloperEditFragment : Fragment() {
@@ -28,11 +31,17 @@ class DeveloperEditFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(DeveloperEditViewModel::class.java)
+        init()
+    }
+
+    private fun init() {
+        val databaseInstance = ProjectRoomDatabase.getInstance(requireContext())
+        val repository = DeveloperRepository(databaseInstance.developerDao())
+        val viewModel: DeveloperEditViewModel by viewModels {
+            DeveloperEditViewModelFactory(repository)
+        }
         val adapter: ArrayAdapter<Post> = ArrayAdapter(requireContext(), R.layout.posts_dropdown_menu_layout, Post.values())
         binding.viewModel = viewModel
         binding.spinnerPost.setAdapter(adapter)
-
     }
-
 }
