@@ -1,0 +1,11 @@
+package fr.im.salimi.projectmanager.ui.developerList
+
+import androidx.lifecycle.*
+import fr.im.salimi.projectmanager.data.entities.Developer
+import fr.im.salimi.projectmanager.data.repositories.DeveloperRepository
+
+
+class DeveloperListViewModel (private val repository: DeveloperRepository) : ViewModel() {
+
+    val listDevelopers: LiveData<List<Developer>> = repository.allDevelopers.asLiveData()
+}
