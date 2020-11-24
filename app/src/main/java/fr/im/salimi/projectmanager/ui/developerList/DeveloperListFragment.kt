@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import fr.im.salimi.projectmanager.R
 import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
@@ -23,6 +25,9 @@ class DeveloperListFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater ,R.layout.developer_list_fragment, container, false)
+        binding.fab.setOnClickListener {
+            this.findNavController().navigate(R.id.action_developerListFragment_to_editDeveloperFragment)
+        }
         initFragmentData()
         return binding.root
     }
