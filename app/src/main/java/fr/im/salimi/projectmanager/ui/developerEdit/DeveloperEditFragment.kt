@@ -10,6 +10,8 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import fr.im.salimi.projectmanager.R
 import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
 import fr.im.salimi.projectmanager.data.helpers.Post
@@ -43,5 +45,20 @@ class DeveloperEditFragment : Fragment() {
         val adapter: ArrayAdapter<Post> = ArrayAdapter(requireContext(), R.layout.posts_dropdown_menu_layout, Post.values())
         binding.viewModel = viewModel
         binding.spinnerPost.setAdapter(adapter)
+
+        //Init observers
+        viewModel.showSnackbarConfirm.observe(viewLifecycleOwner) {
+            if (it) {
+                Snackbar.make(requireView(), getString(R.string.snackbar_text_add_success), Snackbar.LENGTH_LONG).show()
+                viewModel.showSnackbarDone()
+            }
+        }
+
+        viewModel.navigateToList.observe(viewLifecycleOwner) {
+            if (it) {
+                findNavController().navigate(R.id.action_editDeveloperFragment_to_developerListFragment)
+                viewModel.navigateToListDone()
+            }
+        }
     }
 }

@@ -11,4 +11,8 @@ class DeveloperRepository(private val developerDao: DeveloperDao) {
     suspend fun insert(developer: Developer) {
         developerDao.insert(developer)
     }
+
+    suspend fun deleteAll() {
+        developerDao.deleteAll()
+    }
 }

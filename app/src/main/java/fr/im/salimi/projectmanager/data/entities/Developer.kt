@@ -19,6 +19,6 @@ data class Developer (
     var address: Address = Address(),
     var email: String = "",
     @ColumnInfo(name = "phone_number")
-    var phoneNumber: String = "",
+    var phoneNumber: Long = 0,
     var post: Post = Post.NONE
 )

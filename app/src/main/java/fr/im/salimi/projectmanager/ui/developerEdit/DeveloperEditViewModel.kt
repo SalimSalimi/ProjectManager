@@ -1,6 +1,5 @@
 package fr.im.salimi.projectmanager.ui.developerEdit
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,16 +14,33 @@ class DeveloperEditViewModel(private val repository: DeveloperRepository) : View
     val developer: LiveData<Developer>
         get() = _developer
 
+    private val _navigateToList = MutableLiveData<Boolean>()
+    val navigateToList: LiveData<Boolean>
+        get() = _navigateToList
+
+    private val _showSnackbarConfirm = MutableLiveData<Boolean>()
+    val showSnackbarConfirm: LiveData<Boolean>
+        get() = _showSnackbarConfirm
+
     init {
         _developer.value = Developer()
     }
 
     fun onAddClick() {
-        Log.d("DeveloperViewModel", "Clicked")
         insert(_developer.value!!)
     }
 
     private fun insert(developer: Developer) = viewModelScope.launch {
         repository.insert(developer)
+        _showSnackbarConfirm.value = true
+        _navigateToList.value = true
+    }
+
+    fun navigateToListDone() {
+        _navigateToList.value = false
+    }
+
+    fun showSnackbarDone() {
+        _showSnackbarConfirm.value = false
     }
 }
