@@ -19,4 +19,7 @@
     <string name="city">City</string>
     <string name="country">Country</string>
     <string name="post">Post</string>
+    <string name="personal_information">Personal Information</string>
+    <string name="address">Address</string>
+    <string name="add">Add</string>
 </resources>
