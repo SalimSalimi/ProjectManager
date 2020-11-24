@@ -8,7 +8,11 @@
         android:id="@+id/editDeveloperFragment"
         android:name="fr.im.salimi.projectmanager.ui.developerEdit.DeveloperEditFragment"
         android:label="edit_developer_fragment"
-        tools:layout="@layout/developer_edit_fragment" />
+        tools:layout="@layout/developer_edit_fragment" >
+        <action
+            android:id="@+id/action_editDeveloperFragment_to_developerListFragment"
+            app:destination="@id/developerListFragment" />
+    </fragment>
     <fragment
         android:id="@+id/developerListFragment"
         android:name="fr.im.salimi.projectmanager.ui.developerList.DeveloperListFragment"
