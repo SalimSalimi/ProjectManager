@@ -10,26 +10,41 @@ object BindingAdapters {
 
     @BindingAdapter("android:text")
     @JvmStatic
-    fun setPhoneNumber(view: TextInputEditText, phoneNumber: Long?) {
+    fun fromLongToText(view: TextInputEditText, phoneNumber: Long) {
         val currentValue = view.text.toString().toLongOrNull()
         if (currentValue != phoneNumber) {
-            val value = phoneNumber?: 0
+            val value = phoneNumber
             view.setText("$value")
         }
     }
 
     @InverseBindingAdapter(attribute = "android:text")
     @JvmStatic
-    fun getPhoneNumber(view: TextInputEditText): Long =
+    fun fromTextToLong(view: TextInputEditText): Long =
             view.text.toString().toLongOrNull() ?: 0
 
+    @BindingAdapter("android:text")
+    @JvmStatic
+    fun fromIntToText(view: TextInputEditText, phoneNumber: Int) {
+        val currentValue = view.text.toString().toIntOrNull()
+        if (currentValue != phoneNumber) {
+            view.setText("$phoneNumber")
+        }
+    }
+
+    @InverseBindingAdapter(attribute = "android:text")
+    @JvmStatic
+    fun fromTextToInt(view: TextInputEditText): Int =
+            view.text.toString().toIntOrNull() ?: 0
+
+    //Post bin
     @BindingAdapter("android:text")
     @JvmStatic
     fun setPost(view: AutoCompleteTextView, post: Post?) {
         val currentValue = view.text.toString()
         if (currentValue != "") {
             if (Post.valueOf(currentValue) != post) {
-                val value = post?: Post.NONE
+                val value = post ?: Post.NONE
                 view.setText(value.toString())
             }
         }
@@ -41,5 +56,4 @@ object BindingAdapters {
             Post.values().find {
                 it.toString() == view.text.toString()
             } ?: Post.NONE
-
 }
