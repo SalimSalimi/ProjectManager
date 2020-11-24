@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import fr.im.salimi.projectmanager.R
 import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
 import fr.im.salimi.projectmanager.data.entities.Developer
@@ -35,7 +36,10 @@ class DeveloperListFragment : Fragment() {
     private fun initRecycler() {
         binding.developersList.apply {
             val linearLayoutManager = LinearLayoutManager(requireContext())
-            myAdapter = DeveloperListAdapter()
+            val clickListenersCallback = RecyclerClickListenersCallback {
+                Snackbar.make(requireView(), "LOL $it", Snackbar.LENGTH_LONG).show()
+            }
+            myAdapter = DeveloperListAdapter(clickListenersCallback)
             this.layoutManager = linearLayoutManager
             this.adapter = myAdapter
         }
@@ -54,4 +58,5 @@ class DeveloperListFragment : Fragment() {
             myAdapter.notifyDataSetChanged()
         }
     }
+
 }

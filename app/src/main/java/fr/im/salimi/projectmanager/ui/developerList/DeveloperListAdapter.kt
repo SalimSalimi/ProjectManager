@@ -9,7 +9,7 @@ import fr.im.salimi.projectmanager.data.entities.Developer
 import fr.im.salimi.projectmanager.databinding.DeveloperListItemBinding
 import fr.im.salimi.projectmanager.ui.developerList.DeveloperListAdapter.ViewHolder.Companion.create
 
-class DeveloperListAdapter: RecyclerView.Adapter<DeveloperListAdapter.ViewHolder>() {
+class DeveloperListAdapter(val clickListeners: RecyclerClickListenersCallback): RecyclerView.Adapter<DeveloperListAdapter.ViewHolder>() {
 
     var developers: List<Developer> = ArrayList()
 
@@ -19,7 +19,7 @@ class DeveloperListAdapter: RecyclerView.Adapter<DeveloperListAdapter.ViewHolder
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentDeveloper = developers[position]
-        holder.bind(currentDeveloper)
+        holder.bind(currentDeveloper, clickListeners)
     }
 
     override fun getItemCount() =
@@ -27,8 +27,12 @@ class DeveloperListAdapter: RecyclerView.Adapter<DeveloperListAdapter.ViewHolder
 
     class ViewHolder(private val binding: DeveloperListItemBinding): RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(developer: Developer) {
+        fun bind(developer: Developer, clickListeners: RecyclerClickListenersCallback) {
             binding.developer = developer
+            binding.developerCard.setOnLongClickListener {
+                clickListeners.onLongClick(developer)
+                true
+            }
         }
 
         companion object {
