@@ -13,6 +13,7 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
         <item name="textInputStyle">@style/textInputLayoutCustom</item>
+        <item name="chipStyle">@style/customChip</item>
     </style>
 
     <style name="Theme.TeamManager.NoActionBar">
@@ -33,6 +34,11 @@
 
     <style name="textInputLayoutCustom" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
 
+    </style>
+
+    <style name="customChip" parent="Widget.MaterialComponents.Chip.Filter">
+        <item name="chipBackgroundColor">@color/bg_chip_list</item>
+        <item name="android:clickable">true</item>
     </style>
 
 </resources>
