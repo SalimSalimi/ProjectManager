@@ -30,4 +30,5 @@
     <string name="add_a_new_developer_float_content_description">Add a new Developer</string>
     <string name="developer_image_content_description">Developer image</string>
     <string name="home_icon_description">home icon</string>
+    <string name="delete_a_developer">Delete a developer</string>
 </resources>
