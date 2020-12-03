@@ -6,10 +6,10 @@ import fr.im.salimi.projectmanager.data.repositories.DeveloperRepository
 import java.lang.IllegalArgumentException
 
 @Suppress("UNCHECKED_CAST")
-class DeveloperEditViewModelFactory(private val developerRepository: DeveloperRepository) : ViewModelProvider.Factory {
+class DeveloperEditViewModelFactory(private val id: Long,private val developerRepository: DeveloperRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(DeveloperEditViewModel::class.java)) {
-            return DeveloperEditViewModel(developerRepository) as T
+            return DeveloperEditViewModel(id, developerRepository) as T
         }
         throw IllegalArgumentException("Uknown ViewModel Class")
     }

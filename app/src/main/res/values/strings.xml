@@ -27,4 +27,7 @@
     <string name="web_developer">Web Developer</string>
     <string name="mobile_designer">Mobile Designer</string>
     <string name="ui_ux_designer">UI/UX Designer</string>
+    <string name="add_a_new_developer_float_content_description">Add a new Developer</string>
+    <string name="developer_image_content_description">Developer image</string>
+    <string name="home_icon_description">home icon</string>
 </resources>

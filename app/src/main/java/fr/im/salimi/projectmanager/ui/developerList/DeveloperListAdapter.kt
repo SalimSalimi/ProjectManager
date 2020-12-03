@@ -9,7 +9,7 @@ import fr.im.salimi.projectmanager.data.entities.Developer
 import fr.im.salimi.projectmanager.databinding.DeveloperListItemBinding
 import fr.im.salimi.projectmanager.ui.developerList.DeveloperListAdapter.ViewHolder.Companion.create
 
-class DeveloperListAdapter(val clickListeners: RecyclerClickListenersCallback): RecyclerView.Adapter<DeveloperListAdapter.ViewHolder>() {
+class DeveloperListAdapter(private val clickListeners: RecyclerClickListenersCallback): RecyclerView.Adapter<DeveloperListAdapter.ViewHolder>() {
 
     var developers: List<Developer> = ArrayList()
 

@@ -1,9 +1,7 @@
 package fr.im.salimi.projectmanager.data.daos
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.lifecycle.LiveData
+import androidx.room.*
 import fr.im.salimi.projectmanager.data.entities.Developer
 import kotlinx.coroutines.flow.Flow
 
@@ -13,8 +11,14 @@ interface DeveloperDao {
     @Query("SELECT * FROM developers")
     fun getAll(): Flow<List<Developer>>
 
+    @Query("SELECT * FROM developers WHERE id = :id")
+    suspend fun getById(id: Long): Developer
+
     @Insert
     suspend fun insert(developer: Developer)
+
+    @Update
+    suspend fun update(vararg developer: Developer)
 
     @Delete
     suspend fun delete(developer: Developer)
