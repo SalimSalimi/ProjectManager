@@ -10,15 +10,10 @@
             type="fr.im.salimi.projectmanager.ui.developerEdit.DeveloperEditViewModel" />
     </data>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/light_gray_background"
-            tools:ignore="UselessParent">
+            android:background="@color/light_gray_background">
 
                 <LinearLayout
                     android:id="@+id/linearLayout"
@@ -39,6 +34,7 @@
                         android:orientation="horizontal">
 
                         <ImageView
+                            android:contentDescription="@string/developer_image_content_description"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:src="@drawable/ic_baseline_person_24" />
@@ -167,7 +163,8 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:inputType="none"
-                                    android:text="@={viewModel.developer.post}" />
+                                    android:text="@={viewModel.developer.post}"
+                                    tools:ignore="LabelFor" />
 
                             </com.google.android.material.textfield.TextInputLayout>
 
@@ -184,7 +181,8 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:src="@drawable/ic_baseline_home_24" />
+                            android:src="@drawable/ic_baseline_home_24"
+                            android:contentDescription="@string/home_icon_description" />
 
                         <com.google.android.material.textview.MaterialTextView
                             android:layout_width="wrap_content"
@@ -330,5 +328,4 @@
                 </LinearLayout>
 
         </ScrollView>
-    </RelativeLayout>
 </layout>

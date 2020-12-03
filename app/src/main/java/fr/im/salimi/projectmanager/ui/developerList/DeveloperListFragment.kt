@@ -8,9 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import fr.im.salimi.projectmanager.R
 import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
 import fr.im.salimi.projectmanager.data.entities.Developer
@@ -23,8 +25,9 @@ class DeveloperListFragment : Fragment() {
     private lateinit var myAdapter: DeveloperListAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater ,R.layout.developer_list_fragment, container, false)
+        binding.lifecycleOwner = this
         binding.fab.setOnClickListener {
             this.findNavController().navigate(R.id.action_developerListFragment_to_editDeveloperFragment)
         }
@@ -35,7 +38,11 @@ class DeveloperListFragment : Fragment() {
     private fun initRecycler() {
         binding.developersList.apply {
             val linearLayoutManager = LinearLayoutManager(requireContext())
-            myAdapter = DeveloperListAdapter()
+            val clickListenersCallback = RecyclerClickListenersCallback {
+                val directions = DeveloperListFragmentDirections.actionDeveloperListFragmentToEditDeveloperFragment(it)
+                this.findNavController().navigate(directions)
+            }
+            myAdapter = DeveloperListAdapter(clickListenersCallback)
             this.layoutManager = linearLayoutManager
             this.adapter = myAdapter
         }
@@ -54,4 +61,5 @@ class DeveloperListFragment : Fragment() {
             myAdapter.notifyDataSetChanged()
         }
     }
+
 }

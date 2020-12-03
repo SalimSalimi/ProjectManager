@@ -11,6 +11,7 @@ import android.widget.AutoCompleteTextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import fr.im.salimi.projectmanager.R
 import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
@@ -21,29 +22,26 @@ import fr.im.salimi.projectmanager.databinding.DeveloperEditFragmentBinding
 class DeveloperEditFragment : Fragment() {
 
     private lateinit var binding: DeveloperEditFragmentBinding
-    private lateinit var viewModel: DeveloperEditViewModel
+    private val args: DeveloperEditFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.developer_edit_fragment, container, false)
-        return binding.root
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+        binding.lifecycleOwner = this
         init()
+        return binding.root
     }
 
     private fun init() {
         val databaseInstance = ProjectRoomDatabase.getInstance(requireContext())
         val repository = DeveloperRepository(databaseInstance.developerDao())
         val viewModel: DeveloperEditViewModel by viewModels {
-            DeveloperEditViewModelFactory(repository)
+            DeveloperEditViewModelFactory(args.developerId, repository)
         }
-        val adapter: ArrayAdapter<Post> = ArrayAdapter(requireContext(), R.layout.posts_dropdown_menu_layout, Post.values())
         binding.viewModel = viewModel
+        val adapter: ArrayAdapter<Post> = ArrayAdapter(requireContext(), R.layout.posts_dropdown_menu_layout, Post.values())
         binding.spinnerPost.setAdapter(adapter)
 
         //Init observers

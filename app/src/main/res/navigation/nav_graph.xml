@@ -12,6 +12,10 @@
         <action
             android:id="@+id/action_editDeveloperFragment_to_developerListFragment"
             app:destination="@id/developerListFragment" />
+        <argument
+            android:name="developerId"
+            app:argType="long"
+            android:defaultValue="-1L" />
     </fragment>
     <fragment
         android:id="@+id/developerListFragment"
