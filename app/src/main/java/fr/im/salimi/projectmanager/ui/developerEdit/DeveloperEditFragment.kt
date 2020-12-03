@@ -40,8 +40,8 @@ class DeveloperEditFragment : Fragment() {
         val viewModel: DeveloperEditViewModel by viewModels {
             DeveloperEditViewModelFactory(args.developerId, repository)
         }
-        val adapter: ArrayAdapter<Post> = ArrayAdapter(requireContext(), R.layout.posts_dropdown_menu_layout, Post.values())
         binding.viewModel = viewModel
+        val adapter: ArrayAdapter<Post> = ArrayAdapter(requireContext(), R.layout.posts_dropdown_menu_layout, Post.values())
         binding.spinnerPost.setAdapter(adapter)
 
         //Init observers
