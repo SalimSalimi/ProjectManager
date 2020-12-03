@@ -31,4 +31,6 @@
     <string name="developer_image_content_description">Developer image</string>
     <string name="home_icon_description">home icon</string>
     <string name="delete_a_developer">Delete a developer</string>
+    <string name="delete_developer_confirm">Would you like to permanently delete it ?</string>
+    <string name="confirm">Confirm</string>
 </resources>

@@ -4,8 +4,8 @@ import fr.im.salimi.projectmanager.data.entities.Developer
 
 class RecyclerClickListenersCallback(
     private val onLongClickCallback: (Long) -> Unit,
-    /*private val onDeleteClickCallback: (Developer) -> Unit*/) {
+    private val onDeleteClickCallback: (Developer) -> Unit) {
 
     fun onLongClick(developer: Developer) = onLongClickCallback(developer.id)
-    //fun onDeleteClick(developer: Developer) = onDeleteClickCallback(developer)
+    fun onDeleteClick(developer: Developer) = onDeleteClickCallback(developer)
 }

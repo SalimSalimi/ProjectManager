@@ -24,4 +24,8 @@ class DeveloperRepository(private val developerDao: DeveloperDao) {
     suspend fun getById(id: Long): Developer {
         return developerDao.getById(id)
     }
+
+    suspend fun deleteDeveloper(developer: Developer) {
+        return developerDao.delete(developer)
+    }
 }
