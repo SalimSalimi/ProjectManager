@@ -10,4 +10,9 @@ class DeveloperListViewModel (private val repository: DeveloperRepository) : Vie
 
     val listDevelopers: LiveData<List<Developer>> = repository.allDevelopers.asLiveData()
 
+    fun deleteDeveloper(developer: Developer) {
+        viewModelScope.launch {
+            repository.deleteDeveloper(developer)
+        }
+    }
 }

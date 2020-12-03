@@ -33,6 +33,9 @@ class DeveloperListAdapter(private val clickListeners: RecyclerClickListenersCal
                 clickListeners.onLongClick(developer)
                 true
             }
+            binding.deleteDeveloperBtn.setOnClickListener {
+                clickListeners.onDeleteClick(developer)
+            }
         }
 
         companion object {
