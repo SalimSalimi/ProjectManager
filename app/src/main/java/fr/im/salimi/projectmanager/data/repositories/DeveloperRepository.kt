@@ -1,6 +1,5 @@
 package fr.im.salimi.projectmanager.data.repositories
 
-import androidx.lifecycle.LiveData
 import fr.im.salimi.projectmanager.data.daos.DeveloperDao
 import fr.im.salimi.projectmanager.data.entities.Developer
 import kotlinx.coroutines.flow.Flow
