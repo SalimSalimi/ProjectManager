@@ -1,6 +1,5 @@
 package fr.im.salimi.projectmanager.data.daos
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import fr.im.salimi.projectmanager.data.entities.Developer
 import kotlinx.coroutines.flow.Flow
