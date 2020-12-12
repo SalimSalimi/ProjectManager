@@ -8,11 +8,11 @@ import kotlinx.coroutines.launch
 
 class DeveloperListViewModel (private val repository: DeveloperRepository) : ViewModel() {
 
-    val listDevelopers: LiveData<List<Developer>> = repository.allDevelopers.asLiveData()
+    val listDevelopers: LiveData<List<Developer>> = repository.getAll().asLiveData()
 
     fun deleteDeveloper(developer: Developer) {
         viewModelScope.launch {
-            repository.deleteDeveloper(developer)
+            repository.delete(developer)
         }
     }
 }
