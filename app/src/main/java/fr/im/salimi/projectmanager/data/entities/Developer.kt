@@ -10,7 +10,8 @@ import fr.im.salimi.projectmanager.data.helpers.Post
 @Entity(tableName = "developers")
 data class Developer (
     @PrimaryKey(autoGenerate = true)
-    val id: Long = 0,
+    @ColumnInfo(name="developer_id")
+    val developerId: Long = 0,
     @ColumnInfo(name = "first_name")
     var firstName: String = "",
     @ColumnInfo(name = "last_name")
