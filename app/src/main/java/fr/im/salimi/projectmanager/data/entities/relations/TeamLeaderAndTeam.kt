@@ -14,7 +14,7 @@ data class TeamLeaderAndTeam (
     @Embedded
     val teamLeader: Developer,
     @Relation(
-        parentColumn = "id",
-        entityColumn = "leaderId"
+        parentColumn = "developer_id",
+        entityColumn = "leader_id"
     )
     val team: Team )
