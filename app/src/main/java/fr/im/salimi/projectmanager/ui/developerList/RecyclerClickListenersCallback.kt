@@ -6,6 +6,6 @@ class RecyclerClickListenersCallback(
     private val onLongClickCallback: (Long) -> Unit,
     private val onDeleteClickCallback: (Developer) -> Unit) {
 
-    fun onLongClick(developer: Developer) = onLongClickCallback(developer.id)
+    fun onLongClick(developer: Developer) = onLongClickCallback(developer.developerId)
     fun onDeleteClick(developer: Developer) = onDeleteClickCallback(developer)
 }

@@ -12,8 +12,8 @@ class DeveloperRepository(private val developerDao: DeveloperDao) {
         developerDao.insert(developer)
     }
 
-    suspend fun update(vararg developer: Developer) {
-        developerDao.update(*developer)
+    suspend fun update(developer: Developer) {
+        developerDao.update(developer)
     }
 
     suspend fun deleteAll() {
