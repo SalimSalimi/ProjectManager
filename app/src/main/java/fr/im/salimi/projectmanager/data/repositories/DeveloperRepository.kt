@@ -4,27 +4,12 @@ import fr.im.salimi.projectmanager.data.daos.DeveloperDao
 import fr.im.salimi.projectmanager.data.entities.Developer
 import kotlinx.coroutines.flow.Flow
 
-class DeveloperRepository(private val developerDao: DeveloperDao) {
+class DeveloperRepository(private val developerDao: DeveloperDao) : BaseRepository<Developer>(developerDao) {
 
-    val allDevelopers: Flow<List<Developer>> = developerDao.getAll()
+    override suspend fun getById(id: Long): Developer =
+            developerDao.getById(id)
 
-    suspend fun insert(developer: Developer) {
-        developerDao.insert(developer)
-    }
+    override fun getAll(): Flow<List<Developer>> =
+            developerDao.getAll()
 
-    suspend fun update(developer: Developer) {
-        developerDao.update(developer)
-    }
-
-    suspend fun deleteAll() {
-        developerDao.deleteAll()
-    }
-
-    suspend fun getById(id: Long): Developer {
-        return developerDao.getById(id)
-    }
-
-    suspend fun deleteDeveloper(developer: Developer) {
-        return developerDao.delete(developer)
-    }
 }

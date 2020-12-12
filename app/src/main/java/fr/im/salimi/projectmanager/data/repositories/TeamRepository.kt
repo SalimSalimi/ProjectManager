@@ -4,28 +4,12 @@ import fr.im.salimi.projectmanager.data.daos.TeamDao
 import fr.im.salimi.projectmanager.data.entities.Team
 import kotlinx.coroutines.flow.Flow
 
-class TeamRepository(private val teamDao: TeamDao) {
+class TeamRepository(private val teamDao: TeamDao): BaseRepository<Team>(teamDao) {
 
-    suspend fun insert(team: Team) {
-        teamDao.insert(team)
-    }
+    override suspend fun getById(id: Long): Team =
+            teamDao.getTeamById(id)
 
-    suspend fun delete(team: Team) {
-        teamDao.delete(team)
-    }
+    override fun getAll(): Flow<List<Team>> =
+            teamDao.getAll()
 
-    suspend fun update(team: Team) {
-        teamDao.update(team)
-    }
-
-    fun getAll(): Flow<List<Team>> =
-        teamDao.getAll()
-
-    suspend fun getById(id: Long) {
-        teamDao.getTeamById(id)
-    }
-
-    suspend fun deleteAll() {
-        teamDao.deleteAll()
-    }
 }

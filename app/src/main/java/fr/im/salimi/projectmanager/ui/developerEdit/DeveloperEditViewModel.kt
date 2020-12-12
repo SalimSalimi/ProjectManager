@@ -21,7 +21,7 @@ class DeveloperEditViewModel(private val id: Long, private val repository: Devel
         get() = _showSnackbarConfirm
 
     init {
-        initLiveDataDeveloper()
+        initDeveloper()
     }
 
     fun onAddClick() {
@@ -46,7 +46,7 @@ class DeveloperEditViewModel(private val id: Long, private val repository: Devel
         }
     }
 
-    private fun initLiveDataDeveloper() {
+    private fun initDeveloper() {
         if (id == -1L) {
             _developer.value = Developer()
         } else {
