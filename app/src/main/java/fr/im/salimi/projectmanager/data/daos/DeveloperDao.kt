@@ -5,24 +5,15 @@ import fr.im.salimi.projectmanager.data.entities.Developer
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface DeveloperDao {
+abstract class DeveloperDao: BaseDao<Developer> {
 
     @Query("SELECT * FROM developers")
-    fun getAll(): Flow<List<Developer>>
+    abstract fun getAll(): Flow<List<Developer>>
 
-    @Query("SELECT * FROM developers WHERE id = :id")
-    suspend fun getById(id: Long): Developer
-
-    @Insert
-    suspend fun insert(developer: Developer)
-
-    @Update
-    suspend fun update(vararg developer: Developer)
-
-    @Delete
-    suspend fun delete(developer: Developer)
+    @Query("SELECT * FROM developers WHERE developer_id = :id")
+    abstract suspend fun getById(id: Long): Developer
 
     @Query("DELETE FROM developers")
-    suspend fun deleteAll()
+    abstract suspend fun deleteAll()
 
 }

@@ -7,11 +7,15 @@ import kotlinx.coroutines.flow.Flow
 class TeamRepository(private val teamDao: TeamDao) {
 
     suspend fun insert(team: Team) {
-        teamDao.addTeam(team)
+        teamDao.insert(team)
     }
 
     suspend fun delete(team: Team) {
-        teamDao.deleteTeam(team)
+        teamDao.delete(team)
+    }
+
+    suspend fun update(team: Team) {
+        teamDao.update(team)
     }
 
     fun getAll(): Flow<List<Team>> =
