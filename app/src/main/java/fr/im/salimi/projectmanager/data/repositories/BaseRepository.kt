@@ -17,7 +17,9 @@ abstract class BaseRepository<T>(private val dao: BaseDao<T>) {
         dao.update(entity)
     }
 
-    abstract fun getAll(): Flow<List<T>>
+    fun getAll(): Flow<List<T>> =
+            dao.getAll()
 
-    abstract suspend fun getById(id: Long): T
+    suspend fun getById(id: Long): T =
+            dao.getById(id)
 }
