@@ -8,10 +8,10 @@ import kotlinx.coroutines.flow.Flow
 abstract class DeveloperDao: BaseDao<Developer> {
 
     @Query("SELECT * FROM developers")
-    abstract fun getAll(): Flow<List<Developer>>
+    abstract override fun getAll(): Flow<List<Developer>>
 
     @Query("SELECT * FROM developers WHERE developer_id = :id")
-    abstract suspend fun getById(id: Long): Developer
+    abstract override suspend fun getById(id: Long): Developer
 
     @Query("DELETE FROM developers")
     abstract suspend fun deleteAll()
