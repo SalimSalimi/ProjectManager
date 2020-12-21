@@ -10,10 +10,6 @@ import fr.im.salimi.projectmanager.R
 
 class ProjectListFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = ProjectListFragment()
-    }
-
     private lateinit var viewModel: ProjectListViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
