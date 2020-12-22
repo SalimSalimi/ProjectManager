@@ -33,4 +33,5 @@
     <string name="delete_a_developer">Delete a developer</string>
     <string name="delete_developer_confirm">Would you like to permanently delete it ?</string>
     <string name="confirm">Confirm</string>
+    <string name="create_a_new_project">Create a new project</string>
 </resources>

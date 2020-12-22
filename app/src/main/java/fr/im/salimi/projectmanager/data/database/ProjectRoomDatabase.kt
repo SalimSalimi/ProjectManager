@@ -7,16 +7,19 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import fr.im.salimi.projectmanager.data.converters.Converters
 import fr.im.salimi.projectmanager.data.daos.DeveloperDao
+import fr.im.salimi.projectmanager.data.daos.ProjectDao
 import fr.im.salimi.projectmanager.data.daos.TeamDao
 import fr.im.salimi.projectmanager.data.entities.Developer
+import fr.im.salimi.projectmanager.data.entities.Project
 import fr.im.salimi.projectmanager.data.entities.Team
 
-@Database(entities = [Developer::class, Team::class], version = 1, exportSchema = false)
+@Database(entities = [Developer::class, Team::class, Project::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class ProjectRoomDatabase: RoomDatabase() {
 
     abstract fun developerDao(): DeveloperDao
     abstract fun teamDao(): TeamDao
+    abstract fun projectDao(): ProjectDao
 
     companion object {
         @Volatile
