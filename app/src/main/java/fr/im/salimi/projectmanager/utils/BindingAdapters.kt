@@ -2,10 +2,12 @@ package fr.im.salimi.projectmanager.utils
 
 import android.util.Log
 import android.widget.AutoCompleteTextView
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import com.google.android.material.textfield.TextInputEditText
 import fr.im.salimi.projectmanager.data.helpers.Post
+import java.util.*
 
 object BindingAdapters {
 
@@ -58,4 +60,18 @@ object BindingAdapters {
             Post.values().find {
                 it.toString() == view.text.toString()
             } ?: Post.NONE
+
+    @BindingAdapter("android:text")
+    @JvmStatic
+    fun fromDateToText(view: TextView, date: Date) {
+        val currentValue = view.text.toString().toDate("yyyy-MM-dd")
+        if (currentValue != date) {
+            view.setText("$date")
+        }
+    }
+
+    @InverseBindingAdapter(attribute = "android:text")
+    @JvmStatic
+    fun fromTextToDate(view: TextView): Date =
+            view.text.toString().toDate("yyyy-MM-dd") ?: Date()
 }
