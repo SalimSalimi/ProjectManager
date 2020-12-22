@@ -1,22 +1,29 @@
 package fr.im.salimi.projectmanager.ui.projectList
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import fr.im.salimi.projectmanager.R
+import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
 import fr.im.salimi.projectmanager.data.entities.Project
+import fr.im.salimi.projectmanager.data.repositories.ProjectRepository
 import fr.im.salimi.projectmanager.databinding.ProjectListFragmentBinding
+import kotlin.collections.ArrayList
 
 class ProjectListFragment : Fragment() {
 
-    private lateinit var viewModel: ProjectListViewModel
-    private lateinit var projectsList: List<Project>
+    private var projectsList: List<Project> = ArrayList()
     private lateinit var binding: ProjectListFragmentBinding
+    private val viewModel: ProjectListViewModel by viewModels {
+        val database = ProjectRoomDatabase.getInstance(requireContext())
+        val repository = ProjectRepository(database.projectDao())
+        ProjectListViewModelFactory(repository)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -27,8 +34,8 @@ class ProjectListFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(ProjectListViewModel::class.java)
-
+        initObservers()
+        initAdapter()
     }
 
     private fun initObservers() {
@@ -44,4 +51,5 @@ class ProjectListFragment : Fragment() {
             this.adapter = myAdapter
         }
     }
+
 }
