@@ -1,13 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.projectForm.ProjectFormFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
+    <!--<data>
+        <variable
+            name="viewModel"
+            type="fr.im.salimi.projectmanager.ui.projectForm.ProjectFormViewModel"/>
+    </data>-->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Hello" />
+        tools:context=".ui.projectForm.ProjectFormFragment">
 
-</FrameLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_input_project_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_text_project_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/project_name"
+                android:inputType="textPersonName"
+                android:text="" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_input_project_customer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/text_input_project_name"
+            app:layout_constraintStart_toStartOf="@+id/text_input_project_name"
+            app:layout_constraintTop_toBottomOf="@+id/text_input_project_name">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_text_project_customer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/customer"
+                android:inputType="textPersonName"
+                android:text="" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_input_project_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/text_input_project_name"
+            app:layout_constraintStart_toStartOf="@+id/text_input_project_name"
+            app:layout_constraintTop_toBottomOf="@+id/text_input_project_customer">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_text_project_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/description_of_the_project"
+                android:inputType="textPersonName"
+                android:text="" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_input_project_starting_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/text_input_project_ending_date"
+            app:layout_constraintHorizontal_bias="0.5"
+            android:hint="@string/starting_date"
+            app:placeholderText="@string/date_format"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_input_project_description">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_text_starting_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_input_project_ending_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:hint="@string/ending_date"
+            app:placeholderText="@string/date_format"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/text_input_project_starting_date"
+            app:layout_constraintTop_toBottomOf="@+id/text_input_project_description">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_text_ending_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_project_add"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/create_new_project"
+            app:layout_constraintEnd_toEndOf="@+id/text_input_project_description"
+            app:layout_constraintStart_toStartOf="@+id/text_input_project_description"
+            app:layout_constraintTop_toBottomOf="@+id/text_input_project_starting_date" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

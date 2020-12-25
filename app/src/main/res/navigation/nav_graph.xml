@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/developerListFragment">
+    app:startDestination="@id/projectFormFragment">
     <fragment
         android:id="@+id/editDeveloperFragment"
         android:name="fr.im.salimi.projectmanager.ui.developerEdit.DeveloperEditFragment"
@@ -29,4 +29,8 @@
         android:id="@+id/projectListFragment"
         android:name="fr.im.salimi.projectmanager.ui.projectList.ProjectListFragment"
         android:label="ProjectListFragment" />
+    <fragment
+        android:id="@+id/projectFormFragment"
+        android:name="fr.im.salimi.projectmanager.ui.projectForm.ProjectFormFragment"
+        android:label="ProjectFormFragment" />
 </navigation>
