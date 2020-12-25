@@ -18,8 +18,8 @@ import kotlin.collections.ArrayList
 
 class ProjectListFragment : Fragment() {
 
-    private var projectsList: List<Project> = ArrayList()
     private lateinit var binding: ProjectListFragmentBinding
+    private lateinit var myAdapter: ProjectListAdapter
 
     private val viewModel: ProjectListViewModel by viewModels {
         val database = ProjectRoomDatabase.getInstance(requireContext())
@@ -42,14 +42,14 @@ class ProjectListFragment : Fragment() {
 
     private fun initObservers() {
         viewModel.projectsList.observe(viewLifecycleOwner) {
-            projectsList = it
+            myAdapter.submitList(it)
         }
     }
 
     private fun initAdapter() {
         binding.projectsList.apply {
             layoutManager = GridLayoutManager(requireContext(), 2)
-            val myAdapter = ProjectListAdapter(projectsList)
+            myAdapter = ProjectListAdapter()
             this.adapter = myAdapter
         }
     }

@@ -18,7 +18,6 @@ import fr.im.salimi.projectmanager.databinding.DeveloperListFragmentBinding
 
 class DeveloperListFragment : Fragment(), DeveloperAdapterListener {
 
-    private var developersList: List<Developer> = ArrayList()
     private lateinit var binding: DeveloperListFragmentBinding
     private lateinit var myAdapter: DeveloperListAdapter
 
@@ -47,7 +46,7 @@ class DeveloperListFragment : Fragment(), DeveloperAdapterListener {
     private fun initRecycler() {
         binding.developersList.apply {
             val linearLayoutManager = LinearLayoutManager(requireContext())
-            myAdapter = DeveloperListAdapter(developersList, this@DeveloperListFragment)
+            myAdapter = DeveloperListAdapter( this@DeveloperListFragment)
             this.layoutManager = linearLayoutManager
             this.adapter = myAdapter
         }
@@ -55,8 +54,7 @@ class DeveloperListFragment : Fragment(), DeveloperAdapterListener {
 
     private fun initObservers() {
         viewModel.listDevelopers.observe(viewLifecycleOwner) {
-            myAdapter.developersList = it
-            myAdapter.notifyDataSetChanged()
+            myAdapter.submitList(it)
         }
     }
 

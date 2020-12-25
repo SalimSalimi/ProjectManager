@@ -7,8 +7,7 @@ import fr.im.salimi.projectmanager.ui.uiUtils.BaseAdapter
 
 
 class ProjectListAdapter(
-    projectsList: List<Project>,
-    layoutResource: Int = R.layout.project_list_item): BaseAdapter<Project, ProjectListItemBinding>(projectsList, layoutResource) {
+    layoutResource: Int = R.layout.project_list_item): BaseAdapter<Project, ProjectListItemBinding>(layoutResource) {
 
     override fun bind(item: Project, binding: ProjectListItemBinding) {
         binding.project = item
