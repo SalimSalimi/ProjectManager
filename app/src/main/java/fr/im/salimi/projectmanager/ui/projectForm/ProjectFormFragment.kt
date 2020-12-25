@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.util.Pair
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -13,6 +14,7 @@ import fr.im.salimi.projectmanager.R
 import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
 import fr.im.salimi.projectmanager.data.repositories.ProjectRepository
 import fr.im.salimi.projectmanager.databinding.ProjectFormFragmentBinding
+import java.util.*
 
 class ProjectFormFragment : Fragment() {
 
@@ -48,20 +50,20 @@ class ProjectFormFragment : Fragment() {
     }
 
     private fun chooseDatePicker() {
-        val datePicker = MaterialDatePicker.Builder.dateRangePicker().build()
+        val datePicker = MaterialDatePicker.Builder.dateRangePicker()
+                .setSelection(Pair(viewModel.project.value!!.startingDate.time, viewModel.project.value!!.deadline.time))
+                .build()
+        Log.d("ProjectFormFragment", "${viewModel.project.value!!.startingDate.time}")
         datePicker.show(parentFragmentManager, datePicker.toString())
 
         datePicker.addOnPositiveButtonClickListener {
-            Log.d("ProjectFormFragment", "Date is: ${it.first} and ${it.second}")
+            it?.let { pair ->
+                val startingDate = Date(pair.first ?: Date().time)
+                val endingDate = Date(pair.second ?: Date().time)
+                Log.d("ProjectFormFragment", "${startingDate.time}")
+                viewModel.onChooseDate(startingDate, endingDate)
+                binding.invalidateAll()
+            }
         }
-
-        datePicker.addOnCancelListener {
-            Log.d("ProjectFormFragment", "Canceled")
-        }
-
-        datePicker.addOnNegativeButtonClickListener {
-            Log.d("ProjectFormFragment", "Negative")
-        }
-
     }
 }

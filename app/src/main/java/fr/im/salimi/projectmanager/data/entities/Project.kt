@@ -7,7 +7,7 @@ import java.util.*
 
 @Entity(tableName = "projects")
 data class Project(
-        @PrimaryKey
+        @PrimaryKey(autoGenerate = true)
         @ColumnInfo(name = "project_id")
         val projectId: Long = 0,
         @ColumnInfo(name = "project_name")

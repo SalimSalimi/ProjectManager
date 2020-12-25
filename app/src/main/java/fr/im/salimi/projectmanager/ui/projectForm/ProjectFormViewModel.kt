@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import fr.im.salimi.projectmanager.data.entities.Project
 import fr.im.salimi.projectmanager.data.repositories.ProjectRepository
 import kotlinx.coroutines.launch
+import java.util.*
 
 class ProjectFormViewModel(private val projectRepository: ProjectRepository) : ViewModel() {
 
@@ -23,14 +24,21 @@ class ProjectFormViewModel(private val projectRepository: ProjectRepository) : V
         _dateClickedEvent.value = false
     }
 
-    fun onAddBtnClicked() {
-        insert()
-    }
-
     private fun insert() {
         viewModelScope.launch {
             projectRepository.insert(_project.value!!)
         }
+    }
+
+    fun onChooseDate(newStartingDate: Date, newEndingDate: Date) {
+        _project.value?.apply {
+            startingDate = newStartingDate
+            deadline = newEndingDate
+        }
+    }
+
+    fun onAddBtnClicked() {
+        insert()
     }
 
     fun onDateClickedEvent() {
