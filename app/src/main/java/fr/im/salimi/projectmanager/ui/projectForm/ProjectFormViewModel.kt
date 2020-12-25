@@ -4,9 +4,12 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import fr.im.salimi.projectmanager.data.entities.Project
+import fr.im.salimi.projectmanager.data.repositories.ProjectRepository
+import kotlinx.coroutines.launch
 
-class ProjectFormViewModel : ViewModel() {
+class ProjectFormViewModel(private val projectRepository: ProjectRepository) : ViewModel() {
 
     private val _project = MutableLiveData<Project>()
     val project: LiveData<Project>
@@ -17,7 +20,12 @@ class ProjectFormViewModel : ViewModel() {
     }
 
     fun onAddBtnClicked() {
-        Log.d("ProjectFormViewModel", "clicked")
-        Log.d("ProjectFormViewModel", "clicked ${project.value.toString()}")
+        insert()
+    }
+
+    private fun insert() {
+        viewModelScope.launch {
+            projectRepository.insert(_project.value!!)
+        }
     }
 }

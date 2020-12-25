@@ -1,18 +1,25 @@
 package fr.im.salimi.projectmanager.ui.projectForm
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import fr.im.salimi.projectmanager.R
+import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
+import fr.im.salimi.projectmanager.data.repositories.ProjectRepository
 import fr.im.salimi.projectmanager.databinding.ProjectFormFragmentBinding
 
 class ProjectFormFragment : Fragment() {
 
-    private lateinit var viewModel: ProjectFormViewModel
+    private val viewModel: ProjectFormViewModel by viewModels {
+        val database = ProjectRoomDatabase.getInstance(requireContext())
+        val dao = database.projectDao()
+        ProjectFormViewModelFactory(ProjectRepository(dao))
+    }
+
     private lateinit var binding: ProjectFormFragmentBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -25,7 +32,6 @@ class ProjectFormFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(ProjectFormViewModel::class.java)
         binding.viewModel = viewModel
     }
 
