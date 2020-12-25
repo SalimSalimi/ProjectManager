@@ -13,12 +13,14 @@ import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
 import fr.im.salimi.projectmanager.data.entities.Project
 import fr.im.salimi.projectmanager.data.repositories.ProjectRepository
 import fr.im.salimi.projectmanager.databinding.ProjectListFragmentBinding
+import java.util.*
 import kotlin.collections.ArrayList
 
 class ProjectListFragment : Fragment() {
 
     private var projectsList: List<Project> = ArrayList()
     private lateinit var binding: ProjectListFragmentBinding
+
     private val viewModel: ProjectListViewModel by viewModels {
         val database = ProjectRoomDatabase.getInstance(requireContext())
         val repository = ProjectRepository(database.projectDao())
