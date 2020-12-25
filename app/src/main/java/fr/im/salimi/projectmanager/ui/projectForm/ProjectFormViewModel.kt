@@ -1,6 +1,5 @@
 package fr.im.salimi.projectmanager.ui.projectForm
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,8 +14,13 @@ class ProjectFormViewModel(private val projectRepository: ProjectRepository) : V
     val project: LiveData<Project>
         get() = _project
 
+    private val _dateClickedEvent = MutableLiveData<Boolean>()
+    val dateClickedEvent: LiveData<Boolean>
+        get() = _dateClickedEvent
+
     init {
         _project.value = Project()
+        _dateClickedEvent.value = false
     }
 
     fun onAddBtnClicked() {
@@ -27,5 +31,13 @@ class ProjectFormViewModel(private val projectRepository: ProjectRepository) : V
         viewModelScope.launch {
             projectRepository.insert(_project.value!!)
         }
+    }
+
+    fun onDateClickedEvent() {
+        _dateClickedEvent.value = true
+    }
+
+    fun onDateClickedEventFinished() {
+        _dateClickedEvent.value = false
     }
 }
