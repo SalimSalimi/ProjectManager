@@ -8,12 +8,17 @@
         <variable
             name="developer"
             type="fr.im.salimi.projectmanager.data.entities.Developer"/>
+        <variable
+            name="listener"
+            type="fr.im.salimi.projectmanager.ui.developerList.DeveloperAdapterListener"/>
     </data>
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/developerCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="@{(view) -> listener.onClick(view, developer)}"
+        android:onLongClick="@{(view) -> listener.onLongClick(view, developer)}"
         android:layout_margin="8dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
