@@ -15,6 +15,6 @@ data class Project(
         var customer: String = "",
         var description: String = "",
         @ColumnInfo(name = "starting_date")
-        var startingDate: Date,
-        var deadline: Date
+        var startingDate: Date = Date(),
+        var deadline: Date = Date()
 ) : BaseEntity(projectId)
