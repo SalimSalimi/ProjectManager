@@ -1,19 +1,21 @@
 package fr.im.salimi.projectmanager.ui.projectList
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import fr.im.salimi.projectmanager.R
 import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
+import fr.im.salimi.projectmanager.data.entities.Project
 import fr.im.salimi.projectmanager.data.repositories.ProjectRepository
 import fr.im.salimi.projectmanager.databinding.ProjectListFragmentBinding
 
-class ProjectListFragment : Fragment() {
+class ProjectListFragment : Fragment(), ProjectActionListeners {
 
     private lateinit var binding: ProjectListFragmentBinding
     private lateinit var myAdapter: ProjectListAdapter
@@ -46,9 +48,21 @@ class ProjectListFragment : Fragment() {
     private fun initAdapter() {
         binding.projectsList.apply {
             layoutManager = GridLayoutManager(requireContext(), 2)
-            myAdapter = ProjectListAdapter()
+            myAdapter = ProjectListAdapter(listeners =  this@ProjectListFragment)
             this.adapter = myAdapter
         }
+    }
+
+    override fun onClickListener(view: View, project: Project) {
+
+    }
+
+    override fun onLongClickListener(view: View, project: Project): Boolean {
+        val directions =
+                ProjectListFragmentDirections.actionProjectListFragmentToProjectFormFragment(project.projectId)
+        this.findNavController().navigate(directions)
+
+        return true
     }
 
 }
