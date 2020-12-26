@@ -1,6 +1,5 @@
 package fr.im.salimi.projectmanager.ui.projectList
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -24,7 +23,6 @@ class ProjectListViewModel(repository: ProjectRepository) : ViewModel() {
 
     fun onAddBtnClicked() {
         navigateToProjectForm()
-        Log.d("ProjectListViewModel", "CLICKED")
     }
 
     private fun navigateToProjectForm() {
