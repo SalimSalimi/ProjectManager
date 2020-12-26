@@ -35,13 +35,23 @@ class ProjectListFragment : Fragment(), ProjectActionListeners {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        binding.viewModel = viewModel
         initObservers()
         initAdapter()
     }
 
     private fun initObservers() {
+        //Observing list data
         viewModel.projectsList.observe(viewLifecycleOwner) {
             myAdapter.submitList(it)
+        }
+
+        //Observe navigation
+        viewModel.navigateToProjectForm.observe(viewLifecycleOwner) {
+            if (it) {
+                this.findNavController().navigate(R.id.action_projectListFragment_to_projectFormFragment)
+                viewModel.doneNavigatingToProjectForm()
+            }
         }
     }
 
@@ -61,8 +71,6 @@ class ProjectListFragment : Fragment(), ProjectActionListeners {
         val directions =
                 ProjectListFragmentDirections.actionProjectListFragmentToProjectFormFragment(project.projectId)
         this.findNavController().navigate(directions)
-
         return true
     }
-
 }
