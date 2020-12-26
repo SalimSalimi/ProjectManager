@@ -49,9 +49,7 @@ object BindingAdapters {
             val value = (post ?: Post.NONE).ordinal
             view.setText(view.adapter.getItem(value).toString(), false)
             view.listSelection = value
-
         }
-
     }
 
     @InverseBindingAdapter(attribute = "android:text")
@@ -64,14 +62,14 @@ object BindingAdapters {
     @BindingAdapter("android:text")
     @JvmStatic
     fun fromDateToText(view: TextView, date: Date) {
-        val currentValue = view.text.toString().toDate("yyyy-MM-dd")
+        val currentValue = view.text.toString().toDate("dd-MM-yyyy")
         if (currentValue != date) {
-            view.setText("$date")
+            view.setText(date.toString("dd-MM-yyyy"))
         }
     }
 
     @InverseBindingAdapter(attribute = "android:text")
     @JvmStatic
     fun fromTextToDate(view: TextView): Date =
-            view.text.toString().toDate("yyyy-MM-dd") ?: Date()
+            view.text.toString().toDate("dd-MM-yyyy") ?: Date()
 }

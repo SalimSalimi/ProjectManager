@@ -34,4 +34,11 @@
     <string name="delete_developer_confirm">Would you like to permanently delete it ?</string>
     <string name="confirm">Confirm</string>
     <string name="create_a_new_project">Create a new project</string>
+    <string name="project_name">Project name</string>
+    <string name="customer">Customer</string>
+    <string name="description_of_the_project">Description of the project</string>
+    <string name="create_new_project">Create new project</string>
+    <string name="ending_date">Ending date</string>
+    <string name="date_format">dd/mm/yyyy</string>
+    <string name="starting_date">Starting date</string>
 </resources>

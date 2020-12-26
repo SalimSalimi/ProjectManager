@@ -7,7 +7,7 @@ import java.util.*
 
 @Entity(tableName = "projects")
 data class Project(
-        @PrimaryKey
+        @PrimaryKey(autoGenerate = true)
         @ColumnInfo(name = "project_id")
         val projectId: Long = 0,
         @ColumnInfo(name = "project_name")
@@ -15,6 +15,6 @@ data class Project(
         var customer: String = "",
         var description: String = "",
         @ColumnInfo(name = "starting_date")
-        var startingDate: Date,
-        var deadline: Date
+        var startingDate: Date = Date(),
+        var deadline: Date = Date()
 ) : BaseEntity(projectId)

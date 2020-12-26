@@ -10,11 +10,8 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import fr.im.salimi.projectmanager.R
 import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
-import fr.im.salimi.projectmanager.data.entities.Project
 import fr.im.salimi.projectmanager.data.repositories.ProjectRepository
 import fr.im.salimi.projectmanager.databinding.ProjectListFragmentBinding
-import java.util.*
-import kotlin.collections.ArrayList
 
 class ProjectListFragment : Fragment() {
 
