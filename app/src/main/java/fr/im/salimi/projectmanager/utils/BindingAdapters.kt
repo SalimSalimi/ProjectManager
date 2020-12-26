@@ -61,10 +61,10 @@ object BindingAdapters {
 
     @BindingAdapter("android:text")
     @JvmStatic
-    fun fromDateToText(view: TextView, date: Date) {
+    fun fromDateToText(view: TextView, date: Date?) {
         val currentValue = view.text.toString().toDate("dd-MM-yyyy")
         if (currentValue != date) {
-            view.setText(date.toString("dd-MM-yyyy"))
+            view.setText(date?.toString("dd-MM-yyyy"))
         }
     }
 
