@@ -21,7 +21,7 @@ class ProjectFormFragment : Fragment() {
     private val viewModel: ProjectFormViewModel by viewModels {
         val database = ProjectRoomDatabase.getInstance(requireContext())
         val dao = database.projectDao()
-        ProjectFormViewModelFactory(ProjectRepository(dao))
+        ProjectFormViewModelFactory(-1L, ProjectRepository(dao))
     }
 
     private lateinit var binding: ProjectFormFragmentBinding
