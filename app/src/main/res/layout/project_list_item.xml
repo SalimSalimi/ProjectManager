@@ -7,12 +7,17 @@
         <variable
             name="project"
             type="fr.im.salimi.projectmanager.data.entities.Project"/>
+        <variable
+            name="listener"
+            type="fr.im.salimi.projectmanager.ui.projectList.ProjectActionListeners"/>
     </data>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
+        android:onClick="@{(view) -> listener.onClickListener(project)}"
+        android:onLongClick="@{(view) -> listener.onLongClickListener(project)}"
         app:cardElevation="8dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
