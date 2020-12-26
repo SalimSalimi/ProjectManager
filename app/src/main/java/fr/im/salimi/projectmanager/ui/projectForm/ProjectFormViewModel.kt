@@ -19,8 +19,13 @@ class ProjectFormViewModel(private val projectId: Long, private val projectRepos
     val dateClickedEvent: LiveData<Boolean>
         get() = _dateClickedEvent
 
+    private val _navigateToProjectList = MutableLiveData<Boolean>()
+    val navigateToProjectList: LiveData<Boolean>
+        get() = _navigateToProjectList
+
     init {
         initProject()
+        _navigateToProjectList.value = false
         _dateClickedEvent.value = false
     }
 
@@ -52,7 +57,6 @@ class ProjectFormViewModel(private val projectId: Long, private val projectRepos
             update()
     }
 
-
     fun onChooseDate(newStartingDate: Date, newEndingDate: Date) {
         _project.value?.apply {
             startingDate = newStartingDate
@@ -62,6 +66,7 @@ class ProjectFormViewModel(private val projectId: Long, private val projectRepos
 
     fun onAddBtnClicked() {
         upsert()
+        navigateToProjectList()
     }
 
     fun onDateClickedEvent() {
@@ -70,5 +75,13 @@ class ProjectFormViewModel(private val projectId: Long, private val projectRepos
 
     fun onDateClickedEventFinished() {
         _dateClickedEvent.value = false
+    }
+
+    private fun navigateToProjectList() {
+        _navigateToProjectList.value = true
+    }
+
+    fun doneNavigateToProjectList() {
+        _navigateToProjectList.value = false
     }
 }
