@@ -8,6 +8,7 @@ import androidx.core.util.Pair
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.datepicker.MaterialDatePicker
 import fr.im.salimi.projectmanager.R
 import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
@@ -17,10 +18,11 @@ import java.util.*
 
 class ProjectFormFragment : Fragment() {
 
+    private val args: ProjectFormFragmentArgs by navArgs()
     private val viewModel: ProjectFormViewModel by viewModels {
         val database = ProjectRoomDatabase.getInstance(requireContext())
         val dao = database.projectDao()
-        ProjectFormViewModelFactory(2L, ProjectRepository(dao))
+        ProjectFormViewModelFactory(args.projectId, ProjectRepository(dao))
     }
 
     private lateinit var binding: ProjectFormFragmentBinding
