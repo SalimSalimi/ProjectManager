@@ -7,10 +7,11 @@ import fr.im.salimi.projectmanager.ui.uiUtils.BaseAdapter
 
 
 class ProjectListAdapter(
-    layoutResource: Int = R.layout.project_list_item): BaseAdapter<Project, ProjectListItemBinding>(layoutResource) {
+    layoutResource: Int = R.layout.project_list_item, private val listeners: ProjectActionListeners): BaseAdapter<Project, ProjectListItemBinding>(layoutResource) {
 
     override fun bind(item: Project, binding: ProjectListItemBinding) {
         binding.project = item
+        binding.listener = listeners
     }
 
 }
