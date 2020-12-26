@@ -24,21 +24,34 @@ class ProjectFormViewModel(private val projectId: Long, private val projectRepos
         _dateClickedEvent.value = false
     }
 
+    private fun initProject() {
+        if (projectId == -1L)
+            _project.value = Project()
+        else
+            viewModelScope.launch {
+                _project.value = projectRepository.getById(projectId)
+            }
+    }
+
     private fun insert() {
         viewModelScope.launch {
             projectRepository.insert(_project.value!!)
         }
     }
 
-    private fun initProject() {
-        if (projectId == -1L) {
-            _project.value = Project()
-        } else {
-            viewModelScope.launch {
-                _project.value = projectRepository.getById(projectId)
-            }
+    private fun update() {
+        viewModelScope.launch {
+            projectRepository.update(_project.value!!)
         }
     }
+
+    private fun upsert() {
+        if (projectId == -1L)
+            insert()
+        else
+            update()
+    }
+
 
     fun onChooseDate(newStartingDate: Date, newEndingDate: Date) {
         _project.value?.apply {
@@ -48,7 +61,7 @@ class ProjectFormViewModel(private val projectId: Long, private val projectRepos
     }
 
     fun onAddBtnClicked() {
-        insert()
+        upsert()
     }
 
     fun onDateClickedEvent() {
