@@ -46,5 +46,10 @@
             android:id="@+id/action_projectFormFragment_to_projectListFragment"
             app:destination="@id/projectListFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/moduleFormFragment"
+        android:name="fr.im.salimi.projectmanager.ui.moduleForm.ModuleFormFragment"
+        android:label="module_form_fragment"
+        tools:layout="@layout/module_form_fragment" />
 
 </navigation>
