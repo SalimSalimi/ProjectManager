@@ -4,29 +4,34 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import fr.im.salimi.projectmanager.R
+import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
+import fr.im.salimi.projectmanager.data.repositories.ModuleRepository
+import fr.im.salimi.projectmanager.databinding.ModuleFormFragmentBinding
 
 class ModuleFormFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = ModuleFormFragment()
+    private lateinit var binding: ModuleFormFragmentBinding
+    private val viewModel: ModuleFormViewModel by viewModels {
+        val database = ProjectRoomDatabase.getInstance(requireContext())
+        val repository = ModuleRepository(database.moduleDao())
+        ModuleFormViewModelFactory(-1, repository)
     }
-
-    private lateinit var viewModel: ModuleFormViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.module_form_fragment, container, false)
+    ): View {
+        val binding = DataBindingUtil.inflate<ModuleFormFragmentBinding>(inflater, R.layout.module_form_fragment, container, false)
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(ModuleFormViewModel::class.java)
-        // TODO: Use the ViewModel
+        binding.viewModel = viewModel
     }
 
 }
