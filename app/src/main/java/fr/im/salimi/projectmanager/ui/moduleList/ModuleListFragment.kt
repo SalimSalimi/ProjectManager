@@ -40,6 +40,11 @@ class ModuleListFragment : Fragment() {
         viewModel.modules.observe(viewLifecycleOwner) {
             moduleAdapter.submitList(it)
         }
+
+        viewModel.navigateToModuleFormEvent.observe(viewLifecycleOwner) {
+            if (it)
+                navigateToModuleForm()
+        }
     }
 
     private fun initAdapter() {
@@ -49,5 +54,9 @@ class ModuleListFragment : Fragment() {
             moduleAdapter = ModuleListAdapter()
             this.adapter = moduleAdapter
         }
+    }
+
+    private fun navigateToModuleForm() {
+
     }
 }
