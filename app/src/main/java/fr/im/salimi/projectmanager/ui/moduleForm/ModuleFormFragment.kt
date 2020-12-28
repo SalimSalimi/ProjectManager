@@ -18,7 +18,7 @@ class ModuleFormFragment : Fragment() {
     private val viewModel: ModuleFormViewModel by viewModels {
         val database = ProjectRoomDatabase.getInstance(requireContext())
         val repository = ModuleRepository(database.moduleDao())
-        ModuleFormViewModelFactory(-1, repository)
+        ModuleFormViewModelFactory(-1L, repository)
     }
 
     override fun onCreateView(
@@ -32,6 +32,17 @@ class ModuleFormFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         binding.viewModel = viewModel
+        initObservers()
     }
 
+    private fun initObservers() {
+        viewModel.dateClickEvent.observe(viewLifecycleOwner) {
+
+            viewModel.onDateClickedEventFinished()
+        }
+
+        viewModel.addBtnClickEvent.observe(viewLifecycleOwner) {
+            viewModel.onAddBtnClickedFinished()
+        }
+    }
 }

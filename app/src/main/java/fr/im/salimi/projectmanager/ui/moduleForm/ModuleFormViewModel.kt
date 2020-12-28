@@ -14,16 +14,16 @@ class ModuleFormViewModel(private val id: Long, private val repository: ModuleRe
     val module: LiveData<Module>
         get() = _module
 
-    private val _onDateClickEvent = MutableLiveData<Boolean>()
+    private val _dateClickEvent = MutableLiveData<Boolean>()
     val dateClickEvent: LiveData<Boolean>
-        get() = _onDateClickEvent
+        get() = _dateClickEvent
 
-    private val _onAddBtnClickEvent = MutableLiveData<Boolean>()
-    val onAddBtnClickEvent: LiveData<Boolean>
-        get() = _onAddBtnClickEvent
+    private val _addBtnClickEvent = MutableLiveData<Boolean>()
+    val addBtnClickEvent: LiveData<Boolean>
+        get() = _addBtnClickEvent
 
     init {
-        _onDateClickEvent.value = false
+        _dateClickEvent.value = false
         _module.value = Module()
     }
 
@@ -36,19 +36,19 @@ class ModuleFormViewModel(private val id: Long, private val repository: ModuleRe
     }
 
     fun onDateClickedEvent() {
-        _onDateClickEvent.value = true
+        _dateClickEvent.value = true
     }
 
     private fun onAddBtnClickedEvent() {
-        _onAddBtnClickEvent.value = true
+        _addBtnClickEvent.value = true
     }
 
     fun onDateClickedEventFinished() {
-        _onDateClickEvent.value = false
+        _dateClickEvent.value = false
     }
 
     fun onAddBtnClickedFinished() {
-        _onAddBtnClickEvent.value = false
+        _addBtnClickEvent.value = false
     }
 
     private fun insert() {
