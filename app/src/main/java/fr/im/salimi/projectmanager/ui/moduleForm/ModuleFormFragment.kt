@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.util.Pair
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -11,6 +12,7 @@ import fr.im.salimi.projectmanager.R
 import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
 import fr.im.salimi.projectmanager.data.repositories.ModuleRepository
 import fr.im.salimi.projectmanager.databinding.ModuleFormFragmentBinding
+import fr.im.salimi.projectmanager.ui.uiUtils.chooseDatePicker
 
 class ModuleFormFragment : Fragment() {
 
@@ -37,12 +39,22 @@ class ModuleFormFragment : Fragment() {
 
     private fun initObservers() {
         viewModel.dateClickEvent.observe(viewLifecycleOwner) {
-
+            if (it)
+                showDatePicker()
             viewModel.onDateClickedEventFinished()
         }
 
         viewModel.addBtnClickEvent.observe(viewLifecycleOwner) {
             viewModel.onAddBtnClickedFinished()
         }
+    }
+
+    private fun showDatePicker() {
+        val initPair = Pair(viewModel.module.value!!.startingDate.time,
+                viewModel.module.value!!.endingDate.time)
+
+        this.chooseDatePicker(initPair, ( {
+            viewModel.onChooseDate(it)
+        }), null, null)
     }
 }

@@ -1,5 +1,6 @@
 package fr.im.salimi.projectmanager.ui.moduleForm
 
+import androidx.core.util.Pair
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import fr.im.salimi.projectmanager.data.entities.Module
 import fr.im.salimi.projectmanager.data.repositories.ModuleRepository
 import kotlinx.coroutines.launch
+import java.util.*
 
 class ModuleFormViewModel(private val id: Long, private val repository: ModuleRepository) : ViewModel() {
 
@@ -25,6 +27,11 @@ class ModuleFormViewModel(private val id: Long, private val repository: ModuleRe
     init {
         _dateClickEvent.value = false
         _module.value = Module()
+    }
+
+    fun onChooseDate(dates: Pair<Long, Long>) {
+        _module.value!!.startingDate = Date(dates.first!!)
+        _module.value!!.endingDate = Date(dates.second!!)
     }
 
     fun onAddBtnClicked() {
