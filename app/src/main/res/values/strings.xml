@@ -41,4 +41,7 @@
     <string name="ending_date">Ending date</string>
     <string name="date_format">dd/mm/yyyy</string>
     <string name="starting_date">Starting date</string>
+    <string name="module_name">Module name</string>
+    <string name="description_of_the_module">Description module</string>
+    <string name="create_new_module">Create module</string>
 </resources>

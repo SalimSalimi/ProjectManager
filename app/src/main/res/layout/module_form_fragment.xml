@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.moduleForm.ModuleFormFragment">
 
     <data>
         <variable
             name="viewModel"
-            type="fr.im.salimi.projectmanager.ui.projectForm.ProjectFormViewModel"/>
+            type="fr.im.salimi.projectmanager.ui.moduleForm.ModuleFormViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.projectForm.ProjectFormFragment">
+        android:layout_height="match_parent">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/text_input_module_name"
@@ -30,61 +30,41 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="@string/project_name"
+                android:hint="@string/module_name"
                 android:inputType="textPersonName"
-                android:text="@={viewModel.project.name}" />
+                android:text="@={viewModel.module.name}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/text_input_project_customer"
+            android:id="@+id/text_input_module_description"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="@+id/text_input_module_name"
             app:layout_constraintStart_toStartOf="@+id/text_input_module_name"
             app:layout_constraintTop_toBottomOf="@+id/text_input_module_name">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_text_project_customer"
+                android:id="@+id/edit_text_module_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="@string/customer"
+                android:hint="@string/description_of_the_module"
                 android:inputType="textPersonName"
-                android:text="@={viewModel.project.customer}" />
+                android:text="@={viewModel.module.description}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/text_input_project_description"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="@+id/text_input_module_name"
-            app:layout_constraintStart_toStartOf="@+id/text_input_module_name"
-            app:layout_constraintTop_toBottomOf="@+id/text_input_project_customer">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_text_project_description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/description_of_the_project"
-                android:inputType="textPersonName"
-                android:text="@={viewModel.project.description}" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/text_input_project_starting_date"
+            android:id="@+id/text_input_module_starting_date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:hint="@string/starting_date"
-            app:layout_constraintEnd_toStartOf="@+id/text_input_project_ending_date"
+            app:layout_constraintEnd_toStartOf="@+id/text_input_module_ending_date"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_input_project_description"
+            app:layout_constraintTop_toBottomOf="@+id/text_input_module_description"
             app:placeholderText="@string/date_format">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -94,11 +74,11 @@
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:onClick="@{() -> viewModel.onDateClickedEvent()}"
-                android:text="@={viewModel.project.startingDate}" />
+                android:text="@={viewModel.module.startingDate}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/text_input_project_ending_date"
+            android:id="@+id/text_input_module_ending_date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -108,8 +88,8 @@
             app:placeholderText="@string/date_format"
             app:layout_constraintHorizontal_bias="0.5"
 
-            app:layout_constraintStart_toEndOf="@+id/text_input_project_starting_date"
-            app:layout_constraintTop_toBottomOf="@+id/text_input_project_description">
+            app:layout_constraintStart_toEndOf="@+id/text_input_module_starting_date"
+            app:layout_constraintTop_toBottomOf="@+id/text_input_module_description">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_text_ending_date"
@@ -117,19 +97,20 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="@={viewModel.project.deadline}"
+                android:text="@={viewModel.module.endingDate}"
                 android:onClick="@{() -> viewModel.onDateClickedEvent()}"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_project_add"
+            android:id="@+id/button_module_add"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="@string/create_new_project"
-            app:layout_constraintEnd_toEndOf="@+id/text_input_project_description"
-            app:layout_constraintStart_toStartOf="@+id/text_input_project_description"
-            app:layout_constraintTop_toBottomOf="@+id/text_input_project_starting_date"
+            android:text="@string/create_new_module"
+            app:layout_constraintEnd_toEndOf="@+id/text_input_module_description"
+            app:layout_constraintStart_toStartOf="@+id/text_input_module_description"
+            app:layout_constraintTop_toBottomOf="@+id/text_input_module_starting_date"
             android:onClick="@{() -> viewModel.onAddBtnClicked()}"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>
