@@ -27,7 +27,7 @@ class ModuleFormFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = DataBindingUtil.inflate<ModuleFormFragmentBinding>(inflater, R.layout.module_form_fragment, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.module_form_fragment, container, false)
         return binding.root
     }
 
@@ -39,13 +39,15 @@ class ModuleFormFragment : Fragment() {
 
     private fun initObservers() {
         viewModel.dateClickEvent.observe(viewLifecycleOwner) {
-            if (it)
+            if (it) {
                 showDatePicker()
-            viewModel.onDateClickedEventFinished()
+                viewModel.onDateClickedEventFinished()
+            }
         }
 
         viewModel.addBtnClickEvent.observe(viewLifecycleOwner) {
-            viewModel.onAddBtnClickedFinished()
+            if (it)
+                viewModel.onAddBtnClickedFinished()
         }
     }
 
@@ -53,8 +55,9 @@ class ModuleFormFragment : Fragment() {
         val initPair = Pair(viewModel.module.value!!.startingDate.time,
                 viewModel.module.value!!.endingDate.time)
 
-        this.chooseDatePicker(initPair, ( {
+        chooseDatePicker(initPair, ( {
             viewModel.onChooseDate(it)
+            binding.invalidateAll()
         }), null, null)
     }
 }
