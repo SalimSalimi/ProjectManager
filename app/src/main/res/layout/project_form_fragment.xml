@@ -15,7 +15,7 @@
         tools:context=".ui.projectForm.ProjectFormFragment">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/text_input_project_name"
+            android:id="@+id/text_input_module_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -26,7 +26,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_text_project_name"
+                android:id="@+id/edit_text_module_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -40,9 +40,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="@+id/text_input_project_name"
-            app:layout_constraintStart_toStartOf="@+id/text_input_project_name"
-            app:layout_constraintTop_toBottomOf="@+id/text_input_project_name">
+            app:layout_constraintEnd_toEndOf="@+id/text_input_module_name"
+            app:layout_constraintStart_toStartOf="@+id/text_input_module_name"
+            app:layout_constraintTop_toBottomOf="@+id/text_input_module_name">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_text_project_customer"
@@ -59,8 +59,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="@+id/text_input_project_name"
-            app:layout_constraintStart_toStartOf="@+id/text_input_project_name"
+            app:layout_constraintEnd_toEndOf="@+id/text_input_module_name"
+            app:layout_constraintStart_toStartOf="@+id/text_input_module_name"
             app:layout_constraintTop_toBottomOf="@+id/text_input_project_customer">
 
             <com.google.android.material.textfield.TextInputEditText
