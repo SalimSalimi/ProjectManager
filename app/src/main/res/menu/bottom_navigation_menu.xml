@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/projectListFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_projects_24"
+        android:title="@string/projects"/>
+    <item
+        android:id="@+id/moduleListFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_view_module_24"
+        android:title="@string/modules"/>
+    <item
+        android:id="@+id/functions_menu_item"
+        android:enabled="true"
+        android:icon="@drawable/ic_function_24"
+        android:title="@string/functions"/>
+    <item
+        android:id="@+id/developerListFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_person_24"
+        android:title="@string/developers"/>
+</menu>

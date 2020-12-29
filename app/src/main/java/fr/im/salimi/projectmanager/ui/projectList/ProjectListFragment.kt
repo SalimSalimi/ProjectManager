@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import fr.im.salimi.projectmanager.R
 import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
 import fr.im.salimi.projectmanager.data.entities.Project
@@ -18,6 +19,7 @@ import fr.im.salimi.projectmanager.ui.uiUtils.ClickListenersCallback
 
 class ProjectListFragment : Fragment(), ClickListenersCallback<Project> {
 
+    private lateinit var fabBtn: FloatingActionButton
     private lateinit var binding: ProjectListFragmentBinding
     private lateinit var myAdapter: ProjectListAdapter
 
@@ -36,9 +38,17 @@ class ProjectListFragment : Fragment(), ClickListenersCallback<Project> {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        fabBtn = requireActivity().findViewById(R.id.fab_main)
         binding.viewModel = viewModel
+
         initObservers()
         initAdapter()
+        fabBtn.apply {
+            setOnClickListener {
+                viewModel.onAddBtnClicked()
+            }
+            contentDescription = getString(R.string.create_a_new_project)
+        }
     }
 
     private fun initObservers() {

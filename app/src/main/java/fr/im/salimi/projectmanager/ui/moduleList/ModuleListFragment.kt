@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import fr.im.salimi.projectmanager.R
 import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
 import fr.im.salimi.projectmanager.data.entities.Module
@@ -18,6 +19,7 @@ import fr.im.salimi.projectmanager.ui.uiUtils.ClickListenersCallback
 
 class ModuleListFragment : Fragment(), ClickListenersCallback<Module> {
 
+    private lateinit var fabBtn: FloatingActionButton
     private lateinit var moduleAdapter: ModuleListAdapter
     private lateinit var binding: ModuleListFragmentBinding
     private val viewModel: ModuleListViewModel by viewModels {
@@ -35,9 +37,17 @@ class ModuleListFragment : Fragment(), ClickListenersCallback<Module> {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        fabBtn = requireActivity().findViewById(R.id.fab_main)
         binding.viewModel = viewModel
         initAdapter()
         initObservers()
+        fabBtn.apply {
+            setOnClickListener {
+                viewModel.onAddFabBtnClicked()
+            }
+            contentDescription = getString(R.string.create_a_new_module)
+        }
     }
 
     private fun initObservers() {
@@ -76,4 +86,5 @@ class ModuleListFragment : Fragment(), ClickListenersCallback<Module> {
         navigateToModuleForm(entity.moduleId)
         return true
     }
+
 }
