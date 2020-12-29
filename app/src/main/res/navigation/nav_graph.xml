@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/moduleFormFragment">
+    app:startDestination="@id/moduleListFragment">
     <fragment
         android:id="@+id/editDeveloperFragment"
         android:name="fr.im.salimi.projectmanager.ui.developerEdit.DeveloperEditFragment"
@@ -50,6 +50,22 @@
         android:id="@+id/moduleFormFragment"
         android:name="fr.im.salimi.projectmanager.ui.moduleForm.ModuleFormFragment"
         android:label="module_form_fragment"
-        tools:layout="@layout/module_form_fragment" />
+        tools:layout="@layout/module_form_fragment" >
+        <action
+            android:id="@+id/action_moduleFormFragment_to_moduleListFragment"
+            app:destination="@id/moduleListFragment" />
+        <argument
+            android:name="moduleId"
+            app:argType="long"
+            android:defaultValue="-1L" />
+    </fragment>
+    <fragment
+        android:id="@+id/moduleListFragment"
+        android:name="fr.im.salimi.projectmanager.ui.moduleList.ModuleListFragment"
+        android:label="ModuleListFragment" >
+        <action
+            android:id="@+id/action_moduleListFragment_to_moduleFormFragment"
+            app:destination="@id/moduleFormFragment" />
+    </fragment>
 
 </navigation>

@@ -25,8 +25,9 @@ class ModuleFormViewModel(private val id: Long, private val repository: ModuleRe
         get() = _addBtnClickEvent
 
     init {
+        initModule()
         _dateClickEvent.value = false
-        _module.value = Module()
+        _addBtnClickEvent.value = false
     }
 
     fun onChooseDate(dates: Pair<Long, Long>) {
@@ -56,6 +57,15 @@ class ModuleFormViewModel(private val id: Long, private val repository: ModuleRe
 
     fun onAddBtnClickedFinished() {
         _addBtnClickEvent.value = false
+    }
+
+    private fun initModule() {
+        if(id == -1L)
+            _module.value = Module()
+        else
+            viewModelScope.launch {
+                _module.value = repository.getById(id)
+            }
     }
 
     private fun insert() {

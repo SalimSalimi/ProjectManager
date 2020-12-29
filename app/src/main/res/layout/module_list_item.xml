@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
-            name="project"
-            type="fr.im.salimi.projectmanager.data.entities.Project"/>
+            name="module"
+            type="fr.im.salimi.projectmanager.data.entities.Module"/>
+
         <variable
-            name="listener"
-            type="fr.im.salimi.projectmanager.ui.projectList.ProjectActionListeners"/>
+            name="listeners"
+            type="fr.im.salimi.projectmanager.ui.uiUtils.ClickListenersCallback"/>
     </data>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:onClick="@{(view) -> listener.onClickListener(view, project)}"
-        android:onLongClick="@{(view) -> listener.onLongClickListener(view, project)}"
+        android:onClick="@{(view) -> listeners.onClick(view, module)}"
+        android:onLongClick="@{(view) -> listeners.onLongClick(view, module)}"
         app:cardElevation="8dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
 
             <TextView
                 android:id="@+id/module_name_textview"
@@ -31,22 +31,22 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="@{project.name}"
+                android:text="@{module.name}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="Banking App" />
+                tools:text="Manage users" />
 
             <TextView
                 android:id="@+id/module_description_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="@{project.customer}"
+                android:text="@{module.description}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 app:layout_constraintStart_toStartOf="@+id/module_name_textview"
                 app:layout_constraintTop_toBottomOf="@+id/module_name_textview"
-                tools:text="Euro-Information" />
+                tools:text="This part will handle all crud operations about users" />
 
             <TextView
                 android:id="@+id/module_status_textview"
@@ -80,7 +80,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:text="@{project.startingDate}"
+                android:text="@{module.startingDate}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/module_ending_date_textview"
                 app:layout_constraintStart_toStartOf="parent"
@@ -91,7 +91,7 @@
                 android:id="@+id/module_ending_date_textview"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{project.deadline}"
+                android:text="@{module.endingDate}"
                 android:textAlignment="textEnd"
                 app:layout_constraintBottom_toBottomOf="@+id/module_starting_date_textview"
                 app:layout_constraintEnd_toEndOf="@+id/module_progressbar"
