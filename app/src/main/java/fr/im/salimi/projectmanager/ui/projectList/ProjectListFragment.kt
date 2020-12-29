@@ -59,7 +59,7 @@ class ProjectListFragment : Fragment(), ClickListenersCallback<Project> {
     private fun initAdapter() {
         binding.projectsList.apply {
             layoutManager = GridLayoutManager(requireContext(), 2)
-            myAdapter = ProjectListAdapter(listeners =  this@ProjectListFragment)
+            myAdapter = ProjectListAdapter( this@ProjectListFragment)
             this.adapter = myAdapter
         }
     }

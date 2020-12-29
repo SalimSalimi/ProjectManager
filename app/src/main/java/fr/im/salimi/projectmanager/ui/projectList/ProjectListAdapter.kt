@@ -7,8 +7,7 @@ import fr.im.salimi.projectmanager.ui.uiUtils.BaseAdapter
 import fr.im.salimi.projectmanager.ui.uiUtils.ClickListenersCallback
 
 
-class ProjectListAdapter(private val listeners: ClickListenersCallback<Project>,
-    layoutResource: Int = R.layout.project_list_item): BaseAdapter<Project, ProjectListItemBinding>(layoutResource) {
+class ProjectListAdapter(private val listeners: ClickListenersCallback<Project>): BaseAdapter<Project, ProjectListItemBinding>(R.layout.project_list_item) {
 
     override fun bind(item: Project, binding: ProjectListItemBinding) {
         binding.project = item

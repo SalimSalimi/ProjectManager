@@ -57,7 +57,7 @@ class ModuleListFragment : Fragment(), ClickListenersCallback<Module> {
         binding.modulesList.apply {
             val layoutManager = LinearLayoutManager(requireContext())
             this.layoutManager = layoutManager
-            moduleAdapter = ModuleListAdapter(listeners = this@ModuleListFragment)
+            moduleAdapter = ModuleListAdapter(this@ModuleListFragment)
             this.adapter = moduleAdapter
         }
     }
