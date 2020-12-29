@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import fr.im.salimi.projectmanager.R
 import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
@@ -42,8 +43,10 @@ class ModuleListFragment : Fragment() {
         }
 
         viewModel.navigateToModuleFormEvent.observe(viewLifecycleOwner) {
-            if (it)
-                navigateToModuleForm()
+            if (it) {
+                navigateToModuleForm(-1)
+                viewModel.onNavigateToModuleFormEventTriggered()
+            }
         }
     }
 
@@ -56,7 +59,9 @@ class ModuleListFragment : Fragment() {
         }
     }
 
-    private fun navigateToModuleForm() {
-
+    private fun navigateToModuleForm(id: Long) {
+        val directions =
+                ModuleListFragmentDirections.actionModuleListFragmentToModuleFormFragment(id)
+        this.findNavController().navigate(directions)
     }
 }

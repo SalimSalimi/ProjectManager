@@ -22,6 +22,14 @@ class ModuleListViewModel(private val repository: ModuleRepository): ViewModel()
     }
 
     fun onAddFabBtnClicked() {
+        onNavigateToModuleFormEvent()
+    }
+
+    fun onNavigateToModuleFormEventTriggered() {
+        _navigateToModuleFormEvent.value = false
+    }
+
+    private fun onNavigateToModuleFormEvent() {
         _navigateToModuleFormEvent.value = true
     }
 }
