@@ -10,7 +10,7 @@
             type="fr.im.salimi.projectmanager.data.entities.Developer"/>
         <variable
             name="listener"
-            type="fr.im.salimi.projectmanager.ui.developerList.DeveloperAdapterListener"/>
+            type="fr.im.salimi.projectmanager.ui.uiUtils.ClickListenersCallback"/>
     </data>
 
     <com.google.android.material.card.MaterialCardView
