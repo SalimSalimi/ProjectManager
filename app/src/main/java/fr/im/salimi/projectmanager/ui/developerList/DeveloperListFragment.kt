@@ -1,11 +1,11 @@
 package fr.im.salimi.projectmanager.ui.developerList
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,8 +15,9 @@ import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
 import fr.im.salimi.projectmanager.data.entities.Developer
 import fr.im.salimi.projectmanager.data.repositories.DeveloperRepository
 import fr.im.salimi.projectmanager.databinding.DeveloperListFragmentBinding
+import fr.im.salimi.projectmanager.ui.uiUtils.ClickListenersCallback
 
-class DeveloperListFragment : Fragment(), DeveloperAdapterListener {
+class DeveloperListFragment : Fragment(), ClickListenersCallback<Developer> {
 
     private lateinit var binding: DeveloperListFragmentBinding
     private lateinit var myAdapter: DeveloperListAdapter
@@ -58,17 +59,17 @@ class DeveloperListFragment : Fragment(), DeveloperAdapterListener {
         }
     }
 
-    override fun onLongClick(cardView: View, developer: Developer): Boolean {
+    override fun onLongClick(view: View, entity: Developer): Boolean {
         val directions =
-                DeveloperListFragmentDirections.actionDeveloperListFragmentToEditDeveloperFragment(developer.developerId)
+                DeveloperListFragmentDirections.actionDeveloperListFragmentToEditDeveloperFragment(entity.developerId)
         this.findNavController().navigate(directions)
         return true
     }
 
-    override fun onClick(cardView: View, developer: Developer) {
+    override fun onClick(view: View, entity: Developer) {
         Snackbar.make(requireView(), getString(R.string.delete_developer_confirm), Snackbar.LENGTH_LONG)
                 .setAction(getString(R.string.confirm)) {
-                    viewModel.deleteDeveloper(developer)
+                    viewModel.deleteDeveloper(entity)
                     myAdapter.notifyDataSetChanged()
                 }
                 .show()

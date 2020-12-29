@@ -4,10 +4,10 @@ import fr.im.salimi.projectmanager.R
 import fr.im.salimi.projectmanager.data.entities.Project
 import fr.im.salimi.projectmanager.databinding.ProjectListItemBinding
 import fr.im.salimi.projectmanager.ui.uiUtils.BaseAdapter
+import fr.im.salimi.projectmanager.ui.uiUtils.ClickListenersCallback
 
 
-class ProjectListAdapter(
-    layoutResource: Int = R.layout.project_list_item, private val listeners: ProjectActionListeners): BaseAdapter<Project, ProjectListItemBinding>(layoutResource) {
+class ProjectListAdapter(private val listeners: ClickListenersCallback<Project>): BaseAdapter<Project, ProjectListItemBinding>(R.layout.project_list_item) {
 
     override fun bind(item: Project, binding: ProjectListItemBinding) {
         binding.project = item
