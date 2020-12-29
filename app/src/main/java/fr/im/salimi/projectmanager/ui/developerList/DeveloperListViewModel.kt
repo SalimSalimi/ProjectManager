@@ -10,9 +10,25 @@ class DeveloperListViewModel (private val repository: DeveloperRepository) : Vie
 
     val listDevelopers: LiveData<List<Developer>> = repository.getAll().asLiveData()
 
+    private val _onAddBtnClickEvent = MutableLiveData<Boolean>()
+    val onAddBtnClickEvent: LiveData<Boolean>
+        get() = _onAddBtnClickEvent
+
+    init {
+        _onAddBtnClickEvent.value = false
+    }
+
     fun deleteDeveloper(developer: Developer) {
         viewModelScope.launch {
             repository.delete(developer)
         }
+    }
+
+    fun onAddBtnClickedEvent() {
+        _onAddBtnClickEvent.value = true
+    }
+
+    fun onAddBtnClickedEventDone() {
+        _onAddBtnClickEvent.value = false
     }
 }
