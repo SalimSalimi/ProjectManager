@@ -11,10 +11,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import fr.im.salimi.projectmanager.R
 import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
+import fr.im.salimi.projectmanager.data.entities.Module
 import fr.im.salimi.projectmanager.data.repositories.ModuleRepository
 import fr.im.salimi.projectmanager.databinding.ModuleListFragmentBinding
+import fr.im.salimi.projectmanager.ui.uiUtils.ClickListenersCallback
 
-class ModuleListFragment : Fragment() {
+class ModuleListFragment : Fragment(), ClickListenersCallback<Module> {
 
     private lateinit var moduleAdapter: ModuleListAdapter
     private lateinit var binding: ModuleListFragmentBinding
@@ -54,7 +56,7 @@ class ModuleListFragment : Fragment() {
         binding.modulesList.apply {
             val layoutManager = LinearLayoutManager(requireContext())
             this.layoutManager = layoutManager
-            moduleAdapter = ModuleListAdapter()
+            moduleAdapter = ModuleListAdapter(listeners = this@ModuleListFragment)
             this.adapter = moduleAdapter
         }
     }
@@ -63,5 +65,13 @@ class ModuleListFragment : Fragment() {
         val directions =
                 ModuleListFragmentDirections.actionModuleListFragmentToModuleFormFragment(id)
         this.findNavController().navigate(directions)
+    }
+
+    override fun onClick(view: View, entity: Module) {
+
+    }
+
+    override fun onLongClick(view: View, entity: Module): Boolean {
+        return true
     }
 }

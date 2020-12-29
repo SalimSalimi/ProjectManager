@@ -7,12 +7,18 @@
         <variable
             name="module"
             type="fr.im.salimi.projectmanager.data.entities.Module"/>
+
+        <variable
+            name="listeners"
+            type="fr.im.salimi.projectmanager.ui.uiUtils.ClickListenersCallback"/>
     </data>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
+        android:onClick="@{(view) -> listeners.onClick(view, module)}"
+        android:onLongClick="@{(view) -> listeners.onLongClick(view, module)}"
         app:cardElevation="8dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
