@@ -72,6 +72,7 @@ class ModuleListFragment : Fragment(), ClickListenersCallback<Module> {
     }
 
     override fun onLongClick(view: View, entity: Module): Boolean {
+        navigateToModuleForm(entity.id)
         return true
     }
 }
