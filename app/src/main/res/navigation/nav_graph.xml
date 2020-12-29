@@ -55,7 +55,7 @@
             android:id="@+id/action_moduleFormFragment_to_moduleListFragment"
             app:destination="@id/moduleListFragment" />
         <argument
-            android:name="developerId"
+            android:name="moduleId"
             app:argType="long"
             android:defaultValue="-1L" />
     </fragment>
