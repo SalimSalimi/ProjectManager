@@ -31,6 +31,7 @@ class ModuleFormFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.module_form_fragment, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
 

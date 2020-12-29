@@ -29,6 +29,7 @@ class ModuleListFragment : Fragment(), ClickListenersCallback<Module> {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.module_list_fragment, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
 
@@ -72,7 +73,7 @@ class ModuleListFragment : Fragment(), ClickListenersCallback<Module> {
     }
 
     override fun onLongClick(view: View, entity: Module): Boolean {
-        navigateToModuleForm(entity.id)
+        navigateToModuleForm(entity.moduleId)
         return true
     }
 }
