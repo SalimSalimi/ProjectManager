@@ -10,11 +10,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.google.android.material.datepicker.MaterialDatePicker
 import fr.im.salimi.projectmanager.R
 import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
 import fr.im.salimi.projectmanager.data.repositories.ProjectRepository
 import fr.im.salimi.projectmanager.databinding.ProjectFormFragmentBinding
+import fr.im.salimi.projectmanager.ui.uiUtils.chooseDatePicker
 import java.util.*
 
 class ProjectFormFragment : Fragment() {
@@ -61,18 +61,16 @@ class ProjectFormFragment : Fragment() {
     }
 
     private fun chooseDatePicker() {
-        val datePicker = MaterialDatePicker.Builder.dateRangePicker()
-                .setSelection(Pair(viewModel.project.value!!.startingDate.time, viewModel.project.value!!.deadline.time))
-                .build()
-        datePicker.show(parentFragmentManager, datePicker.toString())
+        val initDates =
+                Pair(viewModel.project.value!!.startingDate.time, viewModel.project.value!!.deadline.time)
 
-        datePicker.addOnPositiveButtonClickListener {
-            it?.let { pair ->
+        chooseDatePicker(initDates, {
+            it.let { pair ->
                 val startingDate = Date(pair.first ?: Date().time)
                 val endingDate = Date(pair.second ?: Date().time)
                 viewModel.onChooseDate(startingDate, endingDate)
                 binding.invalidateAll()
             }
-        }
+        }, null, null)
     }
 }
