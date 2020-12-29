@@ -45,4 +45,8 @@
     <string name="description_of_the_module">Description module</string>
     <string name="create_new_module">Create module</string>
     <string name="create_a_new_module">Create a new module</string>
+    <string name="modules">Modules</string>
+    <string name="projects">Projects</string>
+    <string name="developers">Developers</string>
+    <string name="functions">Functions</string>
 </resources>
