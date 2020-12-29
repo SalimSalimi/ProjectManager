@@ -14,8 +14,9 @@ import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
 import fr.im.salimi.projectmanager.data.entities.Project
 import fr.im.salimi.projectmanager.data.repositories.ProjectRepository
 import fr.im.salimi.projectmanager.databinding.ProjectListFragmentBinding
+import fr.im.salimi.projectmanager.ui.uiUtils.ClickListenersCallback
 
-class ProjectListFragment : Fragment(), ProjectActionListeners {
+class ProjectListFragment : Fragment(), ClickListenersCallback<Project> {
 
     private lateinit var binding: ProjectListFragmentBinding
     private lateinit var myAdapter: ProjectListAdapter
@@ -63,13 +64,13 @@ class ProjectListFragment : Fragment(), ProjectActionListeners {
         }
     }
 
-    override fun onClickListener(view: View, project: Project) {
+    override fun onClick(view: View, entity: Project) {
 
     }
 
-    override fun onLongClickListener(view: View, project: Project): Boolean {
+    override fun onLongClick(view: View, entity: Project): Boolean {
         val directions =
-                ProjectListFragmentDirections.actionProjectListFragmentToProjectFormFragment(project.projectId)
+                ProjectListFragmentDirections.actionProjectListFragmentToProjectFormFragment(entity.projectId)
         this.findNavController().navigate(directions)
         return true
     }
