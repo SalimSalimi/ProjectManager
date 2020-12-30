@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import fr.im.salimi.projectmanager.R
 import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
@@ -16,10 +17,13 @@ import fr.im.salimi.projectmanager.data.entities.Project
 import fr.im.salimi.projectmanager.data.repositories.ProjectRepository
 import fr.im.salimi.projectmanager.databinding.ProjectListFragmentBinding
 import fr.im.salimi.projectmanager.ui.uiUtils.ClickListenersCallback
+import fr.im.salimi.projectmanager.ui.uiUtils.FabButtonStates
+import fr.im.salimi.projectmanager.ui.uiUtils.changeFabState
 
 class ProjectListFragment : Fragment(), ClickListenersCallback<Project> {
 
     private lateinit var fabBtn: FloatingActionButton
+    private lateinit var bottomAppBar: BottomAppBar
     private lateinit var binding: ProjectListFragmentBinding
     private lateinit var myAdapter: ProjectListAdapter
 
@@ -39,16 +43,19 @@ class ProjectListFragment : Fragment(), ClickListenersCallback<Project> {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         fabBtn = requireActivity().findViewById(R.id.fab_main)
-        binding.viewModel = viewModel
-
-        initObservers()
-        initAdapter()
+        bottomAppBar = requireActivity().findViewById(R.id.bottom_app_bar)
         fabBtn.apply {
+            changeFabState(FabButtonStates.PRIMARY_STATE, bottomAppBar)
             setOnClickListener {
                 viewModel.onAddBtnClicked()
             }
             contentDescription = getString(R.string.create_a_new_project)
         }
+
+        binding.viewModel = viewModel
+
+        initObservers()
+        initAdapter()
     }
 
     private fun initObservers() {

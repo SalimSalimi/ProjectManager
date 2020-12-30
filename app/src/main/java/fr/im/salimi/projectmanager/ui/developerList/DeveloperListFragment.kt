@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import fr.im.salimi.projectmanager.R
@@ -17,9 +18,12 @@ import fr.im.salimi.projectmanager.data.entities.Developer
 import fr.im.salimi.projectmanager.data.repositories.DeveloperRepository
 import fr.im.salimi.projectmanager.databinding.DeveloperListFragmentBinding
 import fr.im.salimi.projectmanager.ui.uiUtils.ClickListenersCallback
+import fr.im.salimi.projectmanager.ui.uiUtils.FabButtonStates
+import fr.im.salimi.projectmanager.ui.uiUtils.changeFabState
 
 class DeveloperListFragment : Fragment(), ClickListenersCallback<Developer> {
 
+    private lateinit var bottomAppBar: BottomAppBar
     private lateinit var fabBtn: FloatingActionButton
     private lateinit var binding: DeveloperListFragmentBinding
     private lateinit var myAdapter: DeveloperListAdapter
@@ -43,7 +47,10 @@ class DeveloperListFragment : Fragment(), ClickListenersCallback<Developer> {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         fabBtn = requireActivity().findViewById(R.id.fab_main)
+        bottomAppBar = requireActivity().findViewById(R.id.bottom_app_bar)
+
         fabBtn.apply {
+            changeFabState(FabButtonStates.PRIMARY_STATE, bottomAppBar)
             setOnClickListener {
                 viewModel.onAddBtnClickedEvent()
             }
