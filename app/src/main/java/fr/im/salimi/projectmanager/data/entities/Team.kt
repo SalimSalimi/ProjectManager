@@ -8,9 +8,9 @@ import androidx.room.PrimaryKey
 data class Team(
         @PrimaryKey
         @ColumnInfo(name = "team_id")
-        val teamId: Long = 0,
+        override var id: Long = 0,
         var name: String = "",
         @ColumnInfo(name = "leader_id")
         var leaderId: Long = 0,
         var description: String = ""
-) : BaseEntity(teamId)
+) : BaseEntity(id)

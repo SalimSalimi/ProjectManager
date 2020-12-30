@@ -73,7 +73,7 @@ class ModuleDaoTest {
 
         val updatedStartingDate = Date()
         val updatedEndingDate = Date()
-        val updatedModule = Module(moduleId = 1,name = "Updated", description = "UpdatedDescription", updatedStartingDate, updatedEndingDate)
+        val updatedModule = Module(id = 1,name = "Updated", description = "UpdatedDescription", updatedStartingDate, updatedEndingDate)
         database.moduleDao().update(updatedModule)
         val result = database.moduleDao().getById(1)
 

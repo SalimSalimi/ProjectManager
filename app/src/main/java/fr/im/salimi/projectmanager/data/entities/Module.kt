@@ -7,9 +7,9 @@ import java.util.*
 
 @Entity(tableName = "modules")
 data class Module (
-        @PrimaryKey(autoGenerate = true)
+        @PrimaryKey
         @ColumnInfo(name = "module_id")
-        val moduleId: Long = 0L,
+        override var id: Long = 0,
         var name: String = "",
         var description: String = "",
         @ColumnInfo(name = "starting_date")
@@ -18,5 +18,4 @@ data class Module (
         var endingDate: Date = Date(),
         @ColumnInfo(name = "project_id")
         var projectId: Long = 0L
-        ): BaseEntity(
-        moduleId)
+        ): BaseEntity(id)

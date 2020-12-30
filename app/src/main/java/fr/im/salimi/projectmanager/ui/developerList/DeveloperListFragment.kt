@@ -71,7 +71,7 @@ class DeveloperListFragment : Fragment(), ClickListenersCallback<Developer> {
 
     override fun onLongClick(view: View, entity: Developer): Boolean {
         val directions =
-                DeveloperListFragmentDirections.actionDeveloperListFragmentToEditDeveloperFragment(entity.developerId)
+                DeveloperListFragmentDirections.actionDeveloperListFragmentToEditDeveloperFragment(entity.id)
         this.findNavController().navigate(directions)
         return true
     }
