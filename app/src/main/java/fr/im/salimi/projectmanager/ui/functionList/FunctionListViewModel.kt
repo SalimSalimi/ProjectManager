@@ -1,6 +1,7 @@
 package fr.im.salimi.projectmanager.ui.functionList
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import fr.im.salimi.projectmanager.data.entities.Function
@@ -11,4 +12,19 @@ class FunctionListViewModel(private val functionRepository: FunctionRepository) 
     val functionsList: LiveData<List<Function>>
         get() = _functionsList.asLiveData()
 
+    private val _navigateToFunctionFormEvent = MutableLiveData<Boolean>()
+    val navigateToFunctionFormEvent: LiveData<Boolean>
+        get () = _navigateToFunctionFormEvent
+
+    init {
+        _navigateToFunctionFormEvent.value = false
+    }
+
+    fun navigateToFunctionFormEventTriggered() {
+        _navigateToFunctionFormEvent.value = true
+    }
+
+    fun navigateToFunctionFormEventDone() {
+        _navigateToFunctionFormEvent.value = false
+    }
 }

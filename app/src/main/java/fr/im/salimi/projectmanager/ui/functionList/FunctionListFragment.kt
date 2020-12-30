@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import fr.im.salimi.projectmanager.R
 import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
@@ -19,6 +20,7 @@ import fr.im.salimi.projectmanager.ui.uiUtils.setFabBtnBehaviour
 
 class FunctionListFragment : Fragment(), ClickListenersCallback<Function> {
 
+    private var sendingID = -1L
     private lateinit var myAdapter: FunctionListAdapter
     private lateinit var binding: FunctionListFragmentBinding
     private val viewModel: FunctionListViewModel by viewModels {
@@ -48,6 +50,13 @@ class FunctionListFragment : Fragment(), ClickListenersCallback<Function> {
         viewModel.functionsList.observe(viewLifecycleOwner) {
             myAdapter.submitList(it)
         }
+
+        viewModel.navigateToFunctionFormEvent.observe(viewLifecycleOwner) {
+            if (it) {
+                navigateToFunctionForm(sendingID)
+                viewModel.navigateToFunctionFormEventDone()
+            }
+        }
     }
 
     private fun initRecycler() {
@@ -59,8 +68,15 @@ class FunctionListFragment : Fragment(), ClickListenersCallback<Function> {
 
     private fun fabBtnClick() {
         setFabBtnBehaviour(FabButtonStates.PRIMARY_STATE) {
-
+            sendingID = -1L
+            viewModel.navigateToFunctionFormEventTriggered()
         }
+    }
+
+    private fun navigateToFunctionForm(id: Long) {
+        val direction =
+                FunctionListFragmentDirections.actionFunctionListFragmentToFunctionFormFragment(id)
+        this.findNavController().navigate(direction)
     }
 
     override fun onClick(view: View, entity: Function) {
@@ -68,7 +84,7 @@ class FunctionListFragment : Fragment(), ClickListenersCallback<Function> {
     }
 
     override fun onLongClick(view: View, entity: Function): Boolean {
-        //Add Navigation
+        sendingID = entity.functionId
         return true
     }
 }
