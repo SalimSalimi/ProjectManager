@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/functionFormFragment">
+    app:startDestination="@id/functionListFragment">
     <fragment
         android:id="@+id/editDeveloperFragment"
         android:name="fr.im.salimi.projectmanager.ui.developerEdit.DeveloperEditFragment"
@@ -70,6 +70,22 @@
     <fragment
         android:id="@+id/functionFormFragment"
         android:name="fr.im.salimi.projectmanager.ui.functionForm.FunctionFormFragment"
-        android:label="FunctionFormFragment" />
+        android:label="FunctionFormFragment" >
+        <action
+            android:id="@+id/action_functionFormFragment_to_functionListFragment"
+            app:destination="@id/functionListFragment" />
+        <argument
+            android:name="functionId"
+            app:argType="long"
+            android:defaultValue="-1L" />
+    </fragment>
+    <fragment
+        android:id="@+id/functionListFragment"
+        android:name="fr.im.salimi.projectmanager.ui.functionList.FunctionListFragment"
+        android:label="FunctionListFragment" >
+        <action
+            android:id="@+id/action_functionListFragment_to_functionFormFragment"
+            app:destination="@id/functionFormFragment" />
+    </fragment>
 
 </navigation>
