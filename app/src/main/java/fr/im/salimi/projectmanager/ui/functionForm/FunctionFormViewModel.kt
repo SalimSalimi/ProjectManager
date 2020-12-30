@@ -45,7 +45,7 @@ class FunctionFormViewModel(private val id: Long, private val repository: Functi
         _addFabBtnClickEvent.value = false
     }
 
-    fun onAddBtnClickedEvent() {
+    fun upsert() {
         if (id == -1L)
             insert()
         else

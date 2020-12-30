@@ -23,7 +23,7 @@ class FunctionFormFragment : Fragment() {
     private val viewModel: FunctionFormViewModel by viewModels {
         val database = ProjectRoomDatabase.getInstance(requireContext())
         val repository = FunctionRepository(database.functionDao())
-        FunctionFormViewModelFactory(-1, repository)
+        FunctionFormViewModelFactory(-1L, repository)
     }
 
     override fun onCreateView(
@@ -41,7 +41,7 @@ class FunctionFormFragment : Fragment() {
         initObservers()
 
         setFabBtnBehaviour(FabButtonStates.SECONDARY_STATE) {
-            viewModel.onAddFabBtnClickEvent()
+            fabBtnClicked()
         }
     }
 
@@ -52,8 +52,10 @@ class FunctionFormFragment : Fragment() {
         }
 
         viewModel.addFabBtnClickEvent.observe(viewLifecycleOwner) {
-            if (it)
-                viewModel.onAddBtnClickedEvent()
+            if (it) {
+                viewModel.upsert()
+                viewModel.onAddFabClickedEventFinished()
+            }
         }
     }
 
@@ -64,7 +66,7 @@ class FunctionFormFragment : Fragment() {
         )
         chooseDatePicker(initValues, {
             val startingDate = Date(it.first ?: Date().time)
-            val endingDate = Date(it.first ?: Date().time)
+            val endingDate = Date(it.second ?: Date().time)
             viewModel.onChooseDate(startingDate, endingDate)
             viewModel.onDateClickedEventFinished()
             binding.invalidateAll()
@@ -73,5 +75,9 @@ class FunctionFormFragment : Fragment() {
         }, {
             viewModel.onDateClickedEventFinished()
         })
+    }
+
+    private fun fabBtnClicked() {
+        viewModel.onAddFabBtnClickEvent()
     }
 }
