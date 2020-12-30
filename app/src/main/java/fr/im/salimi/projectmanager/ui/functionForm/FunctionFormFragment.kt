@@ -8,6 +8,7 @@ import androidx.core.util.Pair
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import fr.im.salimi.projectmanager.R
 import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
@@ -57,6 +58,7 @@ class FunctionFormFragment : Fragment() {
             if (it) {
                 viewModel.upsert()
                 viewModel.onAddFabClickedEventFinished()
+                this.findNavController().navigate(R.id.action_functionFormFragment_to_functionListFragment)
             }
         }
     }

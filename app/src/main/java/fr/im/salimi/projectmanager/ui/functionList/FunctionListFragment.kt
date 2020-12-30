@@ -85,6 +85,7 @@ class FunctionListFragment : Fragment(), ClickListenersCallback<Function> {
 
     override fun onLongClick(view: View, entity: Function): Boolean {
         sendingID = entity.functionId
+        viewModel.navigateToFunctionFormEventTriggered()
         return true
     }
 }
