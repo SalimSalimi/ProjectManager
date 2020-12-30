@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import fr.im.salimi.projectmanager.data.entities.Function
 import fr.im.salimi.projectmanager.data.repositories.FunctionRepository
 import kotlinx.coroutines.launch
+import java.util.*
 
 class FunctionFormViewModel(private val id: Long, private val repository: FunctionRepository) : ViewModel() {
 
@@ -36,12 +37,24 @@ class FunctionFormViewModel(private val id: Long, private val repository: Functi
         _dateClickEvent.value = false
     }
 
-    fun onAddFabBtnClicked() {
+    fun onAddFabBtnClickEvent() {
         _addFabBtnClickEvent.value = true
     }
 
     fun onAddFabClickedEventFinished() {
         _addFabBtnClickEvent.value = false
+    }
+
+    fun onAddBtnClickedEvent() {
+        if (id == -1L)
+            insert()
+        else
+            update()
+    }
+
+    fun onChooseDate(startingDate: Date, endingDate: Date) {
+        _function.value?.startingDate = startingDate
+        _function.value?.endingDate = endingDate
     }
 
     private fun initFunction() {
@@ -56,4 +69,17 @@ class FunctionFormViewModel(private val id: Long, private val repository: Functi
             _function.value = repository.getById(id)
         }
     }
+
+    private fun insert() {
+        viewModelScope.launch {
+            repository.insert(_function.value!!)
+        }
+    }
+
+    private fun update() {
+        viewModelScope.launch {
+            repository.update(_function.value!!)
+        }
+    }
+
 }
