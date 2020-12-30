@@ -31,9 +31,9 @@ fun Fragment.chooseDatePicker(selection: Pair<Long, Long>?,
     }
 }
 
-fun FloatingActionButton.changeFabState(states: FabButtonStates, bottomBar: BottomAppBar) {
+fun FloatingActionButton.changeFabState(state: FabButtonStates, bottomBar: BottomAppBar) {
     this.apply {
-        when (states) {
+        when (state) {
             FabButtonStates.PRIMARY_STATE -> {
                 setImageResource(R.drawable.ic_baseline_add_24)
                 bottomBar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_CENTER
@@ -43,5 +43,15 @@ fun FloatingActionButton.changeFabState(states: FabButtonStates, bottomBar: Bott
                 bottomBar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_END
             }
         }
+    }
+}
+
+fun Fragment.setFabBtnBehaviour(state: FabButtonStates, clickListener: ((View) -> Unit?)?) {
+    val fabBtn: FloatingActionButton = this.requireActivity().findViewById(R.id.fab_main)
+    val bottomBar: BottomAppBar = this.requireActivity().findViewById(R.id.bottom_app_bar)
+
+    fabBtn.changeFabState(state, bottomBar)
+    fabBtn.setOnClickListener {
+        clickListener?.invoke(it)
     }
 }

@@ -14,7 +14,9 @@ import fr.im.salimi.projectmanager.R
 import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
 import fr.im.salimi.projectmanager.data.repositories.ModuleRepository
 import fr.im.salimi.projectmanager.databinding.ModuleFormFragmentBinding
+import fr.im.salimi.projectmanager.ui.uiUtils.FabButtonStates
 import fr.im.salimi.projectmanager.ui.uiUtils.chooseDatePicker
+import fr.im.salimi.projectmanager.ui.uiUtils.setFabBtnBehaviour
 
 class ModuleFormFragment : Fragment() {
 
@@ -27,8 +29,8 @@ class ModuleFormFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.module_form_fragment, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
@@ -37,7 +39,12 @@ class ModuleFormFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        setFabBtnBehaviour(FabButtonStates.SECONDARY_STATE) {
+            viewModel.onAddBtnClicked()
+        }
         binding.viewModel = viewModel
+
         initObservers()
     }
 
@@ -45,7 +52,6 @@ class ModuleFormFragment : Fragment() {
         viewModel.dateClickEvent.observe(viewLifecycleOwner) {
             if (it) {
                 showDatePicker()
-                viewModel.onDateClickedEventFinished()
             }
         }
 
@@ -61,9 +67,14 @@ class ModuleFormFragment : Fragment() {
         val initPair = Pair(viewModel.module.value!!.startingDate.time,
                 viewModel.module.value!!.endingDate.time)
 
-        chooseDatePicker(initPair, ( {
+        chooseDatePicker(initPair, ({
             viewModel.onChooseDate(it)
             binding.invalidateAll()
-        }), null, null)
+            viewModel.onDateClickedEventFinished()
+        }), {
+            viewModel.onDateClickedEventFinished()
+        }, {
+            viewModel.onDateClickedEventFinished()
+        })
     }
 }

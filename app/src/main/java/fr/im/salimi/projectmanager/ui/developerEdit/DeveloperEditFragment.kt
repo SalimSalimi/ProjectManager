@@ -19,7 +19,7 @@ import fr.im.salimi.projectmanager.data.helpers.Post
 import fr.im.salimi.projectmanager.data.repositories.DeveloperRepository
 import fr.im.salimi.projectmanager.databinding.DeveloperEditFragmentBinding
 import fr.im.salimi.projectmanager.ui.uiUtils.FabButtonStates
-import fr.im.salimi.projectmanager.ui.uiUtils.changeFabState
+import fr.im.salimi.projectmanager.ui.uiUtils.setFabBtnBehaviour
 
 class DeveloperEditFragment : Fragment() {
 
@@ -46,15 +46,8 @@ class DeveloperEditFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        fabBtn = requireActivity().findViewById(R.id.fab_main)
-        bottomBar = requireActivity().findViewById(R.id.bottom_app_bar)
-
-        fabBtn.apply {
-            changeFabState(FabButtonStates.SECONDARY_STATE, bottomBar)
-            setOnClickListener {
-                viewModel.onAddClick()
-                changeFabState(FabButtonStates.PRIMARY_STATE, bottomBar)
-            }
+        setFabBtnBehaviour(FabButtonStates.SECONDARY_STATE) {
+            viewModel.onAddClick()
         }
     }
 

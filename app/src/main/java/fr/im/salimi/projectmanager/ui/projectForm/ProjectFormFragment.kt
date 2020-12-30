@@ -14,7 +14,9 @@ import fr.im.salimi.projectmanager.R
 import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
 import fr.im.salimi.projectmanager.data.repositories.ProjectRepository
 import fr.im.salimi.projectmanager.databinding.ProjectFormFragmentBinding
+import fr.im.salimi.projectmanager.ui.uiUtils.FabButtonStates
 import fr.im.salimi.projectmanager.ui.uiUtils.chooseDatePicker
+import fr.im.salimi.projectmanager.ui.uiUtils.setFabBtnBehaviour
 import java.util.*
 
 class ProjectFormFragment : Fragment() {
@@ -39,6 +41,10 @@ class ProjectFormFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         binding.viewModel = viewModel
+        setFabBtnBehaviour(FabButtonStates.SECONDARY_STATE) {
+            viewModel.onAddBtnClicked()
+        }
+
         initObservers()
     }
 
@@ -47,7 +53,6 @@ class ProjectFormFragment : Fragment() {
         viewModel.dateClickedEvent.observe(viewLifecycleOwner) {
             if (it) {
                 chooseDatePicker()
-                viewModel.onDateClickedEventFinished()
             }
         }
 
@@ -70,7 +75,12 @@ class ProjectFormFragment : Fragment() {
                 val endingDate = Date(pair.second ?: Date().time)
                 viewModel.onChooseDate(startingDate, endingDate)
                 binding.invalidateAll()
+                viewModel.onDateClickedEventFinished()
             }
-        }, null, null)
+        }, {
+            viewModel.onDateClickedEventFinished()
+        }, {
+            viewModel.onDateClickedEventFinished()
+        })
     }
 }
