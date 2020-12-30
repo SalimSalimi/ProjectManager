@@ -9,18 +9,15 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import fr.im.salimi.projectmanager.R
 import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
 import fr.im.salimi.projectmanager.data.entities.Developer
 import fr.im.salimi.projectmanager.data.repositories.DeveloperRepository
 import fr.im.salimi.projectmanager.databinding.DeveloperListFragmentBinding
-import fr.im.salimi.projectmanager.ui.uiUtils.ClickListenersCallback
+import fr.im.salimi.projectmanager.ui.uiUtils.*
 
 class DeveloperListFragment : Fragment(), ClickListenersCallback<Developer> {
 
-    private lateinit var fabBtn: FloatingActionButton
     private lateinit var binding: DeveloperListFragmentBinding
     private lateinit var myAdapter: DeveloperListAdapter
 
@@ -42,11 +39,9 @@ class DeveloperListFragment : Fragment(), ClickListenersCallback<Developer> {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        fabBtn = requireActivity().findViewById(R.id.fab_main)
-        fabBtn.apply {
-            setOnClickListener {
-                viewModel.onAddBtnClickedEvent()
-            }
+
+        setFabBtnBehaviour(FabButtonStates.PRIMARY_STATE) {
+            viewModel.onAddBtnClickedEvent()
         }
         initObservers()
         initRecycler()
@@ -76,13 +71,13 @@ class DeveloperListFragment : Fragment(), ClickListenersCallback<Developer> {
 
     override fun onLongClick(view: View, entity: Developer): Boolean {
         val directions =
-                DeveloperListFragmentDirections.actionDeveloperListFragmentToEditDeveloperFragment(entity.developerId)
+                DeveloperListFragmentDirections.actionDeveloperListFragmentToEditDeveloperFragment(entity.id)
         this.findNavController().navigate(directions)
         return true
     }
 
     override fun onClick(view: View, entity: Developer) {
-        Snackbar.make(requireView(), getString(R.string.delete_developer_confirm), Snackbar.LENGTH_LONG)
+        createSnackbar(text = R.string.delete_developer_confirm)
                 .setAction(getString(R.string.confirm)) {
                     viewModel.deleteDeveloper(entity)
                     myAdapter.notifyDataSetChanged()

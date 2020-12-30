@@ -10,7 +10,7 @@
             type="fr.im.salimi.projectmanager.ui.developerEdit.DeveloperEditViewModel" />
     </data>
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/light_gray_background">
@@ -313,19 +313,7 @@
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </com.google.android.material.card.MaterialCardView>
-
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:onClick="@{() -> viewModel.onAddClick()}"
-                    android:text="@string/add"
-                    app:cornerRadius="8dp"
-                    android:layout_gravity="center_horizontal"/>
                 </LinearLayout>
 
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
 </layout>

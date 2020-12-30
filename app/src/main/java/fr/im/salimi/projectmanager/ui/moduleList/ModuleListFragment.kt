@@ -9,17 +9,17 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import fr.im.salimi.projectmanager.R
 import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
 import fr.im.salimi.projectmanager.data.entities.Module
 import fr.im.salimi.projectmanager.data.repositories.ModuleRepository
 import fr.im.salimi.projectmanager.databinding.ModuleListFragmentBinding
 import fr.im.salimi.projectmanager.ui.uiUtils.ClickListenersCallback
+import fr.im.salimi.projectmanager.ui.uiUtils.FabButtonStates
+import fr.im.salimi.projectmanager.ui.uiUtils.setFabBtnBehaviour
 
 class ModuleListFragment : Fragment(), ClickListenersCallback<Module> {
 
-    private lateinit var fabBtn: FloatingActionButton
     private lateinit var moduleAdapter: ModuleListAdapter
     private lateinit var binding: ModuleListFragmentBinding
     private val viewModel: ModuleListViewModel by viewModels {
@@ -37,17 +37,12 @@ class ModuleListFragment : Fragment(), ClickListenersCallback<Module> {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-        fabBtn = requireActivity().findViewById(R.id.fab_main)
         binding.viewModel = viewModel
+        setFabBtnBehaviour(FabButtonStates.PRIMARY_STATE) {
+            viewModel.onAddFabBtnClicked()
+        }
         initAdapter()
         initObservers()
-        fabBtn.apply {
-            setOnClickListener {
-                viewModel.onAddFabBtnClicked()
-            }
-            contentDescription = getString(R.string.create_a_new_module)
-        }
     }
 
     private fun initObservers() {
@@ -83,7 +78,7 @@ class ModuleListFragment : Fragment(), ClickListenersCallback<Module> {
     }
 
     override fun onLongClick(view: View, entity: Module): Boolean {
-        navigateToModuleForm(entity.moduleId)
+        navigateToModuleForm(entity.id)
         return true
     }
 

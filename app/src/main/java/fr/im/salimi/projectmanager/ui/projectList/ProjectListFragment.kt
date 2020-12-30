@@ -9,17 +9,17 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import fr.im.salimi.projectmanager.R
 import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
 import fr.im.salimi.projectmanager.data.entities.Project
 import fr.im.salimi.projectmanager.data.repositories.ProjectRepository
 import fr.im.salimi.projectmanager.databinding.ProjectListFragmentBinding
 import fr.im.salimi.projectmanager.ui.uiUtils.ClickListenersCallback
+import fr.im.salimi.projectmanager.ui.uiUtils.FabButtonStates
+import fr.im.salimi.projectmanager.ui.uiUtils.setFabBtnBehaviour
 
 class ProjectListFragment : Fragment(), ClickListenersCallback<Project> {
 
-    private lateinit var fabBtn: FloatingActionButton
     private lateinit var binding: ProjectListFragmentBinding
     private lateinit var myAdapter: ProjectListAdapter
 
@@ -38,17 +38,14 @@ class ProjectListFragment : Fragment(), ClickListenersCallback<Project> {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        fabBtn = requireActivity().findViewById(R.id.fab_main)
         binding.viewModel = viewModel
+
+        setFabBtnBehaviour(FabButtonStates.PRIMARY_STATE) {
+            viewModel.onAddBtnClicked()
+        }
 
         initObservers()
         initAdapter()
-        fabBtn.apply {
-            setOnClickListener {
-                viewModel.onAddBtnClicked()
-            }
-            contentDescription = getString(R.string.create_a_new_project)
-        }
     }
 
     private fun initObservers() {
@@ -80,7 +77,7 @@ class ProjectListFragment : Fragment(), ClickListenersCallback<Project> {
 
     override fun onLongClick(view: View, entity: Project): Boolean {
         val directions =
-                ProjectListFragmentDirections.actionProjectListFragmentToProjectFormFragment(entity.projectId)
+                ProjectListFragmentDirections.actionProjectListFragmentToProjectFormFragment(entity.id)
         this.findNavController().navigate(directions)
         return true
     }

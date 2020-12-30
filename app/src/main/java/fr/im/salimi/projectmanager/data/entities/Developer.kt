@@ -9,9 +9,9 @@ import fr.im.salimi.projectmanager.data.helpers.Post
 
 @Entity(tableName = "developers")
 data class Developer(
-        @PrimaryKey(autoGenerate = true)
+        @PrimaryKey
         @ColumnInfo(name = "developer_id")
-        val developerId: Long = 0,
+        override var id: Long = 0,
         @ColumnInfo(name = "first_name")
         var firstName: String = "",
         @ColumnInfo(name = "last_name")
@@ -22,4 +22,4 @@ data class Developer(
         @ColumnInfo(name = "phone_number")
         var phoneNumber: Long = 0,
         var post: Post = Post.NONE
-) : BaseEntity(developerId)
+) : BaseEntity(id)
