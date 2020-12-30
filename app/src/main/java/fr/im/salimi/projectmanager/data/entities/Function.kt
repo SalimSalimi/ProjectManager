@@ -7,7 +7,7 @@ import java.util.*
 
 @Entity(tableName = "functions")
 class Function(@PrimaryKey(autoGenerate = true)
-               @ColumnInfo(name = "module_id")
+               @ColumnInfo(name = "function_id")
                val functionId: Long = 0L,
                var name: String = "",
                var description: String = "",
@@ -15,8 +15,8 @@ class Function(@PrimaryKey(autoGenerate = true)
                var startingDate: Date = Date(),
                @ColumnInfo(name = "finishing_date")
                var endingDate: Date = Date(),
-               @ColumnInfo(name = "project_id")
-               var projectId: Long = 0L
+               @ColumnInfo(name = "module_id")
+               var moduleId: Long = 0L
 ): BaseEntity(
         functionId) {
 }
