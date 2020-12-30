@@ -2,11 +2,13 @@ package fr.im.salimi.projectmanager.ui.uiUtils
 
 import android.content.DialogInterface
 import android.view.View
+import androidx.annotation.StringRes
 import androidx.core.util.Pair
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 import fr.im.salimi.projectmanager.R
 
 fun Fragment.chooseDatePicker(selection: Pair<Long, Long>?,
@@ -55,3 +57,7 @@ fun Fragment.setFabBtnBehaviour(state: FabButtonStates, clickListener: ((View) -
         clickListener?.invoke(it)
     }
 }
+
+fun Fragment.createSnackbar(anchorView: View? = requireActivity().findViewById(R.id.fab_main), @StringRes text: Int) :Snackbar =
+        Snackbar.make(requireView(), getString(text), Snackbar.LENGTH_LONG)
+            .setAnchorView(anchorView)

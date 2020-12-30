@@ -12,13 +12,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import fr.im.salimi.projectmanager.R
 import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
 import fr.im.salimi.projectmanager.data.helpers.Post
 import fr.im.salimi.projectmanager.data.repositories.DeveloperRepository
 import fr.im.salimi.projectmanager.databinding.DeveloperEditFragmentBinding
 import fr.im.salimi.projectmanager.ui.uiUtils.FabButtonStates
+import fr.im.salimi.projectmanager.ui.uiUtils.createSnackbar
 import fr.im.salimi.projectmanager.ui.uiUtils.setFabBtnBehaviour
 
 class DeveloperEditFragment : Fragment() {
@@ -35,8 +35,8 @@ class DeveloperEditFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.developer_edit_fragment, container, false)
         binding.lifecycleOwner = this
@@ -59,7 +59,7 @@ class DeveloperEditFragment : Fragment() {
         //Init observers
         viewModel.showSnackbarConfirm.observe(viewLifecycleOwner) {
             if (it) {
-                Snackbar.make(requireView(), getString(R.string.snackbar_text_add_success), Snackbar.LENGTH_LONG).show()
+                createSnackbar(text = R.string.snackbar_text_add_success).show()
                 viewModel.showSnackbarDone()
             }
         }

@@ -9,15 +9,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
 import fr.im.salimi.projectmanager.R
 import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
 import fr.im.salimi.projectmanager.data.entities.Developer
 import fr.im.salimi.projectmanager.data.repositories.DeveloperRepository
 import fr.im.salimi.projectmanager.databinding.DeveloperListFragmentBinding
-import fr.im.salimi.projectmanager.ui.uiUtils.ClickListenersCallback
-import fr.im.salimi.projectmanager.ui.uiUtils.FabButtonStates
-import fr.im.salimi.projectmanager.ui.uiUtils.setFabBtnBehaviour
+import fr.im.salimi.projectmanager.ui.uiUtils.*
 
 class DeveloperListFragment : Fragment(), ClickListenersCallback<Developer> {
 
@@ -80,7 +77,7 @@ class DeveloperListFragment : Fragment(), ClickListenersCallback<Developer> {
     }
 
     override fun onClick(view: View, entity: Developer) {
-        Snackbar.make(requireView(), getString(R.string.delete_developer_confirm), Snackbar.LENGTH_LONG)
+        createSnackbar(text = R.string.delete_developer_confirm)
                 .setAction(getString(R.string.confirm)) {
                     viewModel.deleteDeveloper(entity)
                     myAdapter.notifyDataSetChanged()
