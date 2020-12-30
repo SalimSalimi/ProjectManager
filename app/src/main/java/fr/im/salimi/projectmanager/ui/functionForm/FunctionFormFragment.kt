@@ -8,6 +8,8 @@ import androidx.core.util.Pair
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import fr.im.salimi.projectmanager.R
 import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
 import fr.im.salimi.projectmanager.data.repositories.FunctionRepository
@@ -19,11 +21,12 @@ import java.util.*
 
 class FunctionFormFragment : Fragment() {
 
+    private val args: FunctionFormFragmentArgs by navArgs()
     private lateinit var binding: FunctionFormFragmentBinding
     private val viewModel: FunctionFormViewModel by viewModels {
         val database = ProjectRoomDatabase.getInstance(requireContext())
         val repository = FunctionRepository(database.functionDao())
-        FunctionFormViewModelFactory(-1L, repository)
+        FunctionFormViewModelFactory(args.functionId, repository)
     }
 
     override fun onCreateView(
@@ -55,6 +58,7 @@ class FunctionFormFragment : Fragment() {
             if (it) {
                 viewModel.upsert()
                 viewModel.onAddFabClickedEventFinished()
+                this.findNavController().navigate(R.id.action_functionFormFragment_to_functionListFragment)
             }
         }
     }

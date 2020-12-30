@@ -11,7 +11,7 @@
         android:icon="@drawable/ic_view_module_24"
         android:title="@string/modules"/>
     <item
-        android:id="@+id/functions_menu_item"
+        android:id="@+id/functionListFragment"
         android:enabled="true"
         android:icon="@drawable/ic_function_24"
         android:title="@string/functions"/>
