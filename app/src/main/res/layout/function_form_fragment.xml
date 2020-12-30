@@ -15,7 +15,7 @@
         tools:context=".ui.functionForm.functionFormFragment">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/text_input_module_name"
+            android:id="@+id/text_input_function_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -26,7 +26,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_text_module_name"
+                android:id="@+id/edit_text_function_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -36,32 +36,13 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/text_input_function_customer"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="@+id/text_input_module_name"
-            app:layout_constraintStart_toStartOf="@+id/text_input_module_name"
-            app:layout_constraintTop_toBottomOf="@+id/text_input_module_name">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_text_function_customer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/customer"
-                android:inputType="textPersonName"
-                android:text="@={viewModel.function.customer}" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/text_input_function_description"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="@+id/text_input_module_name"
-            app:layout_constraintStart_toStartOf="@+id/text_input_module_name"
-            app:layout_constraintTop_toBottomOf="@+id/text_input_function_customer">
+            app:layout_constraintEnd_toEndOf="@+id/text_input_function_name"
+            app:layout_constraintStart_toStartOf="@+id/text_input_function_name"
+            app:layout_constraintTop_toBottomOf="@+id/text_input_function_name">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_text_function_description"
