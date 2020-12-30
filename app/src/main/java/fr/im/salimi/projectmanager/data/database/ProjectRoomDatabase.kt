@@ -7,10 +7,8 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import fr.im.salimi.projectmanager.data.converters.Converters
 import fr.im.salimi.projectmanager.data.daos.*
-import fr.im.salimi.projectmanager.data.entities.Developer
-import fr.im.salimi.projectmanager.data.entities.Module
-import fr.im.salimi.projectmanager.data.entities.Project
-import fr.im.salimi.projectmanager.data.entities.Team
+import fr.im.salimi.projectmanager.data.entities.*
+import fr.im.salimi.projectmanager.data.entities.Function
 
 @Database(entities = [Developer::class, Team::class, Project::class, Module::class, Function::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
