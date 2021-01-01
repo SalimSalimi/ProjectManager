@@ -26,7 +26,7 @@
 
 
             <TextView
-                android:id="@+id/module_name_textview"
+                android:id="@+id/project_name_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -38,18 +38,18 @@
                 tools:text="Banking App" />
 
             <TextView
-                android:id="@+id/module_description_textview"
+                android:id="@+id/project_description_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="@{project.customer}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                app:layout_constraintStart_toStartOf="@+id/module_name_textview"
-                app:layout_constraintTop_toBottomOf="@+id/module_name_textview"
+                app:layout_constraintStart_toStartOf="@+id/project_name_textview"
+                app:layout_constraintTop_toBottomOf="@+id/project_name_textview"
                 tools:text="Euro-Information" />
 
             <TextView
-                android:id="@+id/module_status_textview"
+                android:id="@+id/project_status_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -60,7 +60,7 @@
                 tools:text="In Progress" />
 
             <ProgressBar
-                android:id="@+id/module_progressbar"
+                android:id="@+id/project_progressbar"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -71,10 +71,10 @@
                 android:progress="80"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/module_description_textview" />
+                app:layout_constraintTop_toBottomOf="@+id/project_description_textview" />
 
             <TextView
-                android:id="@+id/module_starting_date_textview"
+                android:id="@+id/project_starting_date_textview"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -82,21 +82,21 @@
                 android:layout_marginBottom="8dp"
                 android:text="@{project.startingDate}"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/module_ending_date_textview"
+                app:layout_constraintEnd_toStartOf="@+id/project_ending_date_textview"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/module_progressbar"
+                app:layout_constraintTop_toBottomOf="@+id/project_progressbar"
                 tools:text="10-12-2020" />
 
             <TextView
-                android:id="@+id/module_ending_date_textview"
+                android:id="@+id/project_ending_date_textview"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@{project.deadline}"
                 android:textAlignment="textEnd"
-                app:layout_constraintBottom_toBottomOf="@+id/module_starting_date_textview"
-                app:layout_constraintEnd_toEndOf="@+id/module_progressbar"
-                app:layout_constraintStart_toEndOf="@+id/module_starting_date_textview"
-                app:layout_constraintTop_toTopOf="@+id/module_starting_date_textview"
+                app:layout_constraintBottom_toBottomOf="@+id/project_starting_date_textview"
+                app:layout_constraintEnd_toEndOf="@+id/project_progressbar"
+                app:layout_constraintStart_toEndOf="@+id/project_starting_date_textview"
+                app:layout_constraintTop_toTopOf="@+id/project_starting_date_textview"
                 tools:text="12-05-2020" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

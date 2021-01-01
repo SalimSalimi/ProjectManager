@@ -19,7 +19,6 @@ class MainActivity : AppCompatActivity() {
         bottomNavigation = findViewById(R.id.bottom_navigation_main)
         fabBtn = findViewById(R.id.fab_main)
 
-        bottomNavigation.menu.getItem(2).isEnabled = false
         bottomNavigation.background = null
         val navController = findNavController(R.id.nav_host_fragment)
 

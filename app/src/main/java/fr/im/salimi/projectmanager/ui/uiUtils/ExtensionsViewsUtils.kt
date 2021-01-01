@@ -1,7 +1,10 @@
 package fr.im.salimi.projectmanager.ui.uiUtils
 
 import android.content.DialogInterface
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.view.View
+import android.widget.ProgressBar
 import androidx.annotation.StringRes
 import androidx.core.util.Pair
 import androidx.fragment.app.Fragment
@@ -10,6 +13,7 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import fr.im.salimi.projectmanager.R
+import fr.im.salimi.projectmanager.utils.calculateProgress
 
 fun Fragment.chooseDatePicker(selection: Pair<Long, Long>?,
                               positiveButtonClickListener: ((Pair<Long, Long>) -> Unit)?,
@@ -61,3 +65,9 @@ fun Fragment.setFabBtnBehaviour(state: FabButtonStates, clickListener: ((View) -
 fun Fragment.createSnackbar(anchorView: View? = requireActivity().findViewById(R.id.fab_main), @StringRes text: Int) :Snackbar =
         Snackbar.make(requireView(), getString(text), Snackbar.LENGTH_LONG)
             .setAnchorView(anchorView)
+
+fun ProgressBar.progressDone(startingDate: Long, currentDate: Long, endingDate: Long) {
+    progress = calculateProgress(startingDate, currentDate, endingDate)
+    if (progress >= 90)
+        progressTintList = ColorStateList.valueOf(Color.RED)
+}
