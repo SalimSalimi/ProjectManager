@@ -18,7 +18,7 @@
         android:layout_margin="8dp"
         android:onClick="@{(view) -> listener.onClick(view, project)}"
         android:onLongClick="@{(view) -> listener.onLongClick(view, project)}"
-        app:cardElevation="8dp"
+        app:cardElevation="4dp"
         app:cardCornerRadius="8dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
