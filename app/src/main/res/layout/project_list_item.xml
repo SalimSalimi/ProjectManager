@@ -18,23 +18,28 @@
         android:layout_margin="8dp"
         android:onClick="@{(view) -> listener.onClick(view, project)}"
         android:onLongClick="@{(view) -> listener.onLongClick(view, project)}"
-        app:cardElevation="8dp">
+        app:cardElevation="8dp"
+        app:cardCornerRadius="8dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/project_letter_rounded"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="8dp"
                 android:background="@drawable/textview_letter_background_circular"
-                android:backgroundTint="@color/blue_500"
-                android:text="T"
+                android:backgroundTint="@color/blue_200"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textSize="30sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/project_description_textview"
+                app:layout_constraintEnd_toStartOf="@+id/guideline2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/project_name_textview" />
 
@@ -49,7 +54,7 @@
                 android:text="@{project.name}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 app:layout_constraintEnd_toStartOf="@+id/project_status_textview"
-                app:layout_constraintStart_toEndOf="@+id/textView4"
+                app:layout_constraintStart_toEndOf="@+id/project_letter_rounded"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Banking App" />
 
@@ -116,6 +121,14 @@
                 app:layout_constraintStart_toEndOf="@+id/project_starting_date_textview"
                 app:layout_constraintTop_toTopOf="@+id/project_starting_date_textview"
                 tools:text="12-05-2020" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="50dp"
+                app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

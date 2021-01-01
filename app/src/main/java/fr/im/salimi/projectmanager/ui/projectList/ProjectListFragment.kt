@@ -8,7 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import fr.im.salimi.projectmanager.R
 import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
 import fr.im.salimi.projectmanager.data.entities.Project
@@ -65,7 +65,7 @@ class ProjectListFragment : Fragment(), ClickListenersCallback<Project> {
 
     private fun initAdapter() {
         binding.projectsList.apply {
-            layoutManager = GridLayoutManager(requireContext(), 2)
+            layoutManager = LinearLayoutManager(requireContext())
             myAdapter = ProjectListAdapter( this@ProjectListFragment)
             this.adapter = myAdapter
         }

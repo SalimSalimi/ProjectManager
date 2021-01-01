@@ -14,6 +14,7 @@ class ProjectListAdapter(private val listeners: ClickListenersCallback<Project>)
     override fun bind(item: Project, binding: ProjectListItemBinding) {
         binding.project = item
         binding.listener = listeners
+        binding.projectLetterRounded.text = item.name[0].toString()
         binding.projectProgressbar.progressDone(item.startingDate.time, Date().time, item.deadline.time)
     }
 
