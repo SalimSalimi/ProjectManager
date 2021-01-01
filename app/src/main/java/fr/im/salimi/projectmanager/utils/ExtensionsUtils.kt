@@ -32,3 +32,10 @@ fun calculateProgress(startingDate: Long, currentDate: Long, endingDate: Long): 
             value
     }
 }
+
+fun String.sumASCIIChars(): Int {
+    var sum = 0
+    for (c in this)
+        sum += c.toInt()
+    return sum
+}

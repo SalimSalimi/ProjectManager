@@ -10,4 +10,17 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="light_gray_background">#f1f5fe</color>
+
+    //Colors for background
+    <color name="red_500">#f44336</color>
+    <color name="pink_500">#e91e63</color>
+    <color name="blue_400">#42a5f5</color>
+    <color name="teal_500">#26a69a</color>
+    <color name="orange_500">#ff9800</color>
+    <color name="deep_orange_500">#ff5722</color>
+    <color name="blue_gray_500">#607d8b</color>
+    <color name="purple_300">#ba68c8</color>
+    <color name="deep_purple_300">#9575cd</color>
+    <color name="indigo_300">#7986cb</color>
+    
 </resources>
