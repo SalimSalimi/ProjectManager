@@ -51,4 +51,6 @@
     <string name="functions">Functions</string>
     <string name="description_of_the_function">Description of the function</string>
     <string name="function_name">Functionnality name</string>
+    <string name="description_of_the_task">Description task</string>
+    <string name="task_name">Task name</string>
 </resources>
