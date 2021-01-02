@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import fr.im.salimi.projectmanager.data.repositories.TaskRepository
 
 @Suppress("UNCHECKED_CAST")
-class TaskViewModelFactory(private val taskId: Long, private val taskRepository: TaskRepository) : ViewModelProvider.Factory {
+class TaskFormViewModelFactory(private val taskId: Long, private val taskRepository: TaskRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(TaskFormViewModel::class.java)) {
             return TaskFormViewModel(taskId, taskRepository) as T
