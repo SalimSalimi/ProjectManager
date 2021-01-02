@@ -14,11 +14,13 @@ import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
 import fr.im.salimi.projectmanager.data.entities.Task
 import fr.im.salimi.projectmanager.data.repositories.TaskRepository
 import fr.im.salimi.projectmanager.databinding.TaskListFragmentBinding
-import fr.im.salimi.projectmanager.ui.functionList.FunctionListFragmentDirections
 import fr.im.salimi.projectmanager.ui.uiUtils.ClickListenersCallback
+import fr.im.salimi.projectmanager.ui.uiUtils.FabButtonStates
+import fr.im.salimi.projectmanager.ui.uiUtils.setFabBtnBehaviour
 
 class TaskListFragment : Fragment(), ClickListenersCallback<Task> {
 
+    private var sendingID = -1L
     private lateinit var myAdapter: TaskListAdapter
     private lateinit var binding: TaskListFragmentBinding
     private val viewModel: TaskListViewModel by viewModels {
@@ -42,6 +44,7 @@ class TaskListFragment : Fragment(), ClickListenersCallback<Task> {
 
         initRecycler()
         initObservers()
+        fabBtnClick()
     }
 
     private fun initObservers() {
@@ -49,12 +52,12 @@ class TaskListFragment : Fragment(), ClickListenersCallback<Task> {
             myAdapter.submitList(it)
         }
 
-        /*viewModel.navigateToFunctionFormEvent.observe(viewLifecycleOwner) {
+        viewModel.navigateToTaskFormEvent.observe(viewLifecycleOwner) {
             if (it) {
-                navigateToFunctionForm(sendingID)
-                viewModel.navigateToFunctionFormEventDone()
+                navigateToTaskForm(sendingID)
+                viewModel.navigateToTaskFormEventDone()
             }
-        }*/
+        }
     }
 
     private fun initRecycler() {
@@ -65,16 +68,16 @@ class TaskListFragment : Fragment(), ClickListenersCallback<Task> {
         }
     }
 
-    /*private fun fabBtnClick() {
+    private fun fabBtnClick() {
         setFabBtnBehaviour(FabButtonStates.PRIMARY_STATE) {
             sendingID = -1L
-            viewModel.navigateToFunctionFormEventTriggered()
+            viewModel.navigateToTaskFormEventTriggered()
         }
-    }*/
+    }
 
-    private fun navigateToFunctionForm(id: Long) {
+    private fun navigateToTaskForm(id: Long) {
         val direction =
-            FunctionListFragmentDirections.actionFunctionListFragmentToFunctionFormFragment(id)
+            TaskListFragmentDirections.actionTaskListFragmentToTaskFormFragment(id)
         this.findNavController().navigate(direction)
     }
 
@@ -83,6 +86,7 @@ class TaskListFragment : Fragment(), ClickListenersCallback<Task> {
     }
 
     override fun onLongClick(view: View, entity: Task): Boolean {
+        navigateToTaskForm(entity.taskId)
         return true
     }
 

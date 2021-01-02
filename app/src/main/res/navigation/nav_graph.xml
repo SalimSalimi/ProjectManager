@@ -90,10 +90,22 @@
     <fragment
         android:id="@+id/taskFormFragment"
         android:name="fr.im.salimi.projectmanager.ui.taskForm.TaskFormFragment"
-        android:label="TaskFormFragment" />
+        android:label="TaskFormFragment" >
+        <action
+            android:id="@+id/action_taskFormFragment_to_taskListFragment"
+            app:destination="@id/taskListFragment" />
+        <argument
+            android:name="taskId"
+            app:argType="long"
+            android:defaultValue="-1L" />
+    </fragment>
     <fragment
         android:id="@+id/taskListFragment"
         android:name="fr.im.salimi.projectmanager.ui.taskList.TaskListFragment"
-        android:label="TaskListFragment" />
+        android:label="TaskListFragment" >
+        <action
+            android:id="@+id/action_taskListFragment_to_taskFormFragment"
+            app:destination="@id/taskFormFragment" />
+    </fragment>
 
 </navigation>
