@@ -1,6 +1,7 @@
 package fr.im.salimi.projectmanager.data.repositories
 
 import fr.im.salimi.projectmanager.data.entities.Module
+import fr.im.salimi.projectmanager.data.repositories.source.FakeModuleDataSource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi

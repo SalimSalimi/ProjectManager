@@ -1,4 +1,4 @@
-package fr.im.salimi.projectmanager.data.repositories
+package fr.im.salimi.projectmanager.data.repositories.source
 
 import fr.im.salimi.projectmanager.data.daos.BaseDao
 import fr.im.salimi.projectmanager.data.entities.Module
