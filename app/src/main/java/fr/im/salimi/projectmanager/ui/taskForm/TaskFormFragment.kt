@@ -8,6 +8,8 @@ import androidx.core.util.Pair
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import fr.im.salimi.projectmanager.R
 import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
 import fr.im.salimi.projectmanager.data.repositories.TaskRepository
@@ -19,15 +21,16 @@ import java.util.*
 
 class TaskFormFragment : Fragment() {
 
+    val args: TaskFormFragmentArgs by navArgs()
     private lateinit var binding: TaskFormFragmentBinding
     private val viewModel: TaskFormViewModel by viewModels {
         val database = ProjectRoomDatabase.getInstance(requireContext())
         val dao = database.taskDao()
-        TaskFormViewModelFactory(-1L, TaskRepository(dao))
+        TaskFormViewModelFactory(args.taskId, TaskRepository(dao))
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.task_form_fragment, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
@@ -36,7 +39,6 @@ class TaskFormFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         binding.viewModel = viewModel
-
         initObservers()
         setFabBtnBehaviour(FabButtonStates.SECONDARY_STATE) {
             fabBtnClicked()
@@ -53,7 +55,7 @@ class TaskFormFragment : Fragment() {
             if (it) {
                 viewModel.upsert()
                 viewModel.onAddFabClickedEventFinished()
-                //this.findNavController().navigate(R.id.action_functionFormFragment_to_functionListFragment)
+                this.findNavController().navigate(R.id.action_taskFormFragment_to_taskListFragment)
             }
         }
     }
