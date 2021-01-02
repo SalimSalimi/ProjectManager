@@ -1,9 +1,11 @@
 package fr.im.salimi.projectmanager.data.entities
 
 import androidx.room.ColumnInfo
+import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.util.*
 
+@Entity(tableName = "tasks")
 class Task(
         @PrimaryKey(autoGenerate = true)
         @ColumnInfo(name = "task_id")
