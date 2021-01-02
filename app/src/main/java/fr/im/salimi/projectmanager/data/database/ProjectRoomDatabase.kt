@@ -10,7 +10,7 @@ import fr.im.salimi.projectmanager.data.daos.*
 import fr.im.salimi.projectmanager.data.entities.*
 import fr.im.salimi.projectmanager.data.entities.Function
 
-@Database(entities = [Developer::class, Team::class, Project::class, Module::class, Function::class], version = 1, exportSchema = false)
+@Database(entities = [Developer::class, Team::class, Project::class, Module::class, Function::class, Task::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class ProjectRoomDatabase: RoomDatabase() {
 
@@ -19,6 +19,7 @@ abstract class ProjectRoomDatabase: RoomDatabase() {
     abstract fun projectDao(): ProjectDao
     abstract fun moduleDao(): ModuleDao
     abstract fun functionDao(): FunctionDao
+    abstract fun taskDao(): TaskDao
 
     companion object {
         @Volatile
