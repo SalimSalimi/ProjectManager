@@ -1,14 +1,13 @@
 package fr.im.salimi.projectmanager.data.repositories
 
-import androidx.lifecycle.asLiveData
 import fr.im.salimi.projectmanager.MainCoroutineRule
 import fr.im.salimi.projectmanager.data.entities.Task
 import fr.im.salimi.projectmanager.data.repositories.source.FakeTasksDataSource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
+import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers
-import org.hamcrest.core.IsEqual
 import org.hamcrest.core.IsNull
 import org.junit.Before
 import org.junit.Rule
@@ -41,12 +40,6 @@ class TaskRepositoryTest {
         dataSource = FakeTasksDataSource(tasksList)
     }
     //Doesn't work with Flow
-    @Test
-    fun getTasks_requestAllTasks() = mainCoroutine.runBlockingTest {
-        val tasks = dataSource.getAll()
-
-        assertThat(tasks.asLiveData().value!!, IsEqual(tasksList))
-    }
 
     @Test
     fun insertTask_getById() = mainCoroutine.runBlockingTest {
@@ -58,5 +51,28 @@ class TaskRepositoryTest {
         assertThat(result, IsNull.notNullValue())
         assertThat(result.name, Matchers.`is`("Task4"))
         assertThat(result.description, Matchers.`is`("Description"))
+    }
+
+    @Test
+    fun getByIdTask_deleteTask_getById() = mainCoroutine.runBlockingTest {
+        val task = dataSource.getById(1)
+
+        var result: Task? = null
+        dataSource.delete(task)
+
+        val exception = try {
+            result = dataSource.getById(1L)
+            false
+        } catch (e: IndexOutOfBoundsException) {
+            true
+        }
+
+        if (exception) {
+            assertThat(exception, `is`(true))
+        } else {
+            assertThat(result, IsNull.nullValue())
+            assertThat(result?.name, Matchers.isEmptyOrNullString())
+            assertThat(result?.description, Matchers.isEmptyOrNullString())
+        }
     }
 }

@@ -5,7 +5,7 @@ import fr.im.salimi.projectmanager.data.entities.Task
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class FakeTasksDataSource(var tasksList: MutableList<Task> = mutableListOf()): BaseDao<Task> {
+class FakeTasksDataSource(var tasksList: MutableList<Task>): BaseDao<Task> {
     override suspend fun insert(entity: Task) {
         tasksList.add(entity)
     }
