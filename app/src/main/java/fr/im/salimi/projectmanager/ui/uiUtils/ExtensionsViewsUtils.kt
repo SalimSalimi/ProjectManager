@@ -64,6 +64,7 @@ fun Fragment.setFabBtnBehaviour(state: FabButtonStates, clickListener: ((View) -
     fabBtn.setOnClickListener {
         clickListener?.invoke(it)
     }
+    bottomBar.performShow()
 }
 
 fun Fragment.createSnackbar(anchorView: View? = requireActivity().findViewById(R.id.fab_main), @StringRes text: Int) :Snackbar =
@@ -90,6 +91,8 @@ fun createColorsArray(context: Context):MutableList<Int> {
         add(getColor(context, R.color.purple_300))
         add(getColor(context, R.color.deep_purple_300))
         add(getColor(context, R.color.indigo_300))
+        add(getColor(context, R.color.yellow_400))
+        add(getColor(context, R.color.amber_500))
     }
     return colorsList
 }

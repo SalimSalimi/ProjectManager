@@ -17,7 +17,6 @@
         android:id="@+id/developerCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{(view) -> listener.onClick(view, developer)}"
         android:onLongClick="@{(view) -> listener.onLongClick(view, developer)}"
         android:layout_margin="8dp">
 
@@ -101,7 +100,10 @@
                 android:elevation="1dp"
                 android:src="@drawable/ic_delete_24"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="@{(view) -> listener.onClick(view, developer)}" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>

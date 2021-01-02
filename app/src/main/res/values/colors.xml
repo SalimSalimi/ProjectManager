@@ -22,5 +22,7 @@
     <color name="purple_300">#ba68c8</color>
     <color name="deep_purple_300">#9575cd</color>
     <color name="indigo_300">#7986cb</color>
-    
+    <color name="yellow_400">#ffee58</color>
+    <color name="amber_500">#ffc107</color>
+
 </resources>
