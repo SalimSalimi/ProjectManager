@@ -7,7 +7,7 @@ import java.util.*
 
 @Entity(tableName = "modules")
 data class Module (
-        @PrimaryKey
+        @PrimaryKey(autoGenerate = true)
         @ColumnInfo(name = "module_id")
         override var id: Long = 0,
         var name: String = "",

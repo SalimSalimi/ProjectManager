@@ -9,7 +9,7 @@ import fr.im.salimi.projectmanager.data.helpers.Post
 
 @Entity(tableName = "developers")
 data class Developer(
-        @PrimaryKey
+        @PrimaryKey(autoGenerate = true)
         @ColumnInfo(name = "developer_id")
         override var id: Long = 0,
         @ColumnInfo(name = "first_name")
