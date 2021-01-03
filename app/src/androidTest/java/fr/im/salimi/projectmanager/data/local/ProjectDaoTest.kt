@@ -92,4 +92,60 @@ class ProjectDaoTest {
         MatcherAssert.assertThat(modules, IsNull.notNullValue())
         MatcherAssert.assertThat(modules.size, Matchers.`is`(2))
     }
+
+    @Test
+    fun insertProjectsAndModules_getAllProjectsWithModules() = runBlocking {
+        val startingDate = Date()
+        val endingDate = Date()
+        val project1 = Project(name = "project", description =  "Description", startingDate = startingDate, deadline = endingDate)
+        database.projectDao().insert(project1)
+
+        val project2 = Project(name = "project2", description =  "Description2", startingDate = startingDate, deadline = endingDate)
+        database.projectDao().insert(project2)
+
+
+        val module = Module(name = "Module", description =  "Description", startingDate = startingDate, endingDate = endingDate, projectId = 1)
+        database.moduleDao().insert(module)
+
+        val module2 = Module(name = "Module2", description =  "Description", startingDate = startingDate, endingDate = endingDate, projectId = 2)
+        database.moduleDao().insert(module2)
+
+        //WHEN
+        val result = database.projectDao().getAllWithModules().asLiveData().getOrAwaitValue()
+
+        val projectResult = result[0].project
+        val modules = result[0].modules
+        //Then
+        //check for project where id 1
+        MatcherAssert.assertThat(result, IsNull.notNullValue())
+        MatcherAssert.assertThat(projectResult.name, Matchers.`is`("project"))
+        MatcherAssert.assertThat(projectResult.description, Matchers.`is`("Description"))
+        MatcherAssert.assertThat(projectResult.startingDate, Matchers.`is`(startingDate))
+        MatcherAssert.assertThat(projectResult.deadline, Matchers.`is`(endingDate))
+        //Check for module of project where id = 1
+        MatcherAssert.assertThat(modules, IsNull.notNullValue())
+        MatcherAssert.assertThat(modules.size, Matchers.`is`(1))
+        MatcherAssert.assertThat(modules[0].name, Matchers.`is`("Module"))
+        MatcherAssert.assertThat(modules[0].description, Matchers.`is`("Description"))
+        MatcherAssert.assertThat(modules[0].startingDate, Matchers.`is`(startingDate))
+        MatcherAssert.assertThat(modules[0].endingDate, Matchers.`is`(endingDate))
+
+
+        val projectResult2 = result[1].project
+        val modules2 = result[1].modules
+
+        MatcherAssert.assertThat(projectResult2.name, Matchers.`is`("project2"))
+        MatcherAssert.assertThat(projectResult2.description, Matchers.`is`("Description2"))
+        MatcherAssert.assertThat(projectResult2.startingDate, Matchers.`is`(startingDate))
+        MatcherAssert.assertThat(projectResult2.deadline, Matchers.`is`(endingDate))
+        //Check for module of project where id = 1
+        MatcherAssert.assertThat(modules2, IsNull.notNullValue())
+        MatcherAssert.assertThat(modules2.size, Matchers.`is`(1))
+        MatcherAssert.assertThat(modules2[0].name, Matchers.`is`("Module2"))
+        MatcherAssert.assertThat(modules2[0].description, Matchers.`is`("Description"))
+        MatcherAssert.assertThat(modules2[0].startingDate, Matchers.`is`(startingDate))
+        MatcherAssert.assertThat(modules2[0].endingDate, Matchers.`is`(endingDate))
+
+
+    }
 }
