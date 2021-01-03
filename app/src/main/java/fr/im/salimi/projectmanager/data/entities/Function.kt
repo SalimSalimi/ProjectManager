@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import java.util.*
 
 @Entity(tableName = "functions")
-class Function(
+data class Function(
         @PrimaryKey(autoGenerate = true)
         @ColumnInfo(name = "function_id")
         val functionId: Long = 0L,
