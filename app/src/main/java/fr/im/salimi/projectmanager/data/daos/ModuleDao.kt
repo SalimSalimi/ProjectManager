@@ -19,5 +19,5 @@ abstract class ModuleDao: BaseDao<Module> {
     abstract fun getAllWithFunctions(): Flow<List<ModuleWithFunctions>>
 
     @Query("SELECT * FROM modules where module_id = :id")
-    abstract fun getByIdWithFunctions(id: Long): Flow<List<ModuleWithFunctions>>
+    abstract fun getByIdWithFunctions(id: Long): Flow<ModuleWithFunctions>
 }
