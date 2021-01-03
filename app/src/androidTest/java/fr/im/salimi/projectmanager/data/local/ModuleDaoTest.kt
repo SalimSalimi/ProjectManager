@@ -7,6 +7,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
 import fr.im.salimi.projectmanager.data.entities.Module
+import fr.im.salimi.projectmanager.data.entities.Project
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.MatcherAssert.assertThat
@@ -35,6 +36,10 @@ class ModuleDaoTest {
         ProjectRoomDatabase::class.java)
                 .allowMainThreadQueries()
                 .build()
+
+        runBlocking {
+            database.projectDao().insert(Project(name = "Project", description = "Description"))
+        }
     }
 
     @After
@@ -47,7 +52,7 @@ class ModuleDaoTest {
         // Given
         val startingDate = Date()
         val endingDate = Date()
-        val module = Module(name = "Module", description =  "Description", startingDate = startingDate, endingDate = endingDate)
+        val module = Module(name = "Module", description =  "Description", startingDate = startingDate, endingDate = endingDate, projectId = 1)
         database.moduleDao().insert(module)
 
         //WHEN
@@ -66,14 +71,13 @@ class ModuleDaoTest {
         // Given
         val startingDate = Date()
         val endingDate = Date()
-        val module = Module(name = "Module", description =  "Description", startingDate = startingDate, endingDate = endingDate)
+        val module = Module(name = "Module", description =  "Description", startingDate = startingDate, endingDate = endingDate, projectId = 1)
         database.moduleDao().insert(module)
 
         //WHEN
-
         val updatedStartingDate = Date()
         val updatedEndingDate = Date()
-        val updatedModule = Module(id = 1,name = "Updated", description = "UpdatedDescription", updatedStartingDate, updatedEndingDate)
+        val updatedModule = Module(id = 1,name = "Updated", description = "UpdatedDescription", updatedStartingDate, updatedEndingDate, projectId = 1)
         database.moduleDao().update(updatedModule)
         val result = database.moduleDao().getById(1)
 
