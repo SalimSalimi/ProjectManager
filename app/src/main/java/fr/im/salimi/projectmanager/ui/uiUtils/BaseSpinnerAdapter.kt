@@ -1,6 +1,7 @@
 package fr.im.salimi.projectmanager.ui.uiUtils
 
 import android.content.Context
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
@@ -14,16 +15,19 @@ abstract class BaseSpinnerAdapter<T : BaseEntity>(context: Context, private val 
     override fun getCount(): Int =
             entitiesList.size
 
+
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val titleTextView = convertView!!.findViewById<TextView>(R.id.entity_title_textview)
-        val subTitleTextView = convertView.findViewById<TextView>(R.id.entity_subtitle_textview)
-        val roundedLetter = convertView.findViewById<TextView>(R.id.entity_letter_rounded)
+        val view = convertView ?: LayoutInflater.from(context).inflate(R.layout.spinner_custom_base_layout, parent, false)
+
+        val titleTextView = view.findViewById<TextView>(R.id.entity_title_textview)
+        val subTitleTextView = view.findViewById<TextView>(R.id.entity_subtitle_textview)
+        val roundedLetter = view.findViewById<TextView>(R.id.entity_letter_rounded)
 
         val entity = getItem(position)
 
         onSetViews(entity!!, titleTextView, subTitleTextView, roundedLetter)
 
-        return super.getView(position, convertView, parent)
+        return view
     }
 
     abstract fun onSetViews(item: T, titleView: TextView,

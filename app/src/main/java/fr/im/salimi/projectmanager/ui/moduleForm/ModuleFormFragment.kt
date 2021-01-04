@@ -29,6 +29,8 @@ class ModuleFormFragment : Fragment() {
         ModuleFormViewModelFactory(args.moduleId, repository)
     }
 
+    private lateinit var spinnerAdapter: ProjectSpinnerAdapter
+
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
@@ -45,7 +47,6 @@ class ModuleFormFragment : Fragment() {
             viewModel.onAddBtnClicked()
         }
         binding.viewModel = viewModel
-
         initObservers()
     }
 
@@ -62,6 +63,12 @@ class ModuleFormFragment : Fragment() {
                 viewModel.onAddBtnClickedFinished()
             }
         }
+        val lists = mutableListOf<Project>()
+        lists.add(Project(name = "Project1", description = "Description1"))
+        lists.add(Project(name = "Project2", description = "Description2"))
+        lists.add(Project(name = "Project3", description = "Description3"))
+        spinnerAdapter = ProjectSpinnerAdapter(requireContext(), lists)
+        binding.editTextModuleProject.setAdapter(spinnerAdapter)
     }
 
     private fun showDatePicker() {
