@@ -20,7 +20,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/entity_subtitle_textview"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/entity_title_textview" />
+        app:layout_constraintTop_toTopOf="@+id/entity_title_textview"
+        tools:text="T"/>
 
     <TextView
         android:id="@+id/entity_title_textview"

@@ -67,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
-                app:endIconDrawable="@drawable/ic_baseline_work_24"
+                app:endIconDrawable="@drawable/ic_projects_24"
                 app:endIconMode="dropdown_menu"
                 app:layout_constraintEnd_toEndOf="@+id/text_input_module_description"
                 app:layout_constraintStart_toStartOf="@+id/text_input_module_description"
