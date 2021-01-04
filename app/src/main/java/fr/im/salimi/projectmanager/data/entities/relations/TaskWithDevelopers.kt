@@ -7,13 +7,12 @@ import fr.im.salimi.projectmanager.data.entities.Developer
 import fr.im.salimi.projectmanager.data.entities.Task
 import fr.im.salimi.projectmanager.data.entities.TaskAssignments
 
-data class DeveloperWithTasks(
+data class TaskWithDevelopers(
         @Embedded
-        val developer: Developer,
+        val task: Task,
         @Relation(
-                parentColumn = "developer_id",
-                entityColumn = "task_id",
+                parentColumn = "task_id",
+                entityColumn = "developer_id",
                 associateBy = Junction(value = TaskAssignments::class)
         )
-        val tasks: List<Task>
-)
+        val developers: List<Developer>)
