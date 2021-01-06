@@ -1,16 +1,16 @@
 package fr.im.salimi.projectmanager.ui.moduleForm
 
 import androidx.core.util.Pair
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import fr.im.salimi.projectmanager.data.entities.Module
+import fr.im.salimi.projectmanager.data.entities.Project
 import fr.im.salimi.projectmanager.data.repositories.ModuleRepository
+import fr.im.salimi.projectmanager.data.repositories.ProjectRepository
 import kotlinx.coroutines.launch
 import java.util.*
 
-class ModuleFormViewModel(private val id: Long, private val repository: ModuleRepository) : ViewModel() {
+class ModuleFormViewModel(private val id: Long, private val repository: ModuleRepository, private val projectRepository: ProjectRepository)
+    : ViewModel() {
 
     private val _module = MutableLiveData<Module>()
     val module: LiveData<Module>
@@ -23,6 +23,10 @@ class ModuleFormViewModel(private val id: Long, private val repository: ModuleRe
     private val _addBtnClickEvent = MutableLiveData<Boolean>()
     val addBtnClickEvent: LiveData<Boolean>
         get() = _addBtnClickEvent
+
+    private val _projects = projectRepository.getAll()
+    val projects: LiveData<List<Project>>
+        get() = _projects.asLiveData()
 
     init {
         initModule()

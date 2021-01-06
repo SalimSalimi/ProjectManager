@@ -16,6 +16,7 @@ import fr.im.salimi.projectmanager.R
 import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
 import fr.im.salimi.projectmanager.data.entities.Project
 import fr.im.salimi.projectmanager.data.repositories.ModuleRepository
+import fr.im.salimi.projectmanager.data.repositories.ProjectRepository
 import fr.im.salimi.projectmanager.databinding.ModuleFormFragmentBinding
 import fr.im.salimi.projectmanager.ui.uiUtils.*
 
@@ -26,10 +27,11 @@ class ModuleFormFragment : Fragment() {
     private val viewModel: ModuleFormViewModel by viewModels {
         val database = ProjectRoomDatabase.getInstance(requireContext())
         val repository = ModuleRepository(database.moduleDao())
-        ModuleFormViewModelFactory(args.moduleId, repository)
+        val projectRepository = ProjectRepository(database.projectDao())
+        ModuleFormViewModelFactory(args.moduleId, repository, projectRepository)
     }
 
-    private lateinit var spinnerAdapter: ProjectSpinnerAdapter
+    private var spinnerAdapter: ProjectSpinnerAdapter? = null
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -63,12 +65,15 @@ class ModuleFormFragment : Fragment() {
                 viewModel.onAddBtnClickedFinished()
             }
         }
-        val lists = mutableListOf<Project>()
-        lists.add(Project(name = "Project1", description = "Description1"))
-        lists.add(Project(name = "Project2", description = "Description2"))
-        lists.add(Project(name = "Project3", description = "Description3"))
-        spinnerAdapter = ProjectSpinnerAdapter(requireContext(), lists)
-        binding.editTextModuleProject.setAdapter(spinnerAdapter)
+
+        viewModel.projects.observe(viewLifecycleOwner) { projects ->
+            if (spinnerAdapter == null){
+                spinnerAdapter = ProjectSpinnerAdapter(requireContext(), projects)
+                binding.editTextModuleProject.setAdapter(spinnerAdapter)
+            }
+            else
+                spinnerAdapter!!.notifyDataSetChanged()
+        }
     }
 
     private fun showDatePicker() {
