@@ -28,6 +28,12 @@ class ModuleFormViewModel(private val id: Long, private val repository: ModuleRe
     val projects: LiveData<List<Project>>
         get() = _projects.asLiveData()
 
+    private val _projectSelected = MutableLiveData<Project>()
+    val projectSelected: LiveData<Project>
+        get() = _projectSelected
+
+    var project: Project?= null
+
     init {
         initModule()
         _dateClickEvent.value = false
@@ -39,12 +45,24 @@ class ModuleFormViewModel(private val id: Long, private val repository: ModuleRe
         _module.value!!.endingDate = Date(dates.second!!)
     }
 
+
+    fun setProjectId(id: Long) {
+        _module.value!!.projectId = id
+    }
+
+    fun onGetProjectById() {
+        if (id != -1L)
+            getProjectById()
+    }
+
     fun onAddBtnClicked() {
-        if (id == -1L)
-            insert()
-        else
-            update()
-        onAddBtnClickedEvent()
+        if (_module.value!!.projectId != -1L) {
+            if (id == -1L)
+                insert()
+            else
+                update()
+            onAddBtnClickedEvent()
+        }
     }
 
     fun onDateClickedEvent() {
@@ -64,7 +82,7 @@ class ModuleFormViewModel(private val id: Long, private val repository: ModuleRe
     }
 
     private fun initModule() {
-        if(id == -1L)
+        if (id == -1L)
             _module.value = Module()
         else
             viewModelScope.launch {
@@ -81,6 +99,12 @@ class ModuleFormViewModel(private val id: Long, private val repository: ModuleRe
     private fun update() {
         viewModelScope.launch {
             repository.update(_module.value!!)
+        }
+    }
+
+    private fun getProjectById() {
+        viewModelScope.launch {
+            _projectSelected.value = projectRepository.getById(_module.value!!.projectId)
         }
     }
 }

@@ -24,4 +24,9 @@ data class Module (
         var endingDate: Date = Date(),
         @ColumnInfo(name = "project_id_fk")
         var projectId: Long = 0L
-        ): BaseEntity(id)
+        ): BaseEntity(id) {
+
+        override fun toString(): String {
+                return this.name
+        }
+        }

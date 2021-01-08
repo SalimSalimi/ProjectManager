@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.TextView
 import androidx.core.util.Pair
 import androidx.databinding.DataBindingUtil
@@ -31,7 +32,8 @@ class ModuleFormFragment : Fragment() {
         ModuleFormViewModelFactory(args.moduleId, repository, projectRepository)
     }
 
-    private var spinnerAdapter: ProjectSpinnerAdapter? = null
+    private lateinit var spinnerAdapter: ProjectSpinnerAdapter
+    private var projectsList: List<Project> = ArrayList()
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -49,6 +51,9 @@ class ModuleFormFragment : Fragment() {
             viewModel.onAddBtnClicked()
         }
         binding.viewModel = viewModel
+        spinnerAdapter = ProjectSpinnerAdapter(requireContext(), projectsList)
+        binding.editTextModuleProject.setAdapter(spinnerAdapter)
+        binding.editTextModuleProject.onItemClickListener = initItemSelectedListener()
         initObservers()
     }
 
@@ -67,12 +72,16 @@ class ModuleFormFragment : Fragment() {
         }
 
         viewModel.projects.observe(viewLifecycleOwner) { projects ->
-            if (spinnerAdapter == null){
-                spinnerAdapter = ProjectSpinnerAdapter(requireContext(), projects)
-                binding.editTextModuleProject.setAdapter(spinnerAdapter)
+            projectsList = projects
+            spinnerAdapter.setEntitiesList(projectsList)
+            viewModel.onGetProjectById()
+        }
+
+        viewModel.projectSelected.observe(viewLifecycleOwner) { projectModule ->
+            val project = projectsList.find { project ->
+                projectModule.id == project.id
             }
-            else
-                spinnerAdapter!!.notifyDataSetChanged()
+            binding.editTextModuleProject.setText(project.toString(), false)
         }
     }
 
@@ -91,7 +100,11 @@ class ModuleFormFragment : Fragment() {
         })
     }
 
-    inner class ProjectSpinnerAdapter(context: Context, projectsList: List<Project>): BaseSpinnerAdapter<Project>(context, projectsList) {
+    private fun initItemSelectedListener(): AdapterView.OnItemClickListener = AdapterView.OnItemClickListener { _, _, _, id ->
+        viewModel.setProjectId(id)
+    }
+
+    inner class ProjectSpinnerAdapter(context: Context, projectsList: List<Project>) : BaseSpinnerAdapter<Project>(context, projectsList) {
         override fun onSetViews(item: Project, titleView: TextView, subTitleView: TextView, roundedLetter: TextView) {
             titleView.text = item.name
             subTitleView.text = item.customer
