@@ -78,9 +78,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:hint="Choose a module"
-                    android:inputType="textPersonName"
-                    android:text="@={viewModel.function.description}" />
+                    android:hint="@string/choose_a_module"
+                    android:inputType="none"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
