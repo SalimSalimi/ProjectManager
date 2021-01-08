@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.util.Pair
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -12,8 +13,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import fr.im.salimi.projectmanager.R
 import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
+import fr.im.salimi.projectmanager.data.entities.Module
 import fr.im.salimi.projectmanager.data.repositories.FunctionRepository
 import fr.im.salimi.projectmanager.databinding.FunctionFormFragmentBinding
+import fr.im.salimi.projectmanager.ui.uiUtils.BaseSpinnerAdapter
 import fr.im.salimi.projectmanager.ui.uiUtils.FabButtonStates
 import fr.im.salimi.projectmanager.ui.uiUtils.chooseDatePicker
 import fr.im.salimi.projectmanager.ui.uiUtils.setFabBtnBehaviour
@@ -28,6 +31,8 @@ class FunctionFormFragment : Fragment() {
         val repository = FunctionRepository(database.functionDao())
         FunctionFormViewModelFactory(args.functionId, repository)
     }
+
+    private lateinit var spinnerAdapter: ModuleSpinnerAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -83,5 +88,13 @@ class FunctionFormFragment : Fragment() {
 
     private fun fabBtnClicked() {
         viewModel.onAddFabBtnClickEvent()
+    }
+
+    inner class ModuleSpinnerAdapter(modulesList: List<Module>): BaseSpinnerAdapter<Module>(requireContext(), modulesList) {
+        override fun onSetViews(item: Module, titleView: TextView, subTitleView: TextView, roundedLetter: TextView) {
+            titleView.text = item.name
+            subTitleView.text = item.description
+            roundedLetter.visibility = View.GONE
+        }
     }
 }
