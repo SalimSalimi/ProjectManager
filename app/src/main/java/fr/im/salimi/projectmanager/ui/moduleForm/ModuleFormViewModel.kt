@@ -1,16 +1,16 @@
 package fr.im.salimi.projectmanager.ui.moduleForm
 
 import androidx.core.util.Pair
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import fr.im.salimi.projectmanager.data.entities.Module
+import fr.im.salimi.projectmanager.data.entities.Project
 import fr.im.salimi.projectmanager.data.repositories.ModuleRepository
+import fr.im.salimi.projectmanager.data.repositories.ProjectRepository
 import kotlinx.coroutines.launch
 import java.util.*
 
-class ModuleFormViewModel(private val id: Long, private val repository: ModuleRepository) : ViewModel() {
+class ModuleFormViewModel(private val id: Long, private val repository: ModuleRepository, private val projectRepository: ProjectRepository)
+    : ViewModel() {
 
     private val _module = MutableLiveData<Module>()
     val module: LiveData<Module>
@@ -24,6 +24,14 @@ class ModuleFormViewModel(private val id: Long, private val repository: ModuleRe
     val addBtnClickEvent: LiveData<Boolean>
         get() = _addBtnClickEvent
 
+    private val _projects = projectRepository.getAll()
+    val projects: LiveData<List<Project>>
+        get() = _projects.asLiveData()
+
+    private val _projectSelected = MutableLiveData<Project>()
+    val projectSelected: LiveData<Project>
+        get() = _projectSelected
+
     init {
         initModule()
         _dateClickEvent.value = false
@@ -35,12 +43,24 @@ class ModuleFormViewModel(private val id: Long, private val repository: ModuleRe
         _module.value!!.endingDate = Date(dates.second!!)
     }
 
+
+    fun setProjectId(id: Long) {
+        _module.value!!.projectId = id
+    }
+
+    fun onGetProjectById() {
+        if (id != -1L)
+            getProjectById()
+    }
+
     fun onAddBtnClicked() {
-        if (id == -1L)
-            insert()
-        else
-            update()
-        onAddBtnClickedEvent()
+        if (_module.value!!.projectId != -1L) {
+            if (id == -1L)
+                insert()
+            else
+                update()
+            onAddBtnClickedEvent()
+        }
     }
 
     fun onDateClickedEvent() {
@@ -60,7 +80,7 @@ class ModuleFormViewModel(private val id: Long, private val repository: ModuleRe
     }
 
     private fun initModule() {
-        if(id == -1L)
+        if (id == -1L)
             _module.value = Module()
         else
             viewModelScope.launch {
@@ -77,6 +97,12 @@ class ModuleFormViewModel(private val id: Long, private val repository: ModuleRe
     private fun update() {
         viewModelScope.launch {
             repository.update(_module.value!!)
+        }
+    }
+
+    private fun getProjectById() {
+        viewModelScope.launch {
+            _projectSelected.value = projectRepository.getById(_module.value!!.projectId)
         }
     }
 }

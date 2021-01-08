@@ -1,9 +1,12 @@
 package fr.im.salimi.projectmanager.ui.moduleForm
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.TextView
 import androidx.core.util.Pair
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -12,11 +15,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import fr.im.salimi.projectmanager.R
 import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
+import fr.im.salimi.projectmanager.data.entities.Project
 import fr.im.salimi.projectmanager.data.repositories.ModuleRepository
+import fr.im.salimi.projectmanager.data.repositories.ProjectRepository
 import fr.im.salimi.projectmanager.databinding.ModuleFormFragmentBinding
-import fr.im.salimi.projectmanager.ui.uiUtils.FabButtonStates
-import fr.im.salimi.projectmanager.ui.uiUtils.chooseDatePicker
-import fr.im.salimi.projectmanager.ui.uiUtils.setFabBtnBehaviour
+import fr.im.salimi.projectmanager.ui.uiUtils.*
 
 class ModuleFormFragment : Fragment() {
 
@@ -25,8 +28,11 @@ class ModuleFormFragment : Fragment() {
     private val viewModel: ModuleFormViewModel by viewModels {
         val database = ProjectRoomDatabase.getInstance(requireContext())
         val repository = ModuleRepository(database.moduleDao())
-        ModuleFormViewModelFactory(args.moduleId, repository)
+        val projectRepository = ProjectRepository(database.projectDao())
+        ModuleFormViewModelFactory(args.moduleId, repository, projectRepository)
     }
+
+    private lateinit var spinnerAdapter: ProjectSpinnerAdapter
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -44,7 +50,9 @@ class ModuleFormFragment : Fragment() {
             viewModel.onAddBtnClicked()
         }
         binding.viewModel = viewModel
-
+        spinnerAdapter = ProjectSpinnerAdapter(requireContext(), listOf())
+        binding.editTextModuleProject.setAdapter(spinnerAdapter)
+        binding.editTextModuleProject.onItemClickListener = initItemSelectedListener()
         initObservers()
     }
 
@@ -61,6 +69,15 @@ class ModuleFormFragment : Fragment() {
                 viewModel.onAddBtnClickedFinished()
             }
         }
+
+        viewModel.projects.observe(viewLifecycleOwner) { projects ->
+            spinnerAdapter.setEntitiesList(projects)
+            viewModel.onGetProjectById()
+        }
+
+        viewModel.projectSelected.observe(viewLifecycleOwner) { projectModule ->
+            binding.editTextModuleProject.setText(projectModule.toString(), false)
+        }
     }
 
     private fun showDatePicker() {
@@ -76,5 +93,18 @@ class ModuleFormFragment : Fragment() {
         }, {
             viewModel.onDateClickedEventFinished()
         })
+    }
+
+    private fun initItemSelectedListener(): AdapterView.OnItemClickListener = AdapterView.OnItemClickListener { _, _, _, id ->
+        viewModel.setProjectId(id)
+    }
+
+    inner class ProjectSpinnerAdapter(context: Context, projectsList: List<Project>) : BaseSpinnerAdapter<Project>(context, projectsList) {
+        override fun onSetViews(item: Project, titleView: TextView, subTitleView: TextView, roundedLetter: TextView) {
+            titleView.text = item.name
+            subTitleView.text = item.customer
+            roundedLetter.text = item.name[0].toString()
+            roundedLetter.setBackgroundColorText(item.name)
+        }
     }
 }

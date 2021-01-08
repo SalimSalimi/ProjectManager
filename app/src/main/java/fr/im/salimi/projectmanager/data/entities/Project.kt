@@ -17,4 +17,8 @@ data class Project(
         @ColumnInfo(name = "starting_date")
         var startingDate: Date = Date(),
         var deadline: Date = Date()
-) : BaseEntity(id)
+) : BaseEntity(id) {
+        override fun toString(): String {
+                return this.name
+        }
+}
