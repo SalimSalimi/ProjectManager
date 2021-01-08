@@ -61,6 +61,25 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_function_module"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/text_input_function_name"
+                app:layout_constraintStart_toStartOf="@+id/text_input_function_name"
+                app:layout_constraintTop_toBottomOf="@+id/text_input_function_description">
+
+                <AutoCompleteTextView
+                    android:id="@+id/edit_text_function_module"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Choose a module"
+                    android:inputType="textPersonName"
+                    android:text="@={viewModel.function.description}" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/text_input_function_starting_date"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -73,7 +92,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/text_input_function_ending_date"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_input_function_description"
+                app:layout_constraintTop_toBottomOf="@+id/text_input_function_module"
                 app:placeholderText="@string/date_format">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -90,14 +109,13 @@
                 android:id="@+id/text_input_function_ending_date"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:hint="@string/ending_date"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/text_input_function_starting_date"
 
-                app:layout_constraintTop_toBottomOf="@+id/text_input_function_description"
+                app:layout_constraintTop_toTopOf="@+id/text_input_function_starting_date"
                 app:placeholderText="@string/date_format">
 
                 <com.google.android.material.textfield.TextInputEditText
