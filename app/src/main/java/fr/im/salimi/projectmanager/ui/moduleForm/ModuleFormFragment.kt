@@ -33,7 +33,6 @@ class ModuleFormFragment : Fragment() {
     }
 
     private lateinit var spinnerAdapter: ProjectSpinnerAdapter
-    private var projectsList: List<Project> = ArrayList()
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -51,7 +50,7 @@ class ModuleFormFragment : Fragment() {
             viewModel.onAddBtnClicked()
         }
         binding.viewModel = viewModel
-        spinnerAdapter = ProjectSpinnerAdapter(requireContext(), projectsList)
+        spinnerAdapter = ProjectSpinnerAdapter(requireContext(), listOf())
         binding.editTextModuleProject.setAdapter(spinnerAdapter)
         binding.editTextModuleProject.onItemClickListener = initItemSelectedListener()
         initObservers()
@@ -72,16 +71,12 @@ class ModuleFormFragment : Fragment() {
         }
 
         viewModel.projects.observe(viewLifecycleOwner) { projects ->
-            projectsList = projects
-            spinnerAdapter.setEntitiesList(projectsList)
+            spinnerAdapter.setEntitiesList(projects)
             viewModel.onGetProjectById()
         }
 
         viewModel.projectSelected.observe(viewLifecycleOwner) { projectModule ->
-            val project = projectsList.find { project ->
-                projectModule.id == project.id
-            }
-            binding.editTextModuleProject.setText(project.toString(), false)
+            binding.editTextModuleProject.setText(projectModule.toString(), false)
         }
     }
 

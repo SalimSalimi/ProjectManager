@@ -32,8 +32,6 @@ class ModuleFormViewModel(private val id: Long, private val repository: ModuleRe
     val projectSelected: LiveData<Project>
         get() = _projectSelected
 
-    var project: Project?= null
-
     init {
         initModule()
         _dateClickEvent.value = false
