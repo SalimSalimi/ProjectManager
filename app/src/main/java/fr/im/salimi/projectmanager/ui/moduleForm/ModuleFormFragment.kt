@@ -1,6 +1,5 @@
 package fr.im.salimi.projectmanager.ui.moduleForm
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -50,7 +49,7 @@ class ModuleFormFragment : Fragment() {
             viewModel.onAddBtnClicked()
         }
         binding.viewModel = viewModel
-        spinnerAdapter = ProjectSpinnerAdapter(requireContext(), listOf())
+        spinnerAdapter = ProjectSpinnerAdapter(listOf())
         binding.editTextModuleProject.setAdapter(spinnerAdapter)
         binding.editTextModuleProject.onItemClickListener = initItemSelectedListener()
         initObservers()
@@ -99,7 +98,7 @@ class ModuleFormFragment : Fragment() {
         viewModel.setProjectId(id)
     }
 
-    inner class ProjectSpinnerAdapter(context: Context, projectsList: List<Project>) : BaseSpinnerAdapter<Project>(context, projectsList) {
+    inner class ProjectSpinnerAdapter(projectsList: List<Project>) : BaseSpinnerAdapter<Project>(requireContext(), projectsList) {
         override fun onSetViews(item: Project, titleView: TextView, subTitleView: TextView, roundedLetter: TextView) {
             titleView.text = item.name
             subTitleView.text = item.customer

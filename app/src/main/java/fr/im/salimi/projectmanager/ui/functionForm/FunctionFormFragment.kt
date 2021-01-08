@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.TextView
 import androidx.core.util.Pair
 import androidx.databinding.DataBindingUtil
@@ -15,6 +16,7 @@ import fr.im.salimi.projectmanager.R
 import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
 import fr.im.salimi.projectmanager.data.entities.Module
 import fr.im.salimi.projectmanager.data.repositories.FunctionRepository
+import fr.im.salimi.projectmanager.data.repositories.ModuleRepository
 import fr.im.salimi.projectmanager.databinding.FunctionFormFragmentBinding
 import fr.im.salimi.projectmanager.ui.uiUtils.BaseSpinnerAdapter
 import fr.im.salimi.projectmanager.ui.uiUtils.FabButtonStates
@@ -29,7 +31,8 @@ class FunctionFormFragment : Fragment() {
     private val viewModel: FunctionFormViewModel by viewModels {
         val database = ProjectRoomDatabase.getInstance(requireContext())
         val repository = FunctionRepository(database.functionDao())
-        FunctionFormViewModelFactory(args.functionId, repository)
+        val moduleRepository = ModuleRepository(database.moduleDao())
+        FunctionFormViewModelFactory(args.functionId, repository, moduleRepository)
     }
 
     private lateinit var spinnerAdapter: ModuleSpinnerAdapter
@@ -48,6 +51,10 @@ class FunctionFormFragment : Fragment() {
         binding.viewModel = viewModel
         initObservers()
 
+        spinnerAdapter = ModuleSpinnerAdapter(listOf())
+        binding.editTextFunctionModule.setAdapter(spinnerAdapter)
+        binding.editTextFunctionModule.onItemClickListener = itemClickListener
+
         setFabBtnBehaviour(FabButtonStates.SECONDARY_STATE) {
             fabBtnClicked()
         }
@@ -65,6 +72,17 @@ class FunctionFormFragment : Fragment() {
                 viewModel.onAddFabClickedEventFinished()
                 this.findNavController().navigate(R.id.action_functionFormFragment_to_functionListFragment)
             }
+        }
+
+        viewModel.modulesList.observe(viewLifecycleOwner) {
+            spinnerAdapter.setEntitiesList(it)
+            if (args.functionId != -1L) {
+                 viewModel.onSetModule()
+            }
+        }
+
+        viewModel.module.observe(viewLifecycleOwner) {
+            setDefaultSpinnerSelection(it)
         }
     }
 
@@ -86,8 +104,16 @@ class FunctionFormFragment : Fragment() {
         })
     }
 
+    private val itemClickListener: AdapterView.OnItemClickListener = AdapterView.OnItemClickListener { _, _, _, id ->
+        viewModel.setModuleId(id)
+    }
+
     private fun fabBtnClicked() {
         viewModel.onAddFabBtnClickEvent()
+    }
+
+    private fun setDefaultSpinnerSelection(module: Module) {
+        binding.editTextFunctionModule.setText(module.toString(), false)
     }
 
     inner class ModuleSpinnerAdapter(modulesList: List<Module>): BaseSpinnerAdapter<Module>(requireContext(), modulesList) {

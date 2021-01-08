@@ -1,15 +1,16 @@
 package fr.im.salimi.projectmanager.ui.functionForm
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import fr.im.salimi.projectmanager.data.entities.Function
+import fr.im.salimi.projectmanager.data.entities.Module
 import fr.im.salimi.projectmanager.data.repositories.FunctionRepository
+import fr.im.salimi.projectmanager.data.repositories.ModuleRepository
 import kotlinx.coroutines.launch
 import java.util.*
 
-class FunctionFormViewModel(private val id: Long, private val repository: FunctionRepository) : ViewModel() {
+class FunctionFormViewModel(private val id: Long,
+                            private val repository: FunctionRepository,
+                            private val moduleRepository: ModuleRepository) : ViewModel() {
 
     private val _function = MutableLiveData<Function>()
     val function: LiveData<Function>
@@ -23,10 +24,28 @@ class FunctionFormViewModel(private val id: Long, private val repository: Functi
     val addFabBtnClickEvent: LiveData<Boolean>
         get() = _addFabBtnClickEvent
 
+    private val _modulesList = moduleRepository.getAll()
+    val modulesList: LiveData<List<Module>>
+        get() = _modulesList.asLiveData()
+
+    private val _module = MutableLiveData<Module>()
+    val module: LiveData<Module>
+        get() = _module
+
     init {
         initFunction()
         _addFabBtnClickEvent.value = false
         _dateClickEvent.value = false
+    }
+
+    fun setModuleId(id: Long) {
+        _function.value!!.moduleId = id
+    }
+
+    fun onSetModule() {
+        viewModelScope.launch {
+            _module.value = moduleRepository.getById(_function.value!!.moduleId)
+        }
     }
 
     fun onDateClickedEvent() {
