@@ -19,6 +19,7 @@ import com.google.android.material.chip.Chip
 import fr.im.salimi.projectmanager.R
 import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
 import fr.im.salimi.projectmanager.data.entities.Developer
+import fr.im.salimi.projectmanager.data.repositories.DeveloperRepository
 import fr.im.salimi.projectmanager.data.repositories.TaskRepository
 import fr.im.salimi.projectmanager.databinding.TaskFormFragmentBinding
 import fr.im.salimi.projectmanager.ui.uiUtils.*
@@ -27,13 +28,15 @@ import kotlin.collections.ArrayList
 
 class TaskFormFragment : Fragment() {
 
-    val args: TaskFormFragmentArgs by navArgs()
+    private val args: TaskFormFragmentArgs by navArgs()
     private lateinit var binding: TaskFormFragmentBinding
     private val viewModel: TaskFormViewModel by viewModels {
         val database = ProjectRoomDatabase.getInstance(requireContext())
         val dao = database.taskDao()
-        TaskFormViewModelFactory(args.taskId, TaskRepository(dao))
+        TaskFormViewModelFactory(args.taskId, TaskRepository(dao), DeveloperRepository(database.developerDao()))
     }
+
+    private lateinit var spinnerAdapter: DevelopersSpinnerAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -45,24 +48,15 @@ class TaskFormFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         binding.viewModel = viewModel
+
+        val list = mutableListOf<Developer>()
+
+        list.add(Developer(firstName = "Salim", lastName = "Salimi"))
+        list.add(Developer(firstName = "Hello", lastName = "Salimi"))
+        list.add(Developer(firstName = "World", lastName = "Salimi"))
+
+        initSpinner()
         initObservers()
-
-        val developersList = mutableListOf<Developer>()
-        developersList.add(Developer(firstName = "Salim", lastName = "Salimi"))
-        developersList.add(Developer(firstName = "Hello", lastName = "Salimi"))
-        developersList.add(Developer(firstName = "World", lastName = "Salimi"))
-        developersList.add(Developer(firstName = "Yildiz", lastName = "Salimi"))
-        developersList.add(Developer(firstName = "Akturk", lastName = "Salimi"))
-
-        val adapter = DevelopersSpinnerAdapter(developersList)
-        binding.editTextTaskDevelopers.setTokenizer(MultiAutoCompleteTextView.CommaTokenizer())
-        binding.editTextTaskDevelopers.threshold = 0
-        binding.editTextTaskDevelopers.onItemClickListener = AdapterView.OnItemClickListener { _, _, i, l ->
-            val developer = adapter.getItem(i) as Developer
-            addChip(developer)
-        }
-        binding.editTextTaskDevelopers.setAdapter(adapter)
-
         setFabBtnBehaviour(FabButtonStates.SECONDARY_STATE) {
             fabBtnClicked()
         }
@@ -80,6 +74,24 @@ class TaskFormFragment : Fragment() {
                 viewModel.onAddFabClickedEventFinished()
                 this.findNavController().navigate(R.id.action_taskFormFragment_to_taskListFragment)
             }
+        }
+
+        viewModel.developersList.observe(viewLifecycleOwner) { developers ->
+            spinnerAdapter.setEntitiesList(developers)
+        }
+    }
+
+    private fun initSpinner() {
+        spinnerAdapter = DevelopersSpinnerAdapter(mutableListOf())
+        with(binding.editTextTaskDevelopers) {
+            setTokenizer(MultiAutoCompleteTextView.CommaTokenizer())
+            threshold = 2
+            onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
+                val developer = spinnerAdapter.getItem(position) as Developer
+                setText("")
+                addChip(developer)
+            }
+            setAdapter(spinnerAdapter)
         }
     }
 
@@ -171,6 +183,11 @@ class TaskFormFragment : Fragment() {
                 }
             }
 
+        }
+
+        override fun setEntitiesList(data: List<Developer>) {
+            super.setEntitiesList(data)
+            tempItems = getEntitiesList().toMutableList()
         }
 
         override fun getFilter(): Filter {

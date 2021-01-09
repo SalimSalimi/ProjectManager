@@ -43,7 +43,7 @@ abstract class BaseSpinnerAdapter<T : BaseEntity>(context: Context, private var 
     abstract fun onSetViews(item: T, titleView: TextView,
                             subTitleView: TextView, roundedLetter: TextView)
 
-    fun setEntitiesList(data: List<T>) {
+    open fun setEntitiesList(data: List<T>) {
         this.entitiesList = data
         this.notifyDataSetChanged()
     }

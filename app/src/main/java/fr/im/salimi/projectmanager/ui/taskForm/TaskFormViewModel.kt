@@ -1,16 +1,16 @@
 package fr.im.salimi.projectmanager.ui.taskForm
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import fr.im.salimi.projectmanager.data.entities.Developer
 import fr.im.salimi.projectmanager.data.entities.Task
+import fr.im.salimi.projectmanager.data.repositories.DeveloperRepository
 import fr.im.salimi.projectmanager.data.repositories.TaskRepository
 import kotlinx.coroutines.launch
 import java.util.*
 
-class TaskFormViewModel(private val id: Long, private val repository: TaskRepository) : ViewModel() {
-    
+class TaskFormViewModel(private val id: Long, private val repository: TaskRepository,
+                        private val developerRepository: DeveloperRepository) : ViewModel() {
+
     private val _task = MutableLiveData<Task>()
     val task: LiveData<Task>
         get() = _task
@@ -22,6 +22,10 @@ class TaskFormViewModel(private val id: Long, private val repository: TaskReposi
     private val _addFabBtnClickEvent = MutableLiveData<Boolean>()
     val addFabBtnClickEvent: LiveData<Boolean>
         get() = _addFabBtnClickEvent
+
+    private val _developersList = developerRepository.getAll()
+    val developersList: LiveData<List<Developer>>
+        get() = _developersList.asLiveData()
 
     init {
         initFunction()
