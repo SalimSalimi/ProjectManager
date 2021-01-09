@@ -1,23 +1,29 @@
 package fr.im.salimi.projectmanager.ui.taskForm
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.Filter
+import android.widget.MultiAutoCompleteTextView
+import android.widget.TextView
 import androidx.core.util.Pair
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.chip.Chip
 import fr.im.salimi.projectmanager.R
 import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
+import fr.im.salimi.projectmanager.data.entities.Developer
 import fr.im.salimi.projectmanager.data.repositories.TaskRepository
 import fr.im.salimi.projectmanager.databinding.TaskFormFragmentBinding
-import fr.im.salimi.projectmanager.ui.uiUtils.FabButtonStates
-import fr.im.salimi.projectmanager.ui.uiUtils.chooseDatePicker
-import fr.im.salimi.projectmanager.ui.uiUtils.setFabBtnBehaviour
+import fr.im.salimi.projectmanager.ui.uiUtils.*
 import java.util.*
+import kotlin.collections.ArrayList
 
 class TaskFormFragment : Fragment() {
 
@@ -40,6 +46,23 @@ class TaskFormFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         binding.viewModel = viewModel
         initObservers()
+
+        val developersList = mutableListOf<Developer>()
+        developersList.add(Developer(firstName = "Salim", lastName = "Salimi"))
+        developersList.add(Developer(firstName = "Hello", lastName = "Salimi"))
+        developersList.add(Developer(firstName = "World", lastName = "Salimi"))
+        developersList.add(Developer(firstName = "Yildiz", lastName = "Salimi"))
+        developersList.add(Developer(firstName = "Akturk", lastName = "Salimi"))
+
+        val adapter = DevelopersSpinnerAdapter(developersList)
+        binding.editTextTaskDevelopers.setTokenizer(MultiAutoCompleteTextView.CommaTokenizer())
+        binding.editTextTaskDevelopers.threshold = 0
+        binding.editTextTaskDevelopers.onItemClickListener = AdapterView.OnItemClickListener { _, _, i, l ->
+            val developer = adapter.getItem(i) as Developer
+            addChip(developer)
+        }
+        binding.editTextTaskDevelopers.setAdapter(adapter)
+
         setFabBtnBehaviour(FabButtonStates.SECONDARY_STATE) {
             fabBtnClicked()
         }
@@ -78,8 +101,80 @@ class TaskFormFragment : Fragment() {
         })
     }
 
+    private fun addChip(developer: Developer) {
+        val chip = Chip(requireContext())
+        chip.text = developer.firstName
+
+        chip.isCheckable = false
+        chip.isClickable = false
+        chip.isCloseIconVisible = true
+
+        chip.setChipIconResource(R.drawable.ic_baseline_person_24)
+        binding.developersChipGroup.addView(chip)
+
+        chip.setOnCloseIconClickListener {
+            Log.d("TaskFormFragment", "Closed")
+            binding.developersChipGroup.removeView(chip)
+        }
+    }
+
     private fun fabBtnClicked() {
         viewModel.onAddFabBtnClickEvent()
     }
 
+    inner class DevelopersSpinnerAdapter(developersList: List<Developer>) : BaseSpinnerAdapter<Developer>(requireContext(), developersList) {
+
+        internal var tempItems: MutableList<Developer> = mutableListOf()
+        internal var suggestions: MutableList<Developer> = mutableListOf()
+
+        init {
+            tempItems = getEntitiesList().toMutableList()
+            suggestions = ArrayList()
+        }
+
+        override fun onSetViews(item: Developer, titleView: TextView, subTitleView: TextView, roundedLetter: TextView) {
+            titleView.text = item.firstName
+            subTitleView.text = item.post.name
+            roundedLetter.text = item.firstName[0].toString()
+            roundedLetter.setBackgroundColorText(item.firstName)
+        }
+
+        private var customFilter: Filter = object : Filter() {
+
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val filterResults = FilterResults()
+                return if (constraint != null) {
+                    suggestions.clear()
+                    tempItems.forEach { developer ->  
+                        if (developer.firstName.toLowerCase(Locale.getDefault()).contains(constraint.toString().toLowerCase(Locale.getDefault())))
+                            suggestions.add(developer)
+                    }
+                    filterResults.values = suggestions
+                    filterResults.count = suggestions.size
+                    filterResults
+                } else {
+                    filterResults.values = tempItems
+                    filterResults.count = tempItems.size
+                    filterResults
+                }
+            }
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults) {
+                val filterList = results.values as? List<Developer>
+                if (results.count > 0) {
+                    clear()
+                    filterList?.forEach {
+                        add(it)
+                    }.also {
+                        notifyDataSetChanged()
+                    }
+                }
+            }
+
+        }
+
+        override fun getFilter(): Filter {
+            return customFilter
+        }
+    }
 }
