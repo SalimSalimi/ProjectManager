@@ -48,12 +48,6 @@ class TaskFormFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         binding.viewModel = viewModel
 
-        val list = mutableListOf<Developer>()
-
-        list.add(Developer(firstName = "Salim", lastName = "Salimi"))
-        list.add(Developer(firstName = "Hello", lastName = "Salimi"))
-        list.add(Developer(firstName = "World", lastName = "Salimi"))
-
         initSpinner()
         initObservers()
         setFabBtnBehaviour(FabButtonStates.SECONDARY_STATE) {
@@ -97,8 +91,8 @@ class TaskFormFragment : Fragment() {
 
     private fun onDateChooser() {
         val initValues = Pair<Long, Long>(
-            viewModel.task.value?.startingDate?.time,
-            viewModel.task.value?.endingDate?.time
+                viewModel.task.value?.startingDate?.time,
+                viewModel.task.value?.endingDate?.time
         )
         chooseDatePicker(initValues, {
             val startingDate = Date(it.first ?: Date().time)
@@ -115,19 +109,20 @@ class TaskFormFragment : Fragment() {
 
     private fun addChip(developer: Developer) {
         val chip = Chip(requireContext())
-        chip.text = developer.firstName
+        with(chip) {
+            text = "${developer.firstName} ${developer.lastName}"
+            isCheckable = false
+            isClickable = false
+            isCloseIconVisible = true
+            isChipIconVisible = true
 
-        chip.isCheckable = false
-        chip.isClickable = false
-        chip.isCloseIconVisible = true
-
-        chip.setChipIconResource(R.drawable.ic_baseline_person_24)
-        binding.developersChipGroup.addView(chip)
-
-        chip.setOnCloseIconClickListener {
-            viewModel.onRemoveDeveloper(developer)
-            binding.developersChipGroup.removeView(chip)
+            setChipIconResource(R.drawable.ic_baseline_person_24)
+            setOnCloseIconClickListener {
+                viewModel.onRemoveDeveloper(developer)
+                binding.developersChipGroup.removeView(chip)
+            }
         }
+        binding.developersChipGroup.addView(chip)
     }
 
     private fun fabBtnClicked() {
@@ -157,7 +152,7 @@ class TaskFormFragment : Fragment() {
                 val filterResults = FilterResults()
                 return if (constraint != null) {
                     suggestions.clear()
-                    tempItems.forEach { developer ->  
+                    tempItems.forEach { developer ->
                         if (developer.firstName.toLowerCase(Locale.getDefault()).contains(constraint.toString().toLowerCase(Locale.getDefault())))
                             suggestions.add(developer)
                     }
