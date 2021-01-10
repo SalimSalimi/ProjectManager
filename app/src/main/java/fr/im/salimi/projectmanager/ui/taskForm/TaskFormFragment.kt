@@ -1,7 +1,6 @@
 package fr.im.salimi.projectmanager.ui.taskForm
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -90,6 +89,7 @@ class TaskFormFragment : Fragment() {
                 val developer = spinnerAdapter.getItem(position) as Developer
                 setText("")
                 addChip(developer)
+                viewModel.onChooseDeveloper(developer)
             }
             setAdapter(spinnerAdapter)
         }
@@ -125,7 +125,7 @@ class TaskFormFragment : Fragment() {
         binding.developersChipGroup.addView(chip)
 
         chip.setOnCloseIconClickListener {
-            Log.d("TaskFormFragment", "Closed")
+            viewModel.onRemoveDeveloper(developer)
             binding.developersChipGroup.removeView(chip)
         }
     }

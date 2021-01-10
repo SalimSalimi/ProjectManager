@@ -1,5 +1,6 @@
 package fr.im.salimi.projectmanager.ui.taskForm
 
+import android.util.Log
 import androidx.lifecycle.*
 import fr.im.salimi.projectmanager.data.entities.Developer
 import fr.im.salimi.projectmanager.data.entities.Task
@@ -26,6 +27,8 @@ class TaskFormViewModel(private val id: Long, private val repository: TaskReposi
     private val _developersList = developerRepository.getAll()
     val developersList: LiveData<List<Developer>>
         get() = _developersList.asLiveData()
+
+    private val developersSelectedId = mutableListOf<Long>()
 
     init {
         initFunction()
@@ -59,6 +62,16 @@ class TaskFormViewModel(private val id: Long, private val repository: TaskReposi
     fun onChooseDate(startingDate: Date, endingDate: Date) {
         _task.value?.startingDate = startingDate
         _task.value?.endingDate = endingDate
+    }
+
+    fun onChooseDeveloper(developer: Developer) {
+        developersSelectedId.add(developer.id)
+        Log.d("TaskFormViewModel", "${developersSelectedId.size}")
+    }
+
+    fun onRemoveDeveloper(developer: Developer) {
+        developersSelectedId.remove(developer.id)
+        Log.d("TaskFormViewModel", "${developersSelectedId.size}")
     }
 
     private fun initFunction() {
