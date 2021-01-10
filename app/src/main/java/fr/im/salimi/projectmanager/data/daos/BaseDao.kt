@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface BaseDao<T> {
     @Insert
-    suspend fun insert(entity: T)
+    suspend fun insert(entity: T): Long
 
     @Delete
     suspend fun delete(entity: T)

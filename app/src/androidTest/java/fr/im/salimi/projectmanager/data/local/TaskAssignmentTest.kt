@@ -64,9 +64,7 @@ class TaskAssignmentTest {
         //When
         val taskAssignment1 = TaskAssignments(1, 1)
         val taskAssignment2 = TaskAssignments(1, 2)
-        database.developerDao().assignTask(taskAssignment1)
-        database.developerDao().assignTask(taskAssignment2)
-
+        database.taskDao().assignTask(taskAssignment1, taskAssignment2)
         //Then
         //Then
         val result = database.developerDao().getDeveloperWithTasksById(1)
@@ -109,8 +107,7 @@ class TaskAssignmentTest {
         //When
         val taskAssignment1 = TaskAssignments(1, 1)
         val taskAssignment2 = TaskAssignments(2, 1)
-        database.developerDao().assignTask(taskAssignment1)
-        database.developerDao().assignTask(taskAssignment2)
+        database.taskDao().assignTask(taskAssignment1, taskAssignment2)
 
         //Then
         val result = database.taskDao().getTaskWithDevelopersByTaskId(1)

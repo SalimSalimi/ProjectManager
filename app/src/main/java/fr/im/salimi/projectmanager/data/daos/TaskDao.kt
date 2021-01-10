@@ -1,8 +1,10 @@
 package fr.im.salimi.projectmanager.data.daos
 
 import androidx.room.Dao
+import androidx.room.Insert
 import androidx.room.Query
 import fr.im.salimi.projectmanager.data.entities.Task
+import fr.im.salimi.projectmanager.data.entities.TaskAssignments
 import fr.im.salimi.projectmanager.data.entities.relations.TaskWithDevelopers
 import kotlinx.coroutines.flow.Flow
 
@@ -14,6 +16,9 @@ abstract class TaskDao: BaseDao<Task> {
 
     @Query("SELECT * FROM tasks WHERE task_id = :id")
     abstract override suspend fun getById(id: Long): Task
+
+    @Insert
+    abstract suspend fun assignTask(vararg taskAssignments: TaskAssignments)
 
     @Query("SELECT * FROM tasks WHERE task_id = :id")
     abstract suspend fun getTaskWithDevelopersByTaskId(id: Long): TaskWithDevelopers

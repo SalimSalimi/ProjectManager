@@ -5,8 +5,8 @@ import kotlinx.coroutines.flow.Flow
 
 abstract class BaseRepository<T>(private val dao: BaseDao<T>) {
 
-    suspend fun insert(entity: T) {
-        dao.insert(entity)
+    suspend fun insert(entity: T): Long {
+        return dao.insert(entity)
     }
 
     suspend fun delete(entity: T) {
