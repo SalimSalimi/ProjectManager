@@ -8,6 +8,7 @@ import fr.im.salimi.projectmanager.data.repositories.DeveloperRepository
 import fr.im.salimi.projectmanager.data.repositories.TaskRepository
 import kotlinx.coroutines.launch
 import java.util.*
+import kotlin.collections.ArrayList
 
 class TaskFormViewModel(private val id: Long, private val repository: TaskRepository,
                         developerRepository: DeveloperRepository) : ViewModel() {
@@ -28,7 +29,11 @@ class TaskFormViewModel(private val id: Long, private val repository: TaskReposi
     val developersList: LiveData<List<Developer>>
         get() = _developersList.asLiveData()
 
-    private val developersSelectedId = mutableListOf<Long>()
+    private val mutableAssignedDevelopersList = ArrayList<Developer>()
+
+    private val _assignedDevelopers = MutableLiveData<List<Developer>>()
+    val assignedDevelopers: LiveData<List<Developer>>
+        get() = _assignedDevelopers
 
     init {
         initFunction()
@@ -65,16 +70,19 @@ class TaskFormViewModel(private val id: Long, private val repository: TaskReposi
     }
 
     fun onChooseDeveloper(developer: Developer) {
-        developersSelectedId.add(developer.id)
+        mutableAssignedDevelopersList.add(developer)
+        _assignedDevelopers.value = mutableAssignedDevelopersList
     }
 
     fun onRemoveDeveloper(developer: Developer) {
-        developersSelectedId.remove(developer.id)
+        mutableAssignedDevelopersList.remove(developer)
+        _assignedDevelopers.value = mutableAssignedDevelopersList
     }
 
     private fun initFunction() {
         if (id == -1L) {
             _task.value = Task()
+            //TODO Remove it after when implementing function choose
             _task.value!!.functionId = 1L
         } else
             getTaskById()
@@ -82,8 +90,12 @@ class TaskFormViewModel(private val id: Long, private val repository: TaskReposi
 
     private fun getTaskById() {
         viewModelScope.launch {
-            _task.value = repository.getById(id)
+            val taskWithAssignments = repository.getTaskAssignmentsByTaskId(id)
+            _task.value = taskWithAssignments.task
+            //TODO Remove it after when implementing function choose
             _task.value!!.functionId = 1L
+            mutableAssignedDevelopersList.addAll(taskWithAssignments.developers)
+            _assignedDevelopers.value = mutableAssignedDevelopersList
         }
     }
 
@@ -110,9 +122,9 @@ class TaskFormViewModel(private val id: Long, private val repository: TaskReposi
 
     private fun createTaskAssignments(): List<TaskAssignments> {
         val assignments = mutableListOf<TaskAssignments>()
-        if (developersSelectedId.size > 0) {
-            developersSelectedId.forEach { developerId ->
-                assignments.add(TaskAssignments(developerId, _task.value!!.id))
+        if (_assignedDevelopers.value?.isNotEmpty() == true) {
+            _assignedDevelopers.value?.forEach { developer ->
+                assignments.add(TaskAssignments(developer.id, _task.value!!.id))
             }
         }
         return assignments

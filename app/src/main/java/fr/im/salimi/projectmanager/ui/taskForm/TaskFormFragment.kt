@@ -72,6 +72,12 @@ class TaskFormFragment : Fragment() {
         viewModel.developersList.observe(viewLifecycleOwner) { developers ->
             spinnerAdapter.setEntitiesList(developers)
         }
+
+        viewModel.assignedDevelopers.observe(viewLifecycleOwner) { developers ->
+            developers.forEach {
+                addChip(it)
+            }
+        }
     }
 
     private fun initSpinner() {
@@ -82,7 +88,6 @@ class TaskFormFragment : Fragment() {
             onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
                 val developer = spinnerAdapter.getItem(position) as Developer
                 setText("")
-                addChip(developer)
                 viewModel.onChooseDeveloper(developer)
             }
             setAdapter(spinnerAdapter)

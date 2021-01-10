@@ -9,4 +9,8 @@ class TaskRepository(private val dao: TaskDao): BaseRepository<Task>(dao) {
     suspend fun insertTaskAssignments(taskAssignments: List<TaskAssignments>) {
         dao.assignTask(*taskAssignments.map { it }.toTypedArray())
     }
+
+    suspend fun getTaskAssignmentsByTaskId(id: Long) =
+            dao.getTaskWithDevelopersByTaskId(id)
+
 }

@@ -2,6 +2,7 @@ package fr.im.salimi.projectmanager.data.daos
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import fr.im.salimi.projectmanager.data.entities.Task
 import fr.im.salimi.projectmanager.data.entities.TaskAssignments
@@ -17,7 +18,7 @@ abstract class TaskDao: BaseDao<Task> {
     @Query("SELECT * FROM tasks WHERE task_id = :id")
     abstract override suspend fun getById(id: Long): Task
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     abstract suspend fun assignTask(vararg taskAssignments: TaskAssignments)
 
     @Query("SELECT * FROM tasks WHERE task_id = :id")
