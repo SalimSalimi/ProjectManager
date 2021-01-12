@@ -1,16 +1,18 @@
 package fr.im.salimi.projectmanager.ui.taskForm
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import fr.im.salimi.projectmanager.data.entities.Developer
 import fr.im.salimi.projectmanager.data.entities.Task
+import fr.im.salimi.projectmanager.data.entities.TaskAssignments
+import fr.im.salimi.projectmanager.data.repositories.DeveloperRepository
 import fr.im.salimi.projectmanager.data.repositories.TaskRepository
 import kotlinx.coroutines.launch
 import java.util.*
+import kotlin.collections.ArrayList
 
-class TaskFormViewModel(private val id: Long, private val repository: TaskRepository) : ViewModel() {
-    
+class TaskFormViewModel(private val id: Long, private val repository: TaskRepository,
+                        developerRepository: DeveloperRepository) : ViewModel() {
+
     private val _task = MutableLiveData<Task>()
     val task: LiveData<Task>
         get() = _task
@@ -22,6 +24,16 @@ class TaskFormViewModel(private val id: Long, private val repository: TaskReposi
     private val _addFabBtnClickEvent = MutableLiveData<Boolean>()
     val addFabBtnClickEvent: LiveData<Boolean>
         get() = _addFabBtnClickEvent
+
+    private val _developersList = developerRepository.getAll()
+    val developersList: LiveData<List<Developer>>
+        get() = _developersList.asLiveData()
+
+    private val mutableAssignedDevelopersList = ArrayList<Developer>()
+
+    private val _assignedDevelopers = MutableLiveData<List<Developer>>()
+    val assignedDevelopers: LiveData<List<Developer>>
+        get() = _assignedDevelopers
 
     init {
         initFunction()
@@ -57,29 +69,64 @@ class TaskFormViewModel(private val id: Long, private val repository: TaskReposi
         _task.value?.endingDate = endingDate
     }
 
+    fun onChooseDeveloper(developer: Developer) {
+        mutableAssignedDevelopersList.add(developer)
+        _assignedDevelopers.value = mutableAssignedDevelopersList
+    }
+
+    fun onRemoveDeveloper(developer: Developer) {
+        mutableAssignedDevelopersList.remove(developer)
+        _assignedDevelopers.value = mutableAssignedDevelopersList
+    }
+
     private fun initFunction() {
-        if (id == -1L)
+        if (id == -1L) {
             _task.value = Task()
-        else
+            //TODO Remove it after when implementing function choose
+            _task.value!!.functionId = 1L
+        } else
             getTaskById()
     }
 
     private fun getTaskById() {
         viewModelScope.launch {
-            _task.value = repository.getById(id)
+            val taskWithAssignments = repository.getTaskAssignmentsByTaskId(id)
+            _task.value = taskWithAssignments.task
+            //TODO Remove it after when implementing function choose
+            _task.value!!.functionId = 1L
+            mutableAssignedDevelopersList.addAll(taskWithAssignments.developers)
+            _assignedDevelopers.value = mutableAssignedDevelopersList
         }
     }
 
     private fun insert() {
         viewModelScope.launch {
-            repository.insert(_task.value!!)
+            _task.value!!.id = repository.insert(_task.value!!)
+            insertAssignments()
         }
     }
 
     private fun update() {
         viewModelScope.launch {
             repository.update(_task.value!!)
+            insertAssignments()
         }
     }
 
+    private suspend fun insertAssignments() {
+        val assignments = createTaskAssignments()
+        if (!assignments.isNullOrEmpty()) {
+            repository.insertTaskAssignments(assignments)
+        }
+    }
+
+    private fun createTaskAssignments(): List<TaskAssignments> {
+        val assignments = mutableListOf<TaskAssignments>()
+        if (_assignedDevelopers.value?.isNotEmpty() == true) {
+            _assignedDevelopers.value?.forEach { developer ->
+                assignments.add(TaskAssignments(developer.id, _task.value!!.id))
+            }
+        }
+        return assignments
+    }
 }

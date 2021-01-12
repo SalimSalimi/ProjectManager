@@ -54,4 +54,5 @@
     <string name="description_of_the_task">Description task</string>
     <string name="task_name">Task name</string>
     <string name="choose_a_module">Choose a module</string>
+    <string name="choose_developers">Choose developers</string>
 </resources>

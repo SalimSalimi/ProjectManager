@@ -10,7 +10,7 @@ import fr.im.salimi.projectmanager.R
 import fr.im.salimi.projectmanager.data.entities.BaseEntity
 
 abstract class BaseSpinnerAdapter<T : BaseEntity>(context: Context, private var entitiesList: List<T>)
-    : ArrayAdapter<T>(context, R.layout.spinner_custom_base_layout, entitiesList) {
+    : ArrayAdapter<T>(context, R.layout.spinner_custom_base_layout, ArrayList(entitiesList)) {
 
     override fun getCount(): Int =
             entitiesList.size
@@ -43,7 +43,7 @@ abstract class BaseSpinnerAdapter<T : BaseEntity>(context: Context, private var 
     abstract fun onSetViews(item: T, titleView: TextView,
                             subTitleView: TextView, roundedLetter: TextView)
 
-    fun setEntitiesList(data: List<T>) {
+    open fun setEntitiesList(data: List<T>) {
         this.entitiesList = data
         this.notifyDataSetChanged()
     }

@@ -56,8 +56,33 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:hint="@string/description_of_the_task"
-                    android:inputType="textPersonName"
+                    android:inputType="text"
                     android:text="@={viewModel.task.description}" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_task_developers"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                app:endIconMode="none"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/text_input_task_name"
+                app:layout_constraintStart_toStartOf="@+id/text_input_task_name"
+                app:layout_constraintTop_toBottomOf="@+id/text_input_task_description">
+
+                <MultiAutoCompleteTextView
+                    android:id="@+id/edit_text_task_developers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/choose_developers"
+                    android:inputType="textPersonName"/>
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/developers_chip_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -73,7 +98,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/text_input_task_ending_date"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_input_task_description"
+                app:layout_constraintTop_toBottomOf="@+id/text_input_task_developers"
                 app:placeholderText="@string/date_format">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -90,14 +115,13 @@
                 android:id="@+id/text_input_task_ending_date"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:hint="@string/ending_date"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/text_input_task_starting_date"
 
-                app:layout_constraintTop_toBottomOf="@+id/text_input_task_description"
+                app:layout_constraintTop_toTopOf="@+id/text_input_task_starting_date"
                 app:placeholderText="@string/date_format">
 
                 <com.google.android.material.textfield.TextInputEditText
