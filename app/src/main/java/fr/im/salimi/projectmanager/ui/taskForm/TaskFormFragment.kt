@@ -74,6 +74,7 @@ class TaskFormFragment : Fragment() {
         }
 
         viewModel.assignedDevelopers.observe(viewLifecycleOwner) { developers ->
+            binding.developersChipGroup.removeAllViews()
             developers.forEach {
                 addChip(it)
             }
@@ -81,12 +82,13 @@ class TaskFormFragment : Fragment() {
     }
 
     private fun initSpinner() {
-        spinnerAdapter = DevelopersSpinnerAdapter(mutableListOf())
+        spinnerAdapter = DevelopersSpinnerAdapter(listOf())
         with(binding.editTextTaskDevelopers) {
             setTokenizer(MultiAutoCompleteTextView.CommaTokenizer())
             threshold = 2
             onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
                 val developer = spinnerAdapter.getItem(position) as Developer
+                //spinnerAdapter.removeEntityItem(developer)
                 setText("")
                 viewModel.onChooseDeveloper(developer)
             }
@@ -124,7 +126,8 @@ class TaskFormFragment : Fragment() {
             setChipIconResource(R.drawable.ic_baseline_person_24)
             setOnCloseIconClickListener {
                 viewModel.onRemoveDeveloper(developer)
-                binding.developersChipGroup.removeView(chip)
+              //  spinnerAdapter.addEntityItem(developer)
+               // spinnerAdapter.notifyDataSetChanged()
             }
         }
         binding.developersChipGroup.addView(chip)
@@ -146,7 +149,7 @@ class TaskFormFragment : Fragment() {
 
         override fun onSetViews(item: Developer, titleView: TextView, subTitleView: TextView, roundedLetter: TextView) {
             titleView.text = item.firstName
-            subTitleView.text = item.post.name
+            subTitleView.text = item.post.state
             roundedLetter.text = item.firstName[0].toString()
             roundedLetter.setBackgroundColorText(item.firstName)
         }
@@ -190,6 +193,18 @@ class TaskFormFragment : Fragment() {
             tempItems = getEntitiesList().toMutableList()
         }
 
+       /* fun addEntityItem(data: Developer) {
+            tempItems.add(data)
+            add(data)
+            notifyDataSetChanged()
+        }
+
+        fun removeEntityItem(data: Developer) {
+            tempItems.remove(data)
+            remove(data)
+            notifyDataSetChanged()
+        }
+        */
         override fun getFilter(): Filter {
             return customFilter
         }
