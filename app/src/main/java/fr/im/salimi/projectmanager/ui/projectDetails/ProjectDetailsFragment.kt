@@ -39,5 +39,34 @@ class ProjectDetailsFragment : Fragment() {
         return binding.root
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        initObserversEvents()
+    }
 
+    private fun initObserversEvents() {
+        viewModel.modulesClickEvent.observe(viewLifecycleOwner) {
+            if (it) {
+                viewModel.onModulesClicked()
+            }
+        }
+
+        viewModel.functionsClickEvent.observe(viewLifecycleOwner) {
+            if (it) {
+                viewModel.onFunctionsClicked()
+            }
+        }
+
+        viewModel.tasksClickEvent.observe(viewLifecycleOwner) {
+            if (it) {
+                viewModel.onTasksClicked()
+            }
+        }
+
+        viewModel.developersClickEvent.observe(viewLifecycleOwner) {
+            if (it) {
+                viewModel.onDevelopersClicked()
+            }
+        }
+    }
 }
