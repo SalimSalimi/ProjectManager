@@ -13,4 +13,6 @@ class TaskRepository(private val dao: TaskDao): BaseRepository<Task>(dao) {
     suspend fun getTaskAssignmentsByTaskId(id: Long) =
             dao.getTaskWithDevelopersByTaskId(id)
 
+    fun getAllByProjectId(projectId: Long) =
+            dao.getAllByProjectId(projectId)
 }
