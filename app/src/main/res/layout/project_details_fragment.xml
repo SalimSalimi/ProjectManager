@@ -25,7 +25,8 @@
             app:cardElevation="4dp"
             app:layout_constraintEnd_toStartOf="@+id/developers_cardview"
             app:layout_constraintStart_toStartOf="@+id/modules_cardview"
-            app:layout_constraintTop_toBottomOf="@+id/modules_cardview">
+            app:layout_constraintTop_toBottomOf="@+id/modules_cardview"
+            android:onClick="@{() -> viewModel.onTasksClick()}">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -172,7 +173,8 @@
             app:layout_constraintBottom_toBottomOf="@+id/modules_cardview"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/modules_cardview"
-            app:layout_constraintTop_toTopOf="@+id/guideline3">
+            app:layout_constraintTop_toTopOf="@+id/guideline3"
+            android:onClick="@{() -> viewModel.onFunctionsClick()}">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -241,7 +243,8 @@
             app:cardElevation="4dp"
             app:layout_constraintEnd_toStartOf="@+id/function_cardview"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline3">
+            app:layout_constraintTop_toTopOf="@+id/guideline3"
+            android:onClick="@{() -> viewModel.onModulesClick()}">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -308,7 +311,8 @@
             app:cardElevation="4dp"
             app:layout_constraintEnd_toEndOf="@+id/function_cardview"
             app:layout_constraintStart_toEndOf="@+id/tasks_cardview"
-            app:layout_constraintTop_toBottomOf="@+id/function_cardview">
+            app:layout_constraintTop_toBottomOf="@+id/function_cardview"
+            android:onClick="@{() -> viewModel.onDevelopersClick()}">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

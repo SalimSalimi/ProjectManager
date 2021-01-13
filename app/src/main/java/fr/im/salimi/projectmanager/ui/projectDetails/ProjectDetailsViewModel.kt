@@ -18,10 +18,64 @@ class ProjectDetailsViewModel(private val id: Long, private val projectRepositor
     val getProjectIsDone: LiveData<Boolean>
         get() = _getProjectIsDone
 
+    private val _modulesClickEvent = MutableLiveData<Boolean>()
+    val modulesClickEvent: LiveData<Boolean>
+        get() = _modulesClickEvent
+
+    private val _functionsClickEvent = MutableLiveData<Boolean>()
+    val functionsClickEvent: LiveData<Boolean>
+        get() = _functionsClickEvent
+
+    private val _tasksClickEvent = MutableLiveData<Boolean>()
+    val tasksClickEvent: LiveData<Boolean>
+        get() = _tasksClickEvent
+
+    private val _developersClickEvent = MutableLiveData<Boolean>()
+    val developersClickEvent: LiveData<Boolean>
+        get() = _developersClickEvent
+
+
     init {
         _getProjectIsDone.value = false
         initProject()
     }
+    
+    fun onGetProjectDone() {
+        _getProjectIsDone.value = false
+    }
+    
+    fun onModulesClick() {
+        _modulesClickEvent.value = true
+    }
+
+    fun onModulesClicked() {
+        _modulesClickEvent.value = false
+    }
+
+    fun onFunctionsClick() {
+        _functionsClickEvent.value = true
+    }
+
+    fun onFunctionsClicked() {
+        _functionsClickEvent.value = false
+    }
+
+    fun onTasksClick() {
+        _tasksClickEvent.value = true
+    }
+
+    fun onTasksClicked() {
+        _tasksClickEvent.value = false
+    }
+
+    fun onDevelopersClick() {
+        _developersClickEvent.value = true
+    }
+
+    fun onDevelopersClicked() {
+        _developersClickEvent.value = false
+    }
+
 
     private fun initProject() {
         viewModelScope.launch {
@@ -30,7 +84,4 @@ class ProjectDetailsViewModel(private val id: Long, private val projectRepositor
         }
     }
 
-    fun onGetProjectDone() {
-        _getProjectIsDone.value = false
-    }
 }
