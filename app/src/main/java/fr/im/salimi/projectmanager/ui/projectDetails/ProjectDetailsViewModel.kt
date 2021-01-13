@@ -14,13 +14,23 @@ class ProjectDetailsViewModel(private val id: Long, private val projectRepositor
     val project: LiveData<Project>
         get() = _project
 
+    private val _getProjectIsDone = MutableLiveData<Boolean>()
+    val getProjectIsDone: LiveData<Boolean>
+        get() = _getProjectIsDone
+
     init {
+        _getProjectIsDone.value = false
         initProject()
     }
 
     private fun initProject() {
         viewModelScope.launch {
             _project.value = projectRepository.getById(id)
+            _getProjectIsDone.value = true
         }
+    }
+
+    fun onGetProjectDone() {
+        _getProjectIsDone.value = false
     }
 }

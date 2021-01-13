@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="viewModel"
+            type="fr.im.salimi.projectmanager.ui.projectDetails.ProjectDetailsViewModel"/>
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -78,19 +84,24 @@
         </com.google.android.material.card.MaterialCardView>
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/rounded_letter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/textview_letter_background_circular"
             android:fontFamily="@font/roboto"
+            android:gravity=""
+            android:text="S"
             android:textAppearance="@style/TextAppearance.AppCompat.Display3"
             android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/guideline3"
+            app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toStartOf="@+id/textView4"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:text="S" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView4"
@@ -105,7 +116,7 @@
             app:layout_constraintEnd_toStartOf="@+id/textView11"
             app:layout_constraintStart_toStartOf="@+id/guideline4"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="Hello World" />
+            android:text="@{viewModel.project.name}" />
 
         <TextView
             android:id="@+id/textView11"
@@ -133,7 +144,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/textView4"
             app:layout_constraintTop_toBottomOf="@+id/textView4"
-            android:text="Hello World" />
+            android:text="@{viewModel.project.customer}" />
 
         <TextView
             android:id="@+id/textView12"
@@ -148,7 +159,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/textView4"
             app:layout_constraintTop_toBottomOf="@+id/textView9"
-            android:text="Hello World is something that Idk what to say zahrejrekrez zajzakljza za" />
+            android:text="@{viewModel.project.description}" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/function_cardview"
