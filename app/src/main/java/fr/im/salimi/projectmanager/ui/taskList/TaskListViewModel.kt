@@ -14,7 +14,7 @@ class TaskListViewModel(private val projectId: Long, private val repository: Tas
 
     private val _tasksList: Flow<List<Task>> = flow {
         if (projectId != -1)
-            emitAll(repository.getAllByProjectId(1L))
+            emitAll(repository.getAllByProjectId(projectId))
         else
             emitAll(repository.getAll())
     }
