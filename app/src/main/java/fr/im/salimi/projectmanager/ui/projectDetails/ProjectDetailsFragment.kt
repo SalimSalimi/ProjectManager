@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import fr.im.salimi.projectmanager.R
 import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
 import fr.im.salimi.projectmanager.data.repositories.ProjectRepository
@@ -15,6 +16,7 @@ import fr.im.salimi.projectmanager.ui.uiUtils.setBackgroundColorText
 
 class ProjectDetailsFragment : Fragment() {
 
+    private val id = 1L
     private lateinit var binding: ProjectDetailsFragmentBinding
     private val viewModel: ProjectDetailsViewModel by viewModels {
         val projectDao = ProjectRoomDatabase.getInstance(requireContext()).projectDao()
@@ -47,6 +49,8 @@ class ProjectDetailsFragment : Fragment() {
     private fun initObserversEvents() {
         viewModel.modulesClickEvent.observe(viewLifecycleOwner) {
             if (it) {
+                val directions = ProjectDetailsFragmentDirections.actionProjectDetailsFragmentToModuleListFragment(id)
+                this.findNavController().navigate(directions)
                 viewModel.onModulesClicked()
             }
         }

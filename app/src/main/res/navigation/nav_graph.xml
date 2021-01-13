@@ -66,6 +66,10 @@
         <action
             android:id="@+id/action_moduleListFragment_to_moduleFormFragment"
             app:destination="@id/moduleFormFragment" />
+        <argument
+            android:name="projectId"
+            app:argType="long"
+            android:defaultValue="-1L" />
     </fragment>
     <fragment
         android:id="@+id/functionFormFragment"
@@ -110,6 +114,10 @@
     <fragment
         android:id="@+id/projectDetailsFragment"
         android:name="fr.im.salimi.projectmanager.ui.projectDetails.ProjectDetailsFragment"
-        android:label="ProjectDetailsFragment" />
+        android:label="ProjectDetailsFragment" >
+        <action
+            android:id="@+id/action_projectDetailsFragment_to_moduleListFragment"
+            app:destination="@id/moduleListFragment" />
+    </fragment>
 
 </navigation>
