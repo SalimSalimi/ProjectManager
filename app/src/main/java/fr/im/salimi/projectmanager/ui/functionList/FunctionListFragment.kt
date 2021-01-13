@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import fr.im.salimi.projectmanager.R
 import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
@@ -20,13 +21,14 @@ import fr.im.salimi.projectmanager.ui.uiUtils.setFabBtnBehaviour
 
 class FunctionListFragment : Fragment(), ClickListenersCallback<Function> {
 
+    private val args: FunctionListFragmentArgs by navArgs()
     private var sendingID = -1L
     private lateinit var myAdapter: FunctionListAdapter
     private lateinit var binding: FunctionListFragmentBinding
     private val viewModel: FunctionListViewModel by viewModels {
         val database = ProjectRoomDatabase.getInstance(requireContext())
         val repository = FunctionRepository(database.functionDao())
-        FunctionListViewModelFactory(1L, repository)
+        FunctionListViewModelFactory(args.projectId, repository)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
