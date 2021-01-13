@@ -36,7 +36,7 @@ class ProjectDetailsViewModel(private val id: Long, private val projectRepositor
 
 
     init {
-        _getProjectIsDone.value = false
+        initEvents()
         initProject()
     }
     
@@ -84,4 +84,11 @@ class ProjectDetailsViewModel(private val id: Long, private val projectRepositor
         }
     }
 
+    private fun initEvents() {
+        _getProjectIsDone.value = false
+        _modulesClickEvent.value = false
+        _functionsClickEvent.value = false
+        _tasksClickEvent.value = false
+        _developersClickEvent.value = false
+    }
 }
