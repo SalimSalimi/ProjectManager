@@ -57,6 +57,8 @@ class ProjectDetailsFragment : Fragment() {
 
         viewModel.functionsClickEvent.observe(viewLifecycleOwner) {
             if (it) {
+                val directions = ProjectDetailsFragmentDirections.actionProjectDetailsFragmentToFunctionListFragment(id)
+                this.findNavController().navigate(directions)
                 viewModel.onFunctionsClicked()
             }
         }
