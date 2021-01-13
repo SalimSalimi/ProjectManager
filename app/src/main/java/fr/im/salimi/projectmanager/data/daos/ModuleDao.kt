@@ -16,6 +16,9 @@ abstract class ModuleDao: BaseDao<Module> {
     @Query("SELECT * FROM modules")
     abstract override fun getAll(): Flow<List<Module>>
 
+    @Query("SELECT * FROM modules WHERE project_id_fk = :projectId")
+    abstract fun getAllByProjectId(projectId: Long): Flow<List<Module>>
+
     @Query("SELECT * FROM modules")
     @Transaction
     abstract fun getAllWithFunctions(): Flow<List<ModuleWithFunctions>>
