@@ -5,10 +5,10 @@ import androidx.lifecycle.ViewModelProvider
 import fr.im.salimi.projectmanager.data.repositories.TaskRepository
 
 @Suppress("UNCHECKED_CAST")
-class TaskListViewModelFactory(private val taskRepository: TaskRepository) : ViewModelProvider.Factory {
+class TaskListViewModelFactory(private val projectId: Long, private val taskRepository: TaskRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(TaskListViewModel::class.java)) {
-            return TaskListViewModel(taskRepository) as T
+            return TaskListViewModel(projectId, taskRepository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel Class")
     }
