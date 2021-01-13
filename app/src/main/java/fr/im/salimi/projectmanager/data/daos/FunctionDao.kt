@@ -18,8 +18,8 @@ abstract class FunctionDao: BaseDao<Function> {
 
     @Query("SELECT f.function_id, f.name, f.description, f.module_id_fk,f.starting_date, f.finishing_date " +
             "FROM functions f " +
-            "INNER JOIN modules m ON m.module_id = f.module_id_fk " +
-            "INNER JOIN projects p on p.project_id = :projectId")
+            "JOIN modules m ON m.module_id = f.module_id_fk " +
+            "AND m.project_id_fk = :projectId")
     abstract fun getAllByProjectId(projectId: Long): Flow<List<Function>>
 
     @Query("SELECT * FROM functions WHERE function_id = :id")

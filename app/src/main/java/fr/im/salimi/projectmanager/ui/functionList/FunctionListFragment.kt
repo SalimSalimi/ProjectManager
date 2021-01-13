@@ -26,7 +26,7 @@ class FunctionListFragment : Fragment(), ClickListenersCallback<Function> {
     private val viewModel: FunctionListViewModel by viewModels {
         val database = ProjectRoomDatabase.getInstance(requireContext())
         val repository = FunctionRepository(database.functionDao())
-        FunctionListViewModelFactory(repository)
+        FunctionListViewModelFactory(1L, repository)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

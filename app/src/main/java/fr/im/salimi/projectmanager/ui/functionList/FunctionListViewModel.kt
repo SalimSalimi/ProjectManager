@@ -1,26 +1,33 @@
 package fr.im.salimi.projectmanager.ui.functionList
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import fr.im.salimi.projectmanager.data.entities.Function
 import fr.im.salimi.projectmanager.data.repositories.FunctionRepository
-class FunctionListViewModel(private val functionRepository: FunctionRepository) : ViewModel() {
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.flow
 
-    private val _functionsList = functionRepository.getAll()
+class FunctionListViewModel(private val projectId: Long, private val functionRepository: FunctionRepository) : ViewModel() {
+
+    private val _functionsList: Flow<List<Function>> = flow {
+        if (projectId == -1L)
+            emitAll(functionRepository.getAll())
+        else
+            emitAll(functionRepository.geAllProjectById(projectId))
+    }
+
     val functionsList: LiveData<List<Function>>
         get() = _functionsList.asLiveData()
 
     private val _navigateToFunctionFormEvent = MutableLiveData<Boolean>()
     val navigateToFunctionFormEvent: LiveData<Boolean>
-        get () = _navigateToFunctionFormEvent
+        get() = _navigateToFunctionFormEvent
 
     init {
         _navigateToFunctionFormEvent.value = false
-        val functions = functionRepository.geAllProjectById(1).asLiveData()
-        Log.d("FunctionListViewModel", "Size: ${functions.value?.size}")
     }
 
     fun navigateToFunctionFormEventTriggered() {
