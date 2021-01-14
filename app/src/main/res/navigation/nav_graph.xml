@@ -36,6 +36,9 @@
         <action
             android:id="@+id/action_projectListFragment_to_projectFormFragment"
             app:destination="@id/projectFormFragment" />
+        <action
+            android:id="@+id/action_projectListFragment_to_projectDetailsFragment"
+            app:destination="@id/projectDetailsFragment" />
 
     </fragment>
     <fragment
@@ -144,6 +147,10 @@
         <action
             android:id="@+id/action_projectDetailsFragment_to_developerListFragment"
             app:destination="@id/developerListFragment" />
+        <argument
+            android:name="projectId"
+            app:argType="long"
+            android:defaultValue="-1L" />
     </fragment>
 
 </navigation>

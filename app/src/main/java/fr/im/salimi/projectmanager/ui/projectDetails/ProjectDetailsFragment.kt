@@ -8,20 +8,21 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import fr.im.salimi.projectmanager.R
 import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
 import fr.im.salimi.projectmanager.data.repositories.ProjectRepository
 import fr.im.salimi.projectmanager.databinding.ProjectDetailsFragmentBinding
-import fr.im.salimi.projectmanager.ui.uiUtils.setBackgroundColorText
 
 class ProjectDetailsFragment : Fragment() {
 
-    private val id = 1L
+    private val args: ProjectDetailsFragmentArgs by navArgs()
+    private var id = -1L
     private lateinit var binding: ProjectDetailsFragmentBinding
     private val viewModel: ProjectDetailsViewModel by viewModels {
         val projectDao = ProjectRoomDatabase.getInstance(requireContext()).projectDao()
         val repository = ProjectRepository(projectDao)
-        ProjectDetailsViewModelFactory(1L, repository)
+        ProjectDetailsViewModelFactory(args.projectId, repository)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -30,19 +31,13 @@ class ProjectDetailsFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         binding.viewModel = viewModel
-
-        viewModel.getProjectIsDone.observe(viewLifecycleOwner) {
-            if (it) {
-                binding.roundedLetter.setBackgroundColorText(viewModel.project.value!!.name)
-                viewModel.onGetProjectDone()
-            }
-        }
-
         return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        id = args.projectId
+        binding.viewModel = viewModel
         initObserversEvents()
     }
 
