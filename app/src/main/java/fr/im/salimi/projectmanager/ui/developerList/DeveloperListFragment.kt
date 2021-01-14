@@ -18,13 +18,14 @@ import fr.im.salimi.projectmanager.ui.uiUtils.*
 
 class DeveloperListFragment : Fragment(), ClickListenersCallback<Developer> {
 
+    private var projectId: Long = -1L
     private lateinit var binding: DeveloperListFragmentBinding
     private lateinit var myAdapter: DeveloperListAdapter
 
     private val viewModel: DeveloperListViewModel by viewModels {
         val database = ProjectRoomDatabase.getInstance(requireContext())
         val repository = DeveloperRepository(database.developerDao())
-        DeveloperListViewModelFactory(repository)
+        DeveloperListViewModelFactory(projectId, repository)
     }
 
     override fun onCreateView(
