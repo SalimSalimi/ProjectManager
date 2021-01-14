@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import fr.im.salimi.projectmanager.R
 import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
@@ -18,14 +19,14 @@ import fr.im.salimi.projectmanager.ui.uiUtils.*
 
 class DeveloperListFragment : Fragment(), ClickListenersCallback<Developer> {
 
-    private var projectId: Long = -1L
+    private val args: DeveloperListFragmentArgs by navArgs()
     private lateinit var binding: DeveloperListFragmentBinding
     private lateinit var myAdapter: DeveloperListAdapter
 
     private val viewModel: DeveloperListViewModel by viewModels {
         val database = ProjectRoomDatabase.getInstance(requireContext())
         val repository = DeveloperRepository(database.developerDao())
-        DeveloperListViewModelFactory(projectId, repository)
+        DeveloperListViewModelFactory(args.projectId, repository)
     }
 
     override fun onCreateView(
@@ -40,7 +41,6 @@ class DeveloperListFragment : Fragment(), ClickListenersCallback<Developer> {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
         setFabBtnBehaviour(FabButtonStates.PRIMARY_STATE) {
             viewModel.onAddBtnClickedEvent()
         }
