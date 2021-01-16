@@ -18,10 +18,7 @@ abstract class TaskDao: BaseDao<Task> {
     @Query("SELECT * FROM tasks WHERE task_id = :id")
     abstract override suspend fun getById(id: Long): Task
 
-    @Query("SELECT  t.task_id, t.name, t.description, t.finishing_date, t.feature_id_fk, t.starting_date, t.state FROM tasks t " +
-            "JOIN features f ON f.feature_id = t.feature_id_fk " +
-            "JOIN modules m ON m.module_id = f.module_id_fk " +
-            "AND m.project_id_fk = :projectId")
+    @Query("SELECT * FROM tasks WHERE project_id_fk = :projectId")
     abstract fun getAllByProjectId(projectId: Long): Flow<List<Task>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
