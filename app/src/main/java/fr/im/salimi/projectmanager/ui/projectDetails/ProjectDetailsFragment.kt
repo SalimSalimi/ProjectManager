@@ -13,6 +13,7 @@ import fr.im.salimi.projectmanager.R
 import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
 import fr.im.salimi.projectmanager.data.repositories.ProjectRepository
 import fr.im.salimi.projectmanager.databinding.ProjectDetailsFragmentBinding
+import fr.im.salimi.projectmanager.ui.uiUtils.setBackgroundColorText
 
 class ProjectDetailsFragment : Fragment() {
 
@@ -71,6 +72,13 @@ class ProjectDetailsFragment : Fragment() {
                 val directions = ProjectDetailsFragmentDirections.actionProjectDetailsFragmentToDeveloperListFragment(1L)
                 this.findNavController().navigate(directions)
                 viewModel.onDevelopersClicked()
+            }
+        }
+
+        viewModel.getProjectIsDone.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.roundedLetter.setBackgroundColorText(viewModel.project.value!!.name)
+                viewModel.onGetProjectDone()
             }
         }
     }
