@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import fr.im.salimi.projectmanager.data.helpers.State
 import java.util.*
 
 @Entity(tableName = "tasks",
@@ -25,6 +26,7 @@ data class Task(
         @ColumnInfo(name = "finishing_date")
         var endingDate: Date = Date(),
         @ColumnInfo(name = "feature_id_fk")
-        var featureId: Long = 0L
+        var featureId: Long = 0L,
+        var state: State = State.IN_PROGRESS
 ) : BaseEntity(taskId) {
 }
