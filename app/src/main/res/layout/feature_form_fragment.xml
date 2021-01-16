@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="fr.im.salimi.projectmanager.ui.functionForm.FunctionFormViewModel" />
+            type="fr.im.salimi.projectmanager.ui.featureForm.FeatureFormViewModel" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -18,10 +18,10 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".ui.functionForm.functionFormFragment">
+            tools:context=".ui.featureForm.featureFormFragment">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/text_input_function_name"
+                android:id="@+id/text_input_feature_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -32,36 +32,36 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edit_text_function_name"
+                    android:id="@+id/edit_text_feature_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:hint="@string/function_name"
+                    android:hint="@string/feature_name"
                     android:inputType="textPersonName"
-                    android:text="@={viewModel.function.name}" />
+                    android:text="@={viewModel.feature.name}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/text_input_function_description"
+                android:id="@+id/text_input_feature_description"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                app:layout_constraintEnd_toEndOf="@+id/text_input_function_name"
-                app:layout_constraintStart_toStartOf="@+id/text_input_function_name"
-                app:layout_constraintTop_toBottomOf="@+id/text_input_function_name">
+                app:layout_constraintEnd_toEndOf="@+id/text_input_feature_name"
+                app:layout_constraintStart_toStartOf="@+id/text_input_feature_name"
+                app:layout_constraintTop_toBottomOf="@+id/text_input_feature_name">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edit_text_function_description"
+                    android:id="@+id/edit_text_feature_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:hint="@string/description_of_the_function"
+                    android:hint="@string/description_of_the_feature"
                     android:inputType="textPersonName"
-                    android:text="@={viewModel.function.description}" />
+                    android:text="@={viewModel.feature.description}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/text_input_function_module"
+                android:id="@+id/text_input_feature_module"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -69,12 +69,12 @@
                 android:layout_marginBottom="16dp"
                 app:endIconDrawable="@drawable/ic_view_module_24"
                 app:endIconMode="dropdown_menu"
-                app:layout_constraintEnd_toEndOf="@+id/text_input_function_name"
-                app:layout_constraintStart_toStartOf="@+id/text_input_function_name"
-                app:layout_constraintTop_toBottomOf="@+id/text_input_function_description">
+                app:layout_constraintEnd_toEndOf="@+id/text_input_feature_name"
+                app:layout_constraintStart_toStartOf="@+id/text_input_feature_name"
+                app:layout_constraintTop_toBottomOf="@+id/text_input_feature_description">
 
                 <AutoCompleteTextView
-                    android:id="@+id/edit_text_function_module"
+                    android:id="@+id/edit_text_feature_module"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -83,7 +83,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/text_input_function_starting_date"
+                android:id="@+id/text_input_feature_starting_date"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -92,10 +92,10 @@
                 android:layout_marginBottom="16dp"
                 android:hint="@string/starting_date"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/text_input_function_ending_date"
+                app:layout_constraintEnd_toStartOf="@+id/text_input_feature_ending_date"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_input_function_module"
+                app:layout_constraintTop_toBottomOf="@+id/text_input_feature_module"
                 app:placeholderText="@string/date_format">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -105,20 +105,20 @@
                     android:ems="10"
                     android:inputType="textPersonName"
                     android:onClick="@{() -> viewModel.onDateClickedEvent()}"
-                    android:text="@={viewModel.function.startingDate}" />
+                    android:text="@={viewModel.feature.startingDate}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/text_input_function_ending_date"
+                android:id="@+id/text_input_feature_ending_date"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:hint="@string/ending_date"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/text_input_function_starting_date"
+                app:layout_constraintStart_toEndOf="@+id/text_input_feature_starting_date"
 
-                app:layout_constraintTop_toTopOf="@+id/text_input_function_starting_date"
+                app:layout_constraintTop_toTopOf="@+id/text_input_feature_starting_date"
                 app:placeholderText="@string/date_format">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -128,7 +128,7 @@
                     android:ems="10"
                     android:inputType="textPersonName"
                     android:onClick="@{() -> viewModel.onDateClickedEvent()}"
-                    android:text="@={viewModel.function.endingDate}" />
+                    android:text="@={viewModel.feature.endingDate}" />
             </com.google.android.material.textfield.TextInputLayout>
 
 

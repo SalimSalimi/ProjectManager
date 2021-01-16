@@ -79,24 +79,24 @@
             android:defaultValue="-1L" />
     </fragment>
     <fragment
-        android:id="@+id/functionFormFragment"
-        android:name="fr.im.salimi.projectmanager.ui.functionForm.FunctionFormFragment"
-        android:label="FunctionFormFragment" >
+        android:id="@+id/featureFormFragment"
+        android:name="fr.im.salimi.projectmanager.ui.featureForm.FeatureFormFragment"
+        android:label="FeatureFormFragment" >
         <action
-            android:id="@+id/action_functionFormFragment_to_functionListFragment"
-            app:destination="@id/functionListFragment" />
+            android:id="@+id/action_featureFormFragment_to_featureListFragment"
+            app:destination="@id/featureListFragment" />
         <argument
-            android:name="functionId"
+            android:name="featureId"
             app:argType="long"
             android:defaultValue="-1L" />
     </fragment>
     <fragment
-        android:id="@+id/functionListFragment"
-        android:name="fr.im.salimi.projectmanager.ui.functionList.FunctionListFragment"
-        android:label="FunctionListFragment" >
+        android:id="@+id/featureListFragment"
+        android:name="fr.im.salimi.projectmanager.ui.featureList.FeatureListFragment"
+        android:label="FeatureListFragment" >
         <action
-            android:id="@+id/action_functionListFragment_to_functionFormFragment"
-            app:destination="@id/functionFormFragment" />
+            android:id="@+id/action_featureListFragment_to_featureFormFragment"
+            app:destination="@id/featureFormFragment" />
         <argument
             android:name="projectId"
             app:argType="long"
@@ -139,8 +139,8 @@
             android:id="@+id/action_projectDetailsFragment_to_moduleListFragment"
             app:destination="@id/moduleListFragment" />
         <action
-            android:id="@+id/action_projectDetailsFragment_to_functionListFragment"
-            app:destination="@id/functionListFragment" />
+            android:id="@+id/action_projectDetailsFragment_to_featureListFragment"
+            app:destination="@id/featureListFragment" />
         <action
             android:id="@+id/action_projectDetailsFragment_to_taskListFragment"
             app:destination="@id/taskListFragment" />

@@ -19,7 +19,7 @@ abstract class DeveloperDao: BaseDao<Developer> {
             "d.post, d.postalCode, d.roadName, d.roadNumber " +
             "FROM developers d JOIN tasks_assignments ta ON d.developer_id = ta.task_id " +
             "JOIN tasks t ON t.task_id = ta.task_id " +
-            "JOIN functions f ON f.function_id = t.task_id " +
+            "JOIN features f ON f.feature_id = t.task_id " +
             "JOIN modules m ON m.module_id = f.module_id_fk " +
             "AND m.project_id_fk = :projectId")
     abstract fun getDevelopersByProject(projectId: Long): Flow<List<Developer>>

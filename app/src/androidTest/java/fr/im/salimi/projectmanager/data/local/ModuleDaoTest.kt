@@ -7,7 +7,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
-import fr.im.salimi.projectmanager.data.entities.Function
+import fr.im.salimi.projectmanager.data.entities.Feature
 import fr.im.salimi.projectmanager.data.entities.Module
 import fr.im.salimi.projectmanager.data.entities.Project
 import fr.im.salimi.projectmanager.getOrAwaitValue
@@ -100,20 +100,20 @@ class ModuleDaoTest {
         val module = Module(name = "Module", description = "Description", startingDate = startingDate, endingDate = endingDate, projectId = 1)
         database.moduleDao().insert(module)
 
-        val function1 = Function(name = "function1", description = "description1", startingDate = startingDate, endingDate = endingDate,
+        val function1 = Feature(name = "function1", description = "description1", startingDate = startingDate, endingDate = endingDate,
                 moduleId = 1L)
 
-        val function2 = Function(name = "function2", description = "description2", startingDate = startingDate, endingDate = endingDate,
+        val function2 = Feature(name = "function2", description = "description2", startingDate = startingDate, endingDate = endingDate,
                 moduleId = 1L)
 
-        database.functionDao().insert(function1)
-        database.functionDao().insert(function2)
+        database.featureDao().insert(function1)
+        database.featureDao().insert(function2)
 
         //When
         val result = database.moduleDao().getByIdWithFunctions(1).asLiveData().getOrAwaitValue()
 
         val resModule = result.module
-        val resFunctions = result.functions
+        val resFunctions = result.features
         //Then
         assertThat(result, notNullValue())
         assertThat(resModule, notNullValue())
@@ -148,21 +148,21 @@ class ModuleDaoTest {
         database.moduleDao().insert(module2)
 
 
-        val function1 = Function(name = "function1", description = "description1", startingDate = startingDate, endingDate = endingDate,
+        val function1 = Feature(name = "function1", description = "description1", startingDate = startingDate, endingDate = endingDate,
                 moduleId = 1L)
 
-        val function2 = Function(name = "function2", description = "description2", startingDate = startingDate, endingDate = endingDate,
+        val function2 = Feature(name = "function2", description = "description2", startingDate = startingDate, endingDate = endingDate,
                 moduleId = 2L)
 
-        database.functionDao().insert(function1)
-        database.functionDao().insert(function2)
+        database.featureDao().insert(function1)
+        database.featureDao().insert(function2)
 
         //When
         val result = database.moduleDao().getAllWithFunctions().asLiveData().getOrAwaitValue()
 
         //Then
         val resModule = result[0].module
-        val resFunctions = result[0].functions
+        val resFunctions = result[0].features
 
         assertThat(result, notNullValue())
         assertThat(resModule, notNullValue())
@@ -179,7 +179,7 @@ class ModuleDaoTest {
         assertThat(resFunctions[0].endingDate, `is`(endingDate))
 
         val resModule1 = result[1].module
-        val resFunctions1 = result[1].functions
+        val resFunctions1 = result[1].features
 
         assertThat(resModule1, notNullValue())
         assertThat(resModule1.name, `is`("Module1"))

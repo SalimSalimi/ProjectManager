@@ -6,6 +6,9 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
+import fr.im.salimi.projectmanager.data.entities.Feature
+import fr.im.salimi.projectmanager.data.entities.Module
+import fr.im.salimi.projectmanager.data.entities.Project
 import fr.im.salimi.projectmanager.data.entities.Task
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
@@ -28,12 +31,21 @@ class TaskDaoTest {
 
     private lateinit var database: ProjectRoomDatabase
 
+    private fun initData() = runBlocking {
+        database.projectDao().insert(Project())
+        database.moduleDao().insert(Module(projectId = 1L))
+        database.featureDao().insert(Feature(moduleId = 1L))
+    }
+
+
     @Before
     fun initDb() {
         database = Room.inMemoryDatabaseBuilder(ApplicationProvider.getApplicationContext(),
                 ProjectRoomDatabase::class.java)
                 .allowMainThreadQueries()
                 .build()
+
+        initData()
     }
 
     @After
@@ -46,7 +58,7 @@ class TaskDaoTest {
         // Given
         val startingDate = Date()
         val endingDate = Date()
-        val task = Task(name = "Task", description =  "Description", startingDate = startingDate, endingDate = endingDate)
+        val task = Task(name = "Task", description =  "Description", startingDate = startingDate, endingDate = endingDate, featureId = 1)
         database.taskDao().insert(task)
 
         //WHEN
@@ -61,18 +73,18 @@ class TaskDaoTest {
     }
 
     @Test
-    fun insertAndUpdateModuleAndGetById() = runBlocking {
+    fun insertAndUpdateTaskAndGetById() = runBlocking {
         // Given
         val startingDate = Date()
         val endingDate = Date()
-        val task = Task(name = "Task", description =  "Description", startingDate = startingDate, endingDate = endingDate)
+        val task = Task(name = "Task", description =  "Description", startingDate = startingDate, endingDate = endingDate, featureId = 1)
         database.taskDao().insert(task)
 
         //WHEN
 
         val updatedStartingDate = Date()
         val updatedEndingDate = Date()
-        val updatedTask = Task(taskId = 1,name = "TaskUpdated", description = "UpdatedDescription", updatedStartingDate, updatedEndingDate)
+        val updatedTask = Task(taskId = 1,name = "TaskUpdated", description = "UpdatedDescription", updatedStartingDate, updatedEndingDate, featureId = 1)
         database.taskDao().update(updatedTask)
         val result = database.taskDao().getById(1)
 
@@ -89,7 +101,7 @@ class TaskDaoTest {
         // Given
         val startingDate = Date()
         val endingDate = Date()
-        val task = Task(name = "Task", description =  "Description", startingDate = startingDate, endingDate = endingDate)
+        val task = Task(name = "Task", description =  "Description", startingDate = startingDate, endingDate = endingDate, featureId = 1)
         database.taskDao().insert(task)
 
         //WHEN

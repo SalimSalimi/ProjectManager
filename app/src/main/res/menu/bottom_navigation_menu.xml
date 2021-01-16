@@ -11,10 +11,10 @@
         android:icon="@drawable/ic_view_module_24"
         android:title="@string/modules"/>
     <item
-        android:id="@+id/functionListFragment"
+        android:id="@+id/featureListFragment"
         android:enabled="true"
-        android:icon="@drawable/ic_function_24"
-        android:title="@string/functions"/>
+        android:icon="@drawable/ic_feature_24"
+        android:title="@string/features"/>
     <item
         android:id="@+id/developerListFragment"
         android:enabled="true"

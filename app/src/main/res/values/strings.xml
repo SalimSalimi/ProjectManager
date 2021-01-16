@@ -48,9 +48,9 @@
     <string name="modules">Modules</string>
     <string name="projects">Projects</string>
     <string name="developers">Developers</string>
-    <string name="functions">Functions</string>
-    <string name="description_of_the_function">Description of the function</string>
-    <string name="function_name">Functionnality name</string>
+    <string name="features">features</string>
+    <string name="description_of_the_feature">Description of the feature</string>
+    <string name="feature_name">feature name</string>
     <string name="description_of_the_task">Description task</string>
     <string name="task_name">Task name</string>
     <string name="choose_a_module">Choose a module</string>

@@ -1,19 +1,19 @@
-package fr.im.salimi.projectmanager.ui.functionForm
+package fr.im.salimi.projectmanager.ui.featureForm
 
 import androidx.lifecycle.*
-import fr.im.salimi.projectmanager.data.entities.Function
+import fr.im.salimi.projectmanager.data.entities.Feature
 import fr.im.salimi.projectmanager.data.entities.Module
-import fr.im.salimi.projectmanager.data.repositories.FunctionRepository
+import fr.im.salimi.projectmanager.data.repositories.FeatureRepository
 import fr.im.salimi.projectmanager.data.repositories.ModuleRepository
 import kotlinx.coroutines.launch
 import java.util.*
 
-class FunctionFormViewModel(private val id: Long,
-                            private val repository: FunctionRepository,
-                            private val moduleRepository: ModuleRepository) : ViewModel() {
+class FeatureFormViewModel(private val id: Long,
+                           private val repository: FeatureRepository,
+                           private val moduleRepository: ModuleRepository) : ViewModel() {
 
-    private val _function = MutableLiveData<Function>()
-    val function: LiveData<Function>
+    private val _function = MutableLiveData<Feature>()
+    val feature: LiveData<Feature>
         get() = _function
 
     private val _dateClickEvent = MutableLiveData<Boolean>()
@@ -78,7 +78,7 @@ class FunctionFormViewModel(private val id: Long,
 
     private fun initFunction() {
         if (id == -1L)
-            _function.value = Function()
+            _function.value = Feature()
         else
             getFunctionById()
     }

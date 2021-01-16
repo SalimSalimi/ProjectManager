@@ -6,7 +6,7 @@ import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import java.util.*
 
-@Entity(tableName = "functions",
+@Entity(tableName = "features",
         foreignKeys = [
                 ForeignKey(
                         entity = Module::class,
@@ -14,10 +14,10 @@ import java.util.*
                         parentColumns = ["module_id"]
                 )
         ])
-data class Function(
+data class Feature(
         @PrimaryKey(autoGenerate = true)
-        @ColumnInfo(name = "function_id")
-        val functionId: Long = 0L,
+        @ColumnInfo(name = "feature_id")
+        val featureId: Long = 0L,
         var name: String = "",
         var description: String = "",
         @ColumnInfo(name = "starting_date")
@@ -27,5 +27,5 @@ data class Function(
         @ColumnInfo(name = "module_id_fk")
         var moduleId: Long = 0L
 ) : BaseEntity(
-        functionId) {
+        featureId) {
 }

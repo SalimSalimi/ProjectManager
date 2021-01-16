@@ -9,9 +9,9 @@ import java.util.*
 @Entity(tableName = "tasks",
         foreignKeys = [
                 ForeignKey(
-                        entity = Function::class,
-                        parentColumns = ["function_id"],
-                        childColumns = ["function_id_fk"]
+                        entity = Feature::class,
+                        parentColumns = ["feature_id"],
+                        childColumns = ["feature_id_fk"]
                 )
 ])
 data class Task(
@@ -24,7 +24,7 @@ data class Task(
         var startingDate: Date = Date(),
         @ColumnInfo(name = "finishing_date")
         var endingDate: Date = Date(),
-        @ColumnInfo(name = "function_id_fk")
-        var functionId: Long = 0L
+        @ColumnInfo(name = "feature_id_fk")
+        var featureId: Long = 0L
 ) : BaseEntity(taskId) {
 }

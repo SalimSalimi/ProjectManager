@@ -1,4 +1,4 @@
-package fr.im.salimi.projectmanager.ui.functionForm
+package fr.im.salimi.projectmanager.ui.featureForm
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,24 +15,24 @@ import androidx.navigation.fragment.navArgs
 import fr.im.salimi.projectmanager.R
 import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
 import fr.im.salimi.projectmanager.data.entities.Module
-import fr.im.salimi.projectmanager.data.repositories.FunctionRepository
+import fr.im.salimi.projectmanager.data.repositories.FeatureRepository
 import fr.im.salimi.projectmanager.data.repositories.ModuleRepository
-import fr.im.salimi.projectmanager.databinding.FunctionFormFragmentBinding
+import fr.im.salimi.projectmanager.databinding.FeatureFormFragmentBinding
 import fr.im.salimi.projectmanager.ui.uiUtils.BaseSpinnerAdapter
 import fr.im.salimi.projectmanager.ui.uiUtils.FabButtonStates
 import fr.im.salimi.projectmanager.ui.uiUtils.chooseDatePicker
 import fr.im.salimi.projectmanager.ui.uiUtils.setFabBtnBehaviour
 import java.util.*
 
-class FunctionFormFragment : Fragment() {
+class FeatureFormFragment : Fragment() {
 
-    private val args: FunctionFormFragmentArgs by navArgs()
-    private lateinit var binding: FunctionFormFragmentBinding
-    private val viewModel: FunctionFormViewModel by viewModels {
+    private val args: FeatureFormFragmentArgs by navArgs()
+    private lateinit var binding: FeatureFormFragmentBinding
+    private val viewModel: FeatureFormViewModel by viewModels {
         val database = ProjectRoomDatabase.getInstance(requireContext())
-        val repository = FunctionRepository(database.functionDao())
+        val repository = FeatureRepository(database.featureDao())
         val moduleRepository = ModuleRepository(database.moduleDao())
-        FunctionFormViewModelFactory(args.functionId, repository, moduleRepository)
+        FeatureFormViewModelFactory(args.featureId, repository, moduleRepository)
     }
 
     private lateinit var spinnerAdapter: ModuleSpinnerAdapter
@@ -41,7 +41,7 @@ class FunctionFormFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.function_form_fragment, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.feature_form_fragment, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
@@ -52,8 +52,8 @@ class FunctionFormFragment : Fragment() {
         initObservers()
 
         spinnerAdapter = ModuleSpinnerAdapter(listOf())
-        binding.editTextFunctionModule.setAdapter(spinnerAdapter)
-        binding.editTextFunctionModule.onItemClickListener = itemClickListener
+        binding.editTextFeatureModule.setAdapter(spinnerAdapter)
+        binding.editTextFeatureModule.onItemClickListener = itemClickListener
 
         setFabBtnBehaviour(FabButtonStates.SECONDARY_STATE) {
             fabBtnClicked()
@@ -70,13 +70,13 @@ class FunctionFormFragment : Fragment() {
             if (it) {
                 viewModel.upsert()
                 viewModel.onAddFabClickedEventFinished()
-                this.findNavController().navigate(R.id.action_functionFormFragment_to_functionListFragment)
+                this.findNavController().navigate(R.id.action_featureFormFragment_to_featureListFragment)
             }
         }
 
         viewModel.modulesList.observe(viewLifecycleOwner) {
             spinnerAdapter.setEntitiesList(it)
-            if (args.functionId != -1L) {
+            if (args.featureId != -1L) {
                  viewModel.onSetModule()
             }
         }
@@ -88,8 +88,8 @@ class FunctionFormFragment : Fragment() {
 
     private fun onDateChooser() {
         val initValues = Pair<Long, Long>(
-            viewModel.function.value?.startingDate?.time,
-            viewModel.function.value?.endingDate?.time
+            viewModel.feature.value?.startingDate?.time,
+            viewModel.feature.value?.endingDate?.time
         )
         chooseDatePicker(initValues, {
             val startingDate = Date(it.first ?: Date().time)
@@ -113,7 +113,7 @@ class FunctionFormFragment : Fragment() {
     }
 
     private fun setDefaultSpinnerSelection(module: Module) {
-        binding.editTextFunctionModule.setText(module.toString(), false)
+        binding.editTextFeatureModule.setText(module.toString(), false)
     }
 
     inner class ModuleSpinnerAdapter(modulesList: List<Module>): BaseSpinnerAdapter<Module>(requireContext(), modulesList) {

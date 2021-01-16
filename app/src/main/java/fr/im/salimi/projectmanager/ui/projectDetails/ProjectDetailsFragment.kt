@@ -51,11 +51,11 @@ class ProjectDetailsFragment : Fragment() {
             }
         }
 
-        viewModel.functionsClickEvent.observe(viewLifecycleOwner) {
+        viewModel.featuresClickEvent.observe(viewLifecycleOwner) {
             if (it) {
-                val directions = ProjectDetailsFragmentDirections.actionProjectDetailsFragmentToFunctionListFragment(id)
+                val directions = ProjectDetailsFragmentDirections.actionProjectDetailsFragmentToFeatureListFragment(id)
                 this.findNavController().navigate(directions)
-                viewModel.onFunctionsClicked()
+                viewModel.onFeaturesClicked()
             }
         }
 
