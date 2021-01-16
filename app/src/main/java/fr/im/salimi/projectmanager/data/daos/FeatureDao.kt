@@ -5,6 +5,7 @@ import androidx.room.Query
 import androidx.room.Transaction
 import fr.im.salimi.projectmanager.data.entities.Feature
 import fr.im.salimi.projectmanager.data.entities.relations.FeatureWithTasks
+import fr.im.salimi.projectmanager.data.entities.subsets.FeatureState
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -26,4 +27,7 @@ abstract class FeatureDao: BaseDao<Feature> {
     @Query("SELECT * FROM features")
     @Transaction
     abstract fun getAllWithTasks(): Flow<FeatureWithTasks>
+
+    @Query("SELECT f.feature_id, f.name, f.description, f.starting_date, f.finishing_date, f.project_id_fk, f.module_id_fk ,MIN(t.state) as state FROM tasks t, features f WHERE t.feature_id_fk = :id")
+    abstract suspend fun getFeatureState(id: Long): FeatureState
 }

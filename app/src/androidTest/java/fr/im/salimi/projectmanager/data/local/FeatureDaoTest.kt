@@ -7,6 +7,8 @@ import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
 import fr.im.salimi.projectmanager.data.entities.Feature
 import fr.im.salimi.projectmanager.data.entities.Module
 import fr.im.salimi.projectmanager.data.entities.Project
+import fr.im.salimi.projectmanager.data.entities.Task
+import fr.im.salimi.projectmanager.data.helpers.State
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
@@ -84,4 +86,25 @@ class FeatureDaoTest {
         MatcherAssert.assertThat(result.endingDate, Matchers.`is`(updatedEndingDate))
     }
 
+    @Test
+    fun insertFeatureAndGetFeatureState() = runBlocking {
+        // Given
+        val startingDate = Date()
+        val endingDate = Date()
+        val feature = Feature(name = "Feature", description = "Description", startingDate = startingDate, endingDate = endingDate, featureId = 1 ,projectId = 1, moduleId = 1)
+        val task = Task(projectId = 1L, featureId = 1L)
+        database.featureDao().insert(feature)
+        database.taskDao().insert(task)
+
+        //WHEN
+        val result = database.featureDao().getFeatureState(1)
+
+        //Then
+        MatcherAssert.assertThat(result, IsNull.notNullValue())
+        MatcherAssert.assertThat(result.feature.name, Matchers.`is`("Feature"))
+        MatcherAssert.assertThat(result.feature.description, Matchers.`is`("Description"))
+        MatcherAssert.assertThat(result.feature.startingDate, Matchers.`is`(startingDate))
+        MatcherAssert.assertThat(result.feature.endingDate, Matchers.`is`(endingDate))
+        MatcherAssert.assertThat(result.state, Matchers.`is`(State.IN_PROGRESS))
+    }
 }
