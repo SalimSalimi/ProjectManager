@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
 import fr.im.salimi.projectmanager.data.entities.Module
-import fr.im.salimi.projectmanager.data.entities.relations.ModuleWithFunctions
+import fr.im.salimi.projectmanager.data.entities.relations.ModuleWithFeatures
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -21,9 +21,9 @@ abstract class ModuleDao: BaseDao<Module> {
 
     @Query("SELECT * FROM modules")
     @Transaction
-    abstract fun getAllWithFunctions(): Flow<List<ModuleWithFunctions>>
+    abstract fun getAllWithFunctions(): Flow<List<ModuleWithFeatures>>
 
     @Query("SELECT * FROM modules where module_id = :id")
     @Transaction
-    abstract fun getByIdWithFunctions(id: Long): Flow<ModuleWithFunctions>
+    abstract fun getByIdWithFunctions(id: Long): Flow<ModuleWithFeatures>
 }

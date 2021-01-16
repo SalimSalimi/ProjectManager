@@ -163,7 +163,7 @@
             android:text="@{viewModel.project.description}" />
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/function_cardview"
+            android:id="@+id/feature_cardview"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -174,7 +174,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/modules_cardview"
             app:layout_constraintTop_toTopOf="@+id/guideline3"
-            android:onClick="@{() -> viewModel.onFunctionsClick()}">
+            android:onClick="@{() -> viewModel.onFeaturesClick()}">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -182,7 +182,7 @@
                 android:background="#110D47A1">
 
                 <ImageView
-                    android:id="@+id/card_function_image"
+                    android:id="@+id/card_feature_image"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -190,42 +190,42 @@
                     app:layout_constraintDimensionRatio="w,1:1"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_function_24"
+                    app:srcCompat="@drawable/ic_feature_24"
                     app:tint="@color/blue_200" />
 
                 <TextView
-                    android:id="@+id/card_function_header"
+                    android:id="@+id/card_feature_header"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="@string/functions"
+                    android:text="@string/features"
                     android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="@+id/card_function_image"
-                    app:layout_constraintTop_toBottomOf="@+id/card_function_image" />
+                    app:layout_constraintStart_toStartOf="@+id/card_feature_image"
+                    app:layout_constraintTop_toBottomOf="@+id/card_feature_image" />
 
                 <TextView
-                    android:id="@+id/card_function_done"
+                    android:id="@+id/card_feature_done"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
                     android:fontFamily="@font/roboto"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/card_function_image"
-                    app:layout_constraintTop_toBottomOf="@+id/card_function_header"
+                    app:layout_constraintStart_toStartOf="@+id/card_feature_image"
+                    app:layout_constraintTop_toBottomOf="@+id/card_feature_header"
                     android:text="modules done: 57" />
 
                 <TextView
-                    android:id="@+id/card_function_left"
+                    android:id="@+id/card_feature_left"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="16dp"
                     android:fontFamily="@font/roboto"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/card_function_done"
-                    app:layout_constraintStart_toStartOf="@+id/card_function_image"
-                    app:layout_constraintTop_toBottomOf="@+id/card_function_done"
+                    app:layout_constraintEnd_toEndOf="@+id/card_feature_done"
+                    app:layout_constraintStart_toStartOf="@+id/card_feature_image"
+                    app:layout_constraintTop_toBottomOf="@+id/card_feature_done"
                     android:text="modules left: 23" />
 
 
@@ -241,7 +241,7 @@
             android:layout_marginEnd="8dp"
             app:cardCornerRadius="8dp"
             app:cardElevation="4dp"
-            app:layout_constraintEnd_toStartOf="@+id/function_cardview"
+            app:layout_constraintEnd_toStartOf="@+id/feature_cardview"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guideline3"
             android:onClick="@{() -> viewModel.onModulesClick()}">
@@ -309,9 +309,9 @@
             android:layout_marginTop="8dp"
             app:cardCornerRadius="8dp"
             app:cardElevation="4dp"
-            app:layout_constraintEnd_toEndOf="@+id/function_cardview"
+            app:layout_constraintEnd_toEndOf="@+id/feature_cardview"
             app:layout_constraintStart_toEndOf="@+id/tasks_cardview"
-            app:layout_constraintTop_toBottomOf="@+id/function_cardview"
+            app:layout_constraintTop_toBottomOf="@+id/feature_cardview"
             android:onClick="@{() -> viewModel.onDevelopersClick()}">
 
             <androidx.constraintlayout.widget.ConstraintLayout

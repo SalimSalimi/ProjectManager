@@ -5,9 +5,12 @@ import fr.im.salimi.projectmanager.data.entities.Task
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class FakeTasksDataSource(var tasksList: MutableList<Task>): BaseDao<Task> {
-    override suspend fun insert(entity: Task) {
-        tasksList.add(entity)
+class FakeTasksDataSource(var tasksList: MutableList<Task>) : BaseDao<Task> {
+    override suspend fun insert(entity: Task): Long {
+        return if (tasksList.add(entity))
+            1L
+        else
+            0L
     }
 
     override suspend fun delete(entity: Task) {

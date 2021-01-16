@@ -3,14 +3,13 @@ package fr.im.salimi.projectmanager.data.local
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.filters.SmallTest
 import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
 import fr.im.salimi.projectmanager.data.entities.Feature
 import fr.im.salimi.projectmanager.data.entities.Module
 import fr.im.salimi.projectmanager.data.entities.Project
 import fr.im.salimi.projectmanager.data.entities.Task
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import fr.im.salimi.projectmanager.data.helpers.State
+import fr.im.salimi.projectmanager.getOrAwaitValue
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
@@ -19,24 +18,14 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 import java.util.*
 
-@RunWith(AndroidJUnit4::class)
-@ExperimentalCoroutinesApi
-@SmallTest
-class TaskDaoTest {
+class FeatureDaoTest {
+
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
 
     private lateinit var database: ProjectRoomDatabase
-
-    private fun initData() = runBlocking {
-        database.projectDao().insert(Project())
-        database.moduleDao().insert(Module(projectId = 1L))
-        database.featureDao().insert(Feature(moduleId = 1L))
-    }
-
 
     @Before
     fun initDb() {
@@ -45,7 +34,10 @@ class TaskDaoTest {
                 .allowMainThreadQueries()
                 .build()
 
-        initData()
+        runBlocking {
+            database.projectDao().insert(Project(name = "Project", description = "Description"))
+            database.moduleDao().insert(Module(name = "Module", description = "Description", projectId = 1L))
+        }
     }
 
     @After
@@ -54,62 +46,66 @@ class TaskDaoTest {
     }
 
     @Test
-    fun insertTaskAndGetById() = runBlocking {
+    fun insertFeatureAndGetById() = runBlocking {
         // Given
         val startingDate = Date()
         val endingDate = Date()
-        val task = Task(name = "Task", description =  "Description", startingDate = startingDate, endingDate = endingDate, featureId = 1)
-        database.taskDao().insert(task)
+        val feature = Feature(name = "Feature", description = "Description", startingDate = startingDate, endingDate = endingDate, featureId = 1 ,projectId = 1, moduleId = 1)
+        database.featureDao().insert(feature)
 
         //WHEN
-        val result = database.taskDao().getById(1)
+        val result = database.featureDao().getById(1)
 
         //Then
         MatcherAssert.assertThat(result, IsNull.notNullValue())
-        MatcherAssert.assertThat(result.name, Matchers.`is`("Task"))
+        MatcherAssert.assertThat(result.name, Matchers.`is`("Feature"))
         MatcherAssert.assertThat(result.description, Matchers.`is`("Description"))
         MatcherAssert.assertThat(result.startingDate, Matchers.`is`(startingDate))
         MatcherAssert.assertThat(result.endingDate, Matchers.`is`(endingDate))
     }
 
     @Test
-    fun insertAndUpdateTaskAndGetById() = runBlocking {
+    fun insertAndUpdateFeatureAndGetById() = runBlocking {
         // Given
         val startingDate = Date()
         val endingDate = Date()
-        val task = Task(name = "Task", description =  "Description", startingDate = startingDate, endingDate = endingDate, featureId = 1)
-        database.taskDao().insert(task)
+        val feature = Feature(name = "Feature", description = "Description", startingDate = startingDate, endingDate = endingDate, projectId = 1, moduleId = 1)
+        database.featureDao().insert(feature)
 
         //WHEN
-
         val updatedStartingDate = Date()
         val updatedEndingDate = Date()
-        val updatedTask = Task(taskId = 1,name = "TaskUpdated", description = "UpdatedDescription", updatedStartingDate, updatedEndingDate, featureId = 1)
-        database.taskDao().update(updatedTask)
-        val result = database.taskDao().getById(1)
+        val updatedFeature = Feature(featureId = 1, name = "Updated", description = "UpdatedDescription", updatedStartingDate, updatedEndingDate, projectId = 1, moduleId = 1)
+        database.featureDao().update(updatedFeature)
+        val result = database.featureDao().getById(1)
 
         //Then
         MatcherAssert.assertThat(result, IsNull.notNullValue())
-        MatcherAssert.assertThat(result.name, Matchers.`is`("TaskUpdated"))
+        MatcherAssert.assertThat(result.name, Matchers.`is`("Updated"))
         MatcherAssert.assertThat(result.description, Matchers.`is`("UpdatedDescription"))
         MatcherAssert.assertThat(result.startingDate, Matchers.`is`(updatedStartingDate))
         MatcherAssert.assertThat(result.endingDate, Matchers.`is`(updatedEndingDate))
     }
 
     @Test
-    fun insertAndGetByIdAndDelete() = runBlocking {
+    fun insertFeatureAndGetFeatureState() = runBlocking {
         // Given
         val startingDate = Date()
         val endingDate = Date()
-        val task = Task(name = "Task", description =  "Description", startingDate = startingDate, endingDate = endingDate, featureId = 1)
+        val feature = Feature(name = "Feature", description = "Description", startingDate = startingDate, endingDate = endingDate, featureId = 1 ,projectId = 1, moduleId = 1)
+        val task = Task(projectId = 1L, featureId = 1L)
+        database.featureDao().insert(feature)
         database.taskDao().insert(task)
 
         //WHEN
-        val result = database.taskDao().getById(1)
-        database.taskDao().delete(result)
+        val result = database.featureDao().getFeatureStateById(1).getOrAwaitValue()
 
         //Then
-        val deletedResult = database.taskDao().getById(1)
-        MatcherAssert.assertThat(deletedResult, IsNull.nullValue())
+        MatcherAssert.assertThat(result, IsNull.notNullValue())
+        MatcherAssert.assertThat(result.feature.name, Matchers.`is`("Feature"))
+        MatcherAssert.assertThat(result.feature.description, Matchers.`is`("Description"))
+        MatcherAssert.assertThat(result.feature.startingDate, Matchers.`is`(startingDate))
+        MatcherAssert.assertThat(result.feature.endingDate, Matchers.`is`(endingDate))
+        MatcherAssert.assertThat(result.state, Matchers.`is`(State.IN_PROGRESS))
     }
 }

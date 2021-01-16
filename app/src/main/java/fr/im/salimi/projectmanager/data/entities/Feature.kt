@@ -4,37 +4,35 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import fr.im.salimi.projectmanager.data.helpers.State
 import java.util.*
 
-@Entity(tableName = "tasks",
+@Entity(tableName = "features",
         foreignKeys = [
             ForeignKey(
-                    entity = Feature::class,
-                    parentColumns = ["feature_id"],
-                    childColumns = ["feature_id_fk"]
+                    entity = Module::class,
+                    childColumns = ["module_id_fk"],
+                    parentColumns = ["module_id"]
             ),
             ForeignKey(
                     entity = Project::class,
-                    parentColumns = ["project_id"],
-                    childColumns = ["project_id_fk"]
+                    childColumns = ["project_id_fk"],
+                    parentColumns = ["project_id"]
             )
         ]
 )
-data class Task(
+data class Feature(
         @PrimaryKey(autoGenerate = true)
-        @ColumnInfo(name = "task_id")
-        val taskId: Long = 0L,
+        @ColumnInfo(name = "feature_id")
+        val featureId: Long = 0L,
         var name: String = "",
         var description: String = "",
         @ColumnInfo(name = "starting_date")
         var startingDate: Date = Date(),
         @ColumnInfo(name = "finishing_date")
         var endingDate: Date = Date(),
-        @ColumnInfo(name = "feature_id_fk")
-        var featureId: Long = 0L,
+        @ColumnInfo(name = "module_id_fk")
+        var moduleId: Long = 0L,
         @ColumnInfo(name = "project_id_fk")
-        var projectId: Long = 0L,
-        var state: State = State.IN_PROGRESS
-) : BaseEntity(taskId) {
-}
+        var projectId: Long = 0L
+) : BaseEntity(
+        featureId)

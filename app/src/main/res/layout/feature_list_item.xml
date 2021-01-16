@@ -5,20 +5,25 @@
 
     <data>
         <variable
-            name="function"
-            type="fr.im.salimi.projectmanager.data.entities.Function"/>
+            name="feature"
+            type="fr.im.salimi.projectmanager.data.entities.Feature"/>
 
         <variable
             name="listeners"
             type="fr.im.salimi.projectmanager.ui.uiUtils.ClickListenersCallback"/>
+
+        <variable
+            name="state"
+            type="fr.im.salimi.projectmanager.data.helpers.State"/>
     </data>
 
+    <!--suppress AndroidUnknownAttribute -->
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:onClick="@{(view) -> listeners.onClick(view, function)}"
-        android:onLongClick="@{(view) -> listeners.onLongClick(view, function)}"
+        android:onClick="@{(view) -> listeners.onClick(view, feature)}"
+        android:onLongClick="@{(view) -> listeners.onLongClick(view, feature)}"
         app:cardElevation="8dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,41 +31,41 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/function_name_textview"
+                android:id="@+id/feature_name_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="@{function.name}"
+                android:text="@{feature.name}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Manage users" />
 
             <TextView
-                android:id="@+id/function_description_textview"
+                android:id="@+id/feature_description_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="@{function.description}"
+                android:text="@{feature.description}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                app:layout_constraintStart_toStartOf="@+id/function_name_textview"
-                app:layout_constraintTop_toBottomOf="@+id/function_name_textview"
+                app:layout_constraintStart_toStartOf="@+id/feature_name_textview"
+                app:layout_constraintTop_toBottomOf="@+id/feature_name_textview"
                 tools:text="This part will handle all crud operations about users" />
 
             <TextView
-                android:id="@+id/function_status_textview"
+                android:id="@+id/feature_status_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
-                android:text="In Progress"
+                android:text="@{state.toString()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="In Progress" />
 
             <ProgressBar
-                android:id="@+id/function_progressbar"
+                android:id="@+id/feature_progressbar"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -71,32 +76,32 @@
                 android:progress="80"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/function_description_textview" />
+                app:layout_constraintTop_toBottomOf="@+id/feature_description_textview" />
 
             <TextView
-                android:id="@+id/function_starting_date_textview"
+                android:id="@+id/feature_starting_date_textview"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:text="@{function.startingDate}"
+                android:text="@{feature.startingDate}"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/function_ending_date_textview"
+                app:layout_constraintEnd_toStartOf="@+id/feature_ending_date_textview"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/function_progressbar"
+                app:layout_constraintTop_toBottomOf="@+id/feature_progressbar"
                 tools:text="10-12-2020" />
 
             <TextView
-                android:id="@+id/function_ending_date_textview"
+                android:id="@+id/feature_ending_date_textview"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{function.endingDate}"
+                android:text="@{feature.endingDate}"
                 android:textAlignment="textEnd"
-                app:layout_constraintBottom_toBottomOf="@+id/function_starting_date_textview"
-                app:layout_constraintEnd_toEndOf="@+id/function_progressbar"
-                app:layout_constraintStart_toEndOf="@+id/function_starting_date_textview"
-                app:layout_constraintTop_toTopOf="@+id/function_starting_date_textview"
+                app:layout_constraintBottom_toBottomOf="@+id/feature_starting_date_textview"
+                app:layout_constraintEnd_toEndOf="@+id/feature_progressbar"
+                app:layout_constraintStart_toEndOf="@+id/feature_starting_date_textview"
+                app:layout_constraintTop_toTopOf="@+id/feature_starting_date_textview"
                 tools:text="12-05-2020" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

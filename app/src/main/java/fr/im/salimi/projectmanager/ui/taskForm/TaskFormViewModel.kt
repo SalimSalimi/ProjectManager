@@ -83,7 +83,8 @@ class TaskFormViewModel(private val id: Long, private val repository: TaskReposi
         if (id == -1L) {
             _task.value = Task()
             //TODO Remove it after when implementing function choose
-            _task.value!!.functionId = 1L
+            _task.value!!.featureId = 1L
+            _task.value!!.projectId = 1L
         } else
             getTaskById()
     }
@@ -93,7 +94,7 @@ class TaskFormViewModel(private val id: Long, private val repository: TaskReposi
             val taskWithAssignments = repository.getTaskAssignmentsByTaskId(id)
             _task.value = taskWithAssignments.task
             //TODO Remove it after when implementing function choose
-            _task.value!!.functionId = 1L
+            _task.value!!.featureId = 1L
             mutableAssignedDevelopersList.addAll(taskWithAssignments.developers)
             _assignedDevelopers.value = mutableAssignedDevelopersList
         }

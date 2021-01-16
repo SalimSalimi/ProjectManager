@@ -6,8 +6,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 class FakeModuleDataSource(var modulesList: MutableList<Module> = mutableListOf()):BaseDao<Module> {
-    override suspend fun insert(entity: Module) {
-        modulesList.add(entity)
+    override suspend fun insert(entity: Module): Long {
+        return if (modulesList.add(entity))
+            1L
+        else
+            0L
     }
 
     override suspend fun delete(entity: Module) {

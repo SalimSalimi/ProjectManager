@@ -22,9 +22,9 @@ class ProjectDetailsViewModel(private val id: Long, private val projectRepositor
     val modulesClickEvent: LiveData<Boolean>
         get() = _modulesClickEvent
 
-    private val _functionsClickEvent = MutableLiveData<Boolean>()
-    val functionsClickEvent: LiveData<Boolean>
-        get() = _functionsClickEvent
+    private val _featuresClickEvent = MutableLiveData<Boolean>()
+    val featuresClickEvent: LiveData<Boolean>
+        get() = _featuresClickEvent
 
     private val _tasksClickEvent = MutableLiveData<Boolean>()
     val tasksClickEvent: LiveData<Boolean>
@@ -52,12 +52,12 @@ class ProjectDetailsViewModel(private val id: Long, private val projectRepositor
         _modulesClickEvent.value = false
     }
 
-    fun onFunctionsClick() {
-        _functionsClickEvent.value = true
+    fun onFeaturesClick() {
+        _featuresClickEvent.value = true
     }
 
-    fun onFunctionsClicked() {
-        _functionsClickEvent.value = false
+    fun onFeaturesClicked() {
+        _featuresClickEvent.value = false
     }
 
     fun onTasksClick() {
@@ -87,7 +87,7 @@ class ProjectDetailsViewModel(private val id: Long, private val projectRepositor
     private fun initEvents() {
         _getProjectIsDone.value = false
         _modulesClickEvent.value = false
-        _functionsClickEvent.value = false
+        _featuresClickEvent.value = false
         _tasksClickEvent.value = false
         _developersClickEvent.value = false
     }

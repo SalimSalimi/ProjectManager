@@ -7,7 +7,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
 import fr.im.salimi.projectmanager.data.entities.*
-import fr.im.salimi.projectmanager.data.entities.Function
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.MatcherAssert
@@ -32,7 +31,7 @@ class TaskAssignmentTest {
     private fun initData() = runBlocking {
         database.projectDao().insert(Project())
         database.moduleDao().insert(Module(projectId = 1L))
-        database.functionDao().insert(Function(moduleId = 1L))
+        database.featureDao().insert(Feature(moduleId = 1L))
     }
 
     @Before
@@ -52,8 +51,8 @@ class TaskAssignmentTest {
     @Test
     fun addTwoTasksToDeveloper_getTasksByDeveloper() = runBlocking {
         //Given
-        val task1 = Task(name = "Task1", description = "Description1", functionId = 1L)
-        val task2 = Task(name = "Task2", description = "Description2", functionId = 1L)
+        val task1 = Task(name = "Task1", description = "Description1", featureId = 1L)
+        val task2 = Task(name = "Task2", description = "Description2", featureId = 1L)
 
         val developer = Developer(firstName = "Salim", lastName = "Salimi")
 
@@ -95,7 +94,7 @@ class TaskAssignmentTest {
     @Test
     fun addTwoDevelopersToTask_getDevelopersByTask() = runBlocking {
         //Given
-        val task1 = Task(name = "Task1", description = "Description1", functionId = 1L)
+        val task1 = Task(name = "Task1", description = "Description1", featureId = 1L)
 
         val developer1 = Developer(firstName = "Salim", lastName = "Salimi")
         val developer2 = Developer(firstName = "Salim1", lastName = "Salimi1")

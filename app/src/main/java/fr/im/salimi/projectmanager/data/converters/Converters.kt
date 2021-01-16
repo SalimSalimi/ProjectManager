@@ -2,7 +2,7 @@ package fr.im.salimi.projectmanager.data.converters
 
 import androidx.room.TypeConverter
 import fr.im.salimi.projectmanager.data.helpers.Post
-import java.sql.Timestamp
+import fr.im.salimi.projectmanager.data.helpers.State
 import java.util.*
 
 class Converters {
@@ -22,4 +22,10 @@ class Converters {
     fun dateToTimestamp(date: Date?): Long? {
         return date?.time
     }
+
+    @TypeConverter
+    fun fromState(value: State) = value.ordinal
+
+    @TypeConverter
+    fun toState(value: Int) = enumValues<State>()[value]
 }
