@@ -9,6 +9,7 @@ import fr.im.salimi.projectmanager.data.entities.Module
 import fr.im.salimi.projectmanager.data.entities.Project
 import fr.im.salimi.projectmanager.data.entities.Task
 import fr.im.salimi.projectmanager.data.helpers.State
+import fr.im.salimi.projectmanager.getOrAwaitValue
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
@@ -97,7 +98,7 @@ class FeatureDaoTest {
         database.taskDao().insert(task)
 
         //WHEN
-        val result = database.featureDao().getFeatureState(1)
+        val result = database.featureDao().getFeatureStateById(1).getOrAwaitValue()
 
         //Then
         MatcherAssert.assertThat(result, IsNull.notNullValue())
