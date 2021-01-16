@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import fr.im.salimi.projectmanager.R
 import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
@@ -20,12 +21,13 @@ import fr.im.salimi.projectmanager.ui.uiUtils.setFabBtnBehaviour
 
 class ModuleListFragment : Fragment(), ClickListenersCallback<Module> {
 
+    private val args: ModuleListFragmentArgs by navArgs()
     private lateinit var moduleAdapter: ModuleListAdapter
     private lateinit var binding: ModuleListFragmentBinding
     private val viewModel: ModuleListViewModel by viewModels {
         val database = ProjectRoomDatabase.getInstance(requireContext())
         val dao = database.moduleDao()
-        ModuleListViewModelFactory(ModuleRepository(dao))
+        ModuleListViewModelFactory(args.projectId, ModuleRepository(dao))
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

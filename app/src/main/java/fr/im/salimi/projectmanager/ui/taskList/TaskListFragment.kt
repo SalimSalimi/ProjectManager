@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import fr.im.salimi.projectmanager.R
 import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
@@ -20,13 +21,14 @@ import fr.im.salimi.projectmanager.ui.uiUtils.setFabBtnBehaviour
 
 class TaskListFragment : Fragment(), ClickListenersCallback<Task> {
 
-    private var sendingID = -1L
+    private val args: TaskListFragmentArgs by navArgs()
+    private var sendingID: Long = -1L
     private lateinit var myAdapter: TaskListAdapter
     private lateinit var binding: TaskListFragmentBinding
     private val viewModel: TaskListViewModel by viewModels {
         val database = ProjectRoomDatabase.getInstance(requireContext())
         val dao = database.taskDao()
-        TaskListViewModelFactory(TaskRepository(dao))
+        TaskListViewModelFactory(sendingID, TaskRepository(dao))
     }
 
     override fun onCreateView(
@@ -40,6 +42,7 @@ class TaskListFragment : Fragment(), ClickListenersCallback<Task> {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        sendingID = args.projectId
         binding.viewModel = viewModel
 
         initRecycler()

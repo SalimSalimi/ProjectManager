@@ -72,7 +72,10 @@ class ProjectListFragment : Fragment(), ClickListenersCallback<Project> {
     }
 
     override fun onClick(view: View, entity: Project) {
-
+        //Navigate to ProjectDetails
+        val directions =
+                ProjectListFragmentDirections.actionProjectListFragmentToProjectDetailsFragment(entity.id)
+        this.findNavController().navigate(directions)
     }
 
     override fun onLongClick(view: View, entity: Project): Boolean {
