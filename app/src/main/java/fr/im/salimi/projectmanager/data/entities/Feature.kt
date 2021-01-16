@@ -1,6 +1,9 @@
 package fr.im.salimi.projectmanager.data.entities
 
-import androidx.room.*
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.PrimaryKey
 import java.util.*
 
 @Entity(tableName = "features",
@@ -14,12 +17,6 @@ import java.util.*
                     entity = Project::class,
                     childColumns = ["project_id_fk"],
                     parentColumns = ["project_id"]
-            )
-        ],
-        indices = [
-            Index(
-                    value = ["project_id_fk"],
-                    unique = true
             )
         ]
 )

@@ -42,6 +42,10 @@ class FeatureFormViewModel(private val id: Long,
         _function.value!!.moduleId = id
     }
 
+    fun setProjectId(id: Long) {
+        _function.value!!.projectId = id
+    }
+
     fun onSetModule() {
         viewModelScope.launch {
             _module.value = moduleRepository.getById(_function.value!!.moduleId)

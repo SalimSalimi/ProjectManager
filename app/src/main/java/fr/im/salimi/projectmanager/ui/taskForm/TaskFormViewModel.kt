@@ -84,6 +84,7 @@ class TaskFormViewModel(private val id: Long, private val repository: TaskReposi
             _task.value = Task()
             //TODO Remove it after when implementing function choose
             _task.value!!.featureId = 1L
+            _task.value!!.projectId = 1L
         } else
             getTaskById()
     }

@@ -104,8 +104,10 @@ class FeatureFormFragment : Fragment() {
         })
     }
 
-    private val itemClickListener: AdapterView.OnItemClickListener = AdapterView.OnItemClickListener { _, _, _, id ->
-        viewModel.setModuleId(id)
+    private val itemClickListener: AdapterView.OnItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
+        val module = spinnerAdapter.getItem(position)
+        viewModel.setModuleId(module!!.id)
+        viewModel.setProjectId(module.projectId)
     }
 
     private fun fabBtnClicked() {

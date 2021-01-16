@@ -1,6 +1,9 @@
 package fr.im.salimi.projectmanager.data.entities
 
-import androidx.room.*
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.PrimaryKey
 import fr.im.salimi.projectmanager.data.helpers.State
 import java.util.*
 
@@ -16,14 +19,8 @@ import java.util.*
                     parentColumns = ["project_id"],
                     childColumns = ["project_id_fk"]
             )
-
-        ],
-        indices = [
-            Index(
-                    value = ["project_id_fk"],
-                    unique = true
-            )
-        ])
+        ]
+)
 data class Task(
         @PrimaryKey(autoGenerate = true)
         @ColumnInfo(name = "task_id")
