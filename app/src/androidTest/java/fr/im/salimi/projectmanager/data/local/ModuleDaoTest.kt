@@ -110,7 +110,7 @@ class ModuleDaoTest {
         database.featureDao().insert(function2)
 
         //When
-        val result = database.moduleDao().getByIdWithFunctions(1).asLiveData().getOrAwaitValue()
+        val result = database.moduleDao().getByIdWithFeatures(1).asLiveData().getOrAwaitValue()
 
         val resModule = result.module
         val resFunctions = result.features
@@ -158,7 +158,7 @@ class ModuleDaoTest {
         database.featureDao().insert(function2)
 
         //When
-        val result = database.moduleDao().getAllWithFunctions().asLiveData().getOrAwaitValue()
+        val result = database.moduleDao().getAllWithFeatures().asLiveData().getOrAwaitValue()
 
         //Then
         val resModule = result[0].module

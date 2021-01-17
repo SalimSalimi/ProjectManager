@@ -29,12 +29,20 @@ abstract class FeatureDao: BaseDao<Feature> {
     @Transaction
     abstract fun getAllWithTasks(): Flow<FeatureWithTasks>
 
-    @Query("SELECT f.feature_id, f.name, f.description, f.starting_date, f.finishing_date, f.project_id_fk, f.module_id_fk ,MIN(t.state) as state FROM tasks t, features f")
+    @Query("SELECT f.feature_id, f.name, f.description, f.starting_date, f.finishing_date, f.project_id_fk, " +
+            "f.module_id_fk ,MIN(t.state) as state " +
+            "FROM tasks t, features f")
     abstract fun getAllFeaturesState(): Flow<List<FeatureState>>
 
-    @Query("SELECT f.feature_id, f.name, f.description, f.starting_date, f.finishing_date, f.project_id_fk, f.module_id_fk, MIN(t.state) as state FROM tasks t, features f WHERE f.project_id_fk = :projectId")
+    @Query("SELECT f.feature_id, f.name, f.description, f.starting_date, f.finishing_date, " +
+            "f.project_id_fk, f.module_id_fk, MIN(t.state) as state " +
+            "FROM tasks t, features f " +
+            "WHERE f.project_id_fk = :projectId")
     abstract fun getAllFeatureStateByProjectId(projectId: Long): Flow<List<FeatureState>>
 
-    @Query("SELECT f.feature_id, f.name, f.description, f.starting_date, f.finishing_date, f.project_id_fk, f.module_id_fk ,MIN(t.state) as state FROM tasks t, features f WHERE t.feature_id_fk = :id")
+    @Query("SELECT f.feature_id, f.name, f.description, f.starting_date, f.finishing_date, " +
+            "f.project_id_fk, f.module_id_fk ,MIN(t.state) as state " +
+            "FROM tasks t, features f WHERE " +
+            "t.feature_id_fk = :id")
     abstract fun getFeatureStateById(id: Long): LiveData<FeatureState>
 }
