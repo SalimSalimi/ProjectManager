@@ -29,15 +29,23 @@ abstract class ModuleDao: BaseDao<Module> {
     @Transaction
     abstract fun getByIdWithFeatures(id: Long): Flow<ModuleWithFeatures>
 
-    @Query("SELECT m.module_id, m.name, m.description, m.starting_date, m.finishing_date, m.project_id_fk, MIN(t.state) as state FROM modules m, tasks t WHERE t.project_id_fk = m.project_id_fk")
+    @Query("SELECT m.module_id, m.name, m.description, m.starting_date, m.finishing_date, m.project_id_fk, " +
+            "MIN(t.state) as state " +
+            "FROM modules m, tasks t " +
+            "WHERE t.project_id_fk = m.project_id_fk")
     abstract fun getAllModulesState(): Flow<List<ModuleState>>
 
     @Query("SELECT m.module_id, m.name, m.description, m.starting_date, m.finishing_date, m.project_id_fk, " +
             "MIN(t.state) as state " +
             "FROM modules m, tasks t " +
-            "WHERE t.project_id_fk = m.project_id_fk AND module_id = :id")
+            "WHERE t.project_id_fk = m.project_id_fk " +
+            "AND module_id = :id")
     abstract fun getModuleStateById(id: Long): LiveData<ModuleState>
 
-    @Query("SELECT m.module_id, m.name, m.description, m.starting_date, m.finishing_date, m.project_id_fk, MIN(t.state) as state FROM modules m, tasks t WHERE t.project_id_fk = :projectId AND m.project_id_fk = :projectId")
+    @Query("SELECT m.module_id, m.name, m.description, m.starting_date, m.finishing_date, m.project_id_fk, " +
+            "MIN(t.state) as state " +
+            "FROM modules m, tasks t " +
+            "WHERE t.project_id_fk = :projectId " +
+            "AND m.project_id_fk = :projectId")
     abstract fun getAllModuleStateByProjectId(projectId: Long): Flow<List<ModuleState>>
 }
