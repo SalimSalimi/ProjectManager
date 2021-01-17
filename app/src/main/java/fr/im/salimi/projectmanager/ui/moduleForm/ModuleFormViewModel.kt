@@ -9,7 +9,7 @@ import fr.im.salimi.projectmanager.data.repositories.ProjectRepository
 import kotlinx.coroutines.launch
 import java.util.*
 
-class ModuleFormViewModel(private val id: Long, private val repository: ModuleRepository, private val projectRepository: ProjectRepository)
+class ModuleFormViewModel(private val id: Long)
     : ViewModel() {
 
     private val _module = MutableLiveData<Module>()
@@ -24,7 +24,7 @@ class ModuleFormViewModel(private val id: Long, private val repository: ModuleRe
     val addBtnClickEvent: LiveData<Boolean>
         get() = _addBtnClickEvent
 
-    private val _projects = projectRepository.getAll()
+    private val _projects = ProjectRepository.getAll()
     val projects: LiveData<List<Project>>
         get() = _projects.asLiveData()
 
@@ -84,25 +84,25 @@ class ModuleFormViewModel(private val id: Long, private val repository: ModuleRe
             _module.value = Module()
         else
             viewModelScope.launch {
-                _module.value = repository.getById(id)
+                _module.value = ModuleRepository.getById(id)
             }
     }
 
     private fun insert() {
         viewModelScope.launch {
-            repository.insert(_module.value!!)
+            ModuleRepository.insert(_module.value!!)
         }
     }
 
     private fun update() {
         viewModelScope.launch {
-            repository.update(_module.value!!)
+            ModuleRepository.update(_module.value!!)
         }
     }
 
     private fun getProjectById() {
         viewModelScope.launch {
-            _projectSelected.value = projectRepository.getById(_module.value!!.projectId)
+            _projectSelected.value = ProjectRepository.getById(_module.value!!.projectId)
         }
     }
 }
