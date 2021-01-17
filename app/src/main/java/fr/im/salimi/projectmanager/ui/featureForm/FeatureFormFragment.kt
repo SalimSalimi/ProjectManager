@@ -13,7 +13,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import fr.im.salimi.projectmanager.R
-import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
 import fr.im.salimi.projectmanager.data.entities.Module
 import fr.im.salimi.projectmanager.databinding.FeatureFormFragmentBinding
 import fr.im.salimi.projectmanager.ui.uiUtils.BaseSpinnerAdapter
@@ -27,10 +26,7 @@ class FeatureFormFragment : Fragment() {
     private val args: FeatureFormFragmentArgs by navArgs()
     private lateinit var binding: FeatureFormFragmentBinding
     private val viewModel: FeatureFormViewModel by viewModels {
-        val database = ProjectRoomDatabase.createInstance(requireContext())
-        val repository = FeatureRepository(database.featureDao())
-        val moduleRepository = ModuleRepository(database.moduleDao())
-        FeatureFormViewModelFactory(args.featureId, repository, moduleRepository)
+        FeatureFormViewModelFactory(args.featureId)
     }
 
     private lateinit var spinnerAdapter: ModuleSpinnerAdapter
