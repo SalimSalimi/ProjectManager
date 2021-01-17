@@ -48,11 +48,14 @@
     <string name="modules">Modules</string>
     <string name="projects">Projects</string>
     <string name="developers">Developers</string>
-    <string name="features">features</string>
+    <string name="features">Features</string>
     <string name="description_of_the_feature">Description of the feature</string>
     <string name="feature_name">feature name</string>
     <string name="description_of_the_task">Description task</string>
     <string name="task_name">Task name</string>
     <string name="choose_a_module">Choose a module</string>
     <string name="choose_developers">Choose developers</string>
+    <string name="features_done_placeholder">Features done: %1$d</string>
+    <string name="features_progress_placeholder">Features in progress: %1$d</string>
+    <string name="features_overdue_placeholder">Features overdue: %1$d</string>
 </resources>

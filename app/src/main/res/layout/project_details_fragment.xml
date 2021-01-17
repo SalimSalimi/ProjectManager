@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="fr.im.salimi.projectmanager.data.helpers.State"/>
         <variable
             name="viewModel"
             type="fr.im.salimi.projectmanager.ui.projectDetails.ProjectDetailsViewModel"/>
@@ -218,7 +219,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/card_feature_image"
                     app:layout_constraintTop_toBottomOf="@+id/card_feature_header"
-                    android:text="modules done: 57" />
+                    android:text="@{`Feature done:` + viewModel.featureNumberState.get(State.DONE)}"
+                    tools:text="Features done: 5"/>
 
                 <TextView
                     android:id="@+id/card_feature_left"
@@ -230,7 +232,8 @@
                     app:layout_constraintEnd_toEndOf="@+id/card_feature_done"
                     app:layout_constraintStart_toStartOf="@+id/card_feature_image"
                     app:layout_constraintTop_toBottomOf="@+id/card_feature_done"
-                    tools:text="modules done: 23" />
+                    android:text="@{`Feature done:` + viewModel.featureNumberState.get(State.IN_PROGRESS)}"
+                    tools:text="Overdue in progress: 5"/>
 
                 <TextView
                     android:id="@+id/textView5"
@@ -239,7 +242,7 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
                     android:fontFamily="@font/roboto"
-                    android:text="TextView"
+                    android:text="@{`Feature done:` + viewModel.featureNumberState.get(State.OVERDUE)}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/card_feature_left"
                     app:layout_constraintStart_toStartOf="@+id/card_feature_left"

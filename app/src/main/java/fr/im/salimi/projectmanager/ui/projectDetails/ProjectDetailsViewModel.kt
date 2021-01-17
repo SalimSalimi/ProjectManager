@@ -2,6 +2,8 @@ package fr.im.salimi.projectmanager.ui.projectDetails
 
 import androidx.lifecycle.*
 import fr.im.salimi.projectmanager.data.entities.subsets.ProjectState
+import fr.im.salimi.projectmanager.data.helpers.State
+import fr.im.salimi.projectmanager.data.repositories.FeatureRepository
 import fr.im.salimi.projectmanager.data.repositories.ProjectRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
@@ -15,6 +17,15 @@ class ProjectDetailsViewModel(private val id: Long) : ViewModel() {
     }
     val projectState: LiveData<ProjectState> = Transformations.map(_projectState.asLiveData()) {
         it
+    }
+
+    private val _featureNumberState = FeatureRepository.getNumberStateByProjectId(id)
+    val featureNumberState: LiveData<Map<State, Int>> = Transformations.map(_featureNumberState.asLiveData()) { list ->
+        val map = LinkedHashMap<State, Int>()
+        list.forEach { item ->
+            map[item.state] = item.number
+        }
+        map
     }
 
     private val _getProjectIsDone = MutableLiveData<Boolean>()
