@@ -1,22 +1,26 @@
 package fr.im.salimi.projectmanager.data.repositories
 
 import fr.im.salimi.projectmanager.data.daos.FeatureDao
+import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
 import fr.im.salimi.projectmanager.data.entities.Feature
 
-class FeatureRepository(private val dao: FeatureDao): BaseRepository<Feature>(dao) {
+object FeatureRepository : BaseRepository<Feature>(ProjectRoomDatabase.getInstance().featureDao()) {
+
+    private val featureDao = dao as FeatureDao
 
     fun geAllByProjectId(projectId: Long) =
-            dao.getAllByProjectId(projectId)
+            featureDao.getAllByProjectId(projectId)
 
     fun getAllFeaturesState() =
-            dao.getAllFeaturesState()
+            featureDao.getAllFeaturesState()
 
     fun getFeatureStateById(id: Long) =
-            dao.getFeatureStateById(id)
+            featureDao.getFeatureStateById(id)
 
     fun getAllFeatureStateByProjectId(projectId: Long) =
-            dao.getAllFeatureStateByProjectId(projectId)
+            featureDao.getAllFeatureStateByProjectId(projectId)
 
     fun getNumberStateByProjectId(projectId: Long) =
-            dao.getNumberStateByProjectId(projectId)
+            featureDao.getNumberStateByProjectId(projectId)
+
 }
