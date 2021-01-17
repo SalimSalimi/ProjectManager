@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import fr.im.salimi.projectmanager.R
 import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
 import fr.im.salimi.projectmanager.data.entities.Feature
-import fr.im.salimi.projectmanager.data.repositories.FeatureRepository
 import fr.im.salimi.projectmanager.databinding.FeatureListFragmentBinding
 import fr.im.salimi.projectmanager.ui.uiUtils.ClickListenersCallback
 import fr.im.salimi.projectmanager.ui.uiUtils.FabButtonStates
@@ -26,7 +25,7 @@ class FeatureListFragment : Fragment(), ClickListenersCallback<Feature> {
     private lateinit var myAdapter: FeatureListAdapter
     private lateinit var binding: FeatureListFragmentBinding
     private val viewModel: FeatureListViewModel by viewModels {
-        val database = ProjectRoomDatabase.getInstance(requireContext())
+        val database = ProjectRoomDatabase.createInstance(requireContext())
         val repository = FeatureRepository(database.featureDao())
         FeatureListViewModelFactory(args.projectId, repository)
     }

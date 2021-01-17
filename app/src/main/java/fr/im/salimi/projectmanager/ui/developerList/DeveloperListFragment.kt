@@ -11,9 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import fr.im.salimi.projectmanager.R
-import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
 import fr.im.salimi.projectmanager.data.entities.Developer
-import fr.im.salimi.projectmanager.data.repositories.DeveloperRepository
 import fr.im.salimi.projectmanager.databinding.DeveloperListFragmentBinding
 import fr.im.salimi.projectmanager.ui.uiUtils.*
 
@@ -24,9 +22,7 @@ class DeveloperListFragment : Fragment(), ClickListenersCallback<Developer> {
     private lateinit var myAdapter: DeveloperListAdapter
 
     private val viewModel: DeveloperListViewModel by viewModels {
-        val database = ProjectRoomDatabase.getInstance(requireContext())
-        val repository = DeveloperRepository(database.developerDao())
-        DeveloperListViewModelFactory(args.projectId, repository)
+        DeveloperListViewModelFactory(args.projectId)
     }
 
     override fun onCreateView(

@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import fr.im.salimi.projectmanager.R
 import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
 import fr.im.salimi.projectmanager.data.entities.Task
-import fr.im.salimi.projectmanager.data.repositories.TaskRepository
 import fr.im.salimi.projectmanager.databinding.TaskListFragmentBinding
 import fr.im.salimi.projectmanager.ui.uiUtils.ClickListenersCallback
 import fr.im.salimi.projectmanager.ui.uiUtils.FabButtonStates
@@ -26,7 +25,7 @@ class TaskListFragment : Fragment(), ClickListenersCallback<Task> {
     private lateinit var myAdapter: TaskListAdapter
     private lateinit var binding: TaskListFragmentBinding
     private val viewModel: TaskListViewModel by viewModels {
-        val database = ProjectRoomDatabase.getInstance(requireContext())
+        val database = ProjectRoomDatabase.createInstance(requireContext())
         val dao = database.taskDao()
         TaskListViewModelFactory(sendingID, TaskRepository(dao))
     }

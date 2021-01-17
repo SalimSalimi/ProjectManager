@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import fr.im.salimi.projectmanager.R
 import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
 import fr.im.salimi.projectmanager.data.entities.Project
-import fr.im.salimi.projectmanager.data.repositories.ProjectRepository
 import fr.im.salimi.projectmanager.databinding.ProjectListFragmentBinding
 import fr.im.salimi.projectmanager.ui.uiUtils.ClickListenersCallback
 import fr.im.salimi.projectmanager.ui.uiUtils.FabButtonStates
@@ -24,7 +23,7 @@ class ProjectListFragment : Fragment(), ClickListenersCallback<Project> {
     private lateinit var myAdapter: ProjectListAdapter
 
     private val viewModel: ProjectListViewModel by viewModels {
-        val database = ProjectRoomDatabase.getInstance(requireContext())
+        val database = ProjectRoomDatabase.createInstance(requireContext())
         val repository = ProjectRepository(database.projectDao())
         ProjectListViewModelFactory(repository)
     }

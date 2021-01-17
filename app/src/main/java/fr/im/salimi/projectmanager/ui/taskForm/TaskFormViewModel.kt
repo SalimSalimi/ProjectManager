@@ -10,8 +10,7 @@ import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.collections.ArrayList
 
-class TaskFormViewModel(private val id: Long, private val repository: TaskRepository,
-                        developerRepository: DeveloperRepository) : ViewModel() {
+class TaskFormViewModel(private val id: Long, private val repository: TaskRepository) : ViewModel() {
 
     private val _task = MutableLiveData<Task>()
     val task: LiveData<Task>
@@ -25,7 +24,7 @@ class TaskFormViewModel(private val id: Long, private val repository: TaskReposi
     val addFabBtnClickEvent: LiveData<Boolean>
         get() = _addFabBtnClickEvent
 
-    private val _developersList = developerRepository.getAll()
+    private val _developersList = DeveloperRepository.getAll()
     val developersList: LiveData<List<Developer>>
         get() = _developersList.asLiveData()
 

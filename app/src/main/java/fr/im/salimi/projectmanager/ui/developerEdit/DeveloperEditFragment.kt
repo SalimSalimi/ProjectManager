@@ -13,9 +13,7 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import fr.im.salimi.projectmanager.R
-import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
 import fr.im.salimi.projectmanager.data.helpers.Post
-import fr.im.salimi.projectmanager.data.repositories.DeveloperRepository
 import fr.im.salimi.projectmanager.databinding.DeveloperEditFragmentBinding
 import fr.im.salimi.projectmanager.ui.uiUtils.FabButtonStates
 import fr.im.salimi.projectmanager.ui.uiUtils.createSnackbar
@@ -29,9 +27,7 @@ class DeveloperEditFragment : Fragment() {
     private lateinit var binding: DeveloperEditFragmentBinding
     private val args: DeveloperEditFragmentArgs by navArgs()
     private val viewModel: DeveloperEditViewModel by viewModels {
-        val databaseInstance = ProjectRoomDatabase.getInstance(requireContext())
-        val repository = DeveloperRepository(databaseInstance.developerDao())
-        DeveloperEditViewModelFactory(args.developerId, repository)
+        DeveloperEditViewModelFactory(args.developerId)
     }
 
     override fun onCreateView(
