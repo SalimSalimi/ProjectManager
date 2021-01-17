@@ -11,8 +11,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import fr.im.salimi.projectmanager.R
-import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
-import fr.im.salimi.projectmanager.data.repositories.ProjectRepository
 import fr.im.salimi.projectmanager.databinding.ProjectFormFragmentBinding
 import fr.im.salimi.projectmanager.ui.uiUtils.FabButtonStates
 import fr.im.salimi.projectmanager.ui.uiUtils.chooseDatePicker
@@ -23,9 +21,7 @@ class ProjectFormFragment : Fragment() {
 
     private val args: ProjectFormFragmentArgs by navArgs()
     private val viewModel: ProjectFormViewModel by viewModels {
-        val database = ProjectRoomDatabase.getInstance(requireContext())
-        val dao = database.projectDao()
-        ProjectFormViewModelFactory(args.projectId, ProjectRepository(dao))
+        ProjectFormViewModelFactory(args.projectId)
     }
 
     private lateinit var binding: ProjectFormFragmentBinding

@@ -8,9 +8,7 @@ import fr.im.salimi.projectmanager.data.repositories.ModuleRepository
 import kotlinx.coroutines.launch
 import java.util.*
 
-class FeatureFormViewModel(private val id: Long,
-                           private val repository: FeatureRepository,
-                           private val moduleRepository: ModuleRepository) : ViewModel() {
+class FeatureFormViewModel(private val id: Long) : ViewModel() {
 
     private val _function = MutableLiveData<Feature>()
     val feature: LiveData<Feature>
@@ -24,7 +22,7 @@ class FeatureFormViewModel(private val id: Long,
     val addFabBtnClickEvent: LiveData<Boolean>
         get() = _addFabBtnClickEvent
 
-    private val _modulesList = moduleRepository.getAll()
+    private val _modulesList = ModuleRepository.getAll()
     val modulesList: LiveData<List<Module>>
         get() = _modulesList.asLiveData()
 
@@ -48,7 +46,7 @@ class FeatureFormViewModel(private val id: Long,
 
     fun onSetModule() {
         viewModelScope.launch {
-            _module.value = moduleRepository.getById(_function.value!!.moduleId)
+            _module.value = ModuleRepository.getById(_function.value!!.moduleId)
         }
     }
 
@@ -89,19 +87,19 @@ class FeatureFormViewModel(private val id: Long,
 
     private fun getFunctionById() {
         viewModelScope.launch {
-            _function.value = repository.getById(id)
+            _function.value = FeatureRepository.getById(id)
         }
     }
 
     private fun insert() {
         viewModelScope.launch {
-            repository.insert(_function.value!!)
+            FeatureRepository.insert(_function.value!!)
         }
     }
 
     private fun update() {
         viewModelScope.launch {
-            repository.update(_function.value!!)
+            FeatureRepository.update(_function.value!!)
         }
     }
 

@@ -10,13 +10,13 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
 
-class FeatureListViewModel(private val projectId: Long, private val featureRepository: FeatureRepository) : ViewModel() {
+class FeatureListViewModel(private val projectId: Long) : ViewModel() {
 
     private val _featuresList: Flow<List<FeatureState>> = flow {
         if (projectId == -1L)
-            emitAll(featureRepository.getAllFeaturesState())
+            emitAll(FeatureRepository.getAllFeaturesState())
         else
-            emitAll(featureRepository.getAllFeatureStateByProjectId(projectId))
+            emitAll(FeatureRepository.getAllFeatureStateByProjectId(projectId))
     }
 
     val featuresList: LiveData<List<FeatureState>>

@@ -9,7 +9,7 @@ import fr.im.salimi.projectmanager.data.repositories.ProjectRepository
 import kotlinx.coroutines.launch
 import java.util.*
 
-class ProjectFormViewModel(private val projectId: Long, private val projectRepository: ProjectRepository) : ViewModel() {
+class ProjectFormViewModel(private val projectId: Long) : ViewModel() {
 
     private val _project = MutableLiveData<Project>()
     val project: LiveData<Project>
@@ -34,19 +34,19 @@ class ProjectFormViewModel(private val projectId: Long, private val projectRepos
             _project.value = Project()
         else
             viewModelScope.launch {
-                _project.value = projectRepository.getById(projectId)
+                _project.value = ProjectRepository.getById(projectId)
             }
     }
 
     private fun insert() {
         viewModelScope.launch {
-            projectRepository.insert(_project.value!!)
+            ProjectRepository.insert(_project.value!!)
         }
     }
 
     private fun update() {
         viewModelScope.launch {
-            projectRepository.update(_project.value!!)
+            ProjectRepository.update(_project.value!!)
         }
     }
 

@@ -10,14 +10,14 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
 
-class ModuleListViewModel(private val projectId: Long, private val repository: ModuleRepository) :
+class ModuleListViewModel(private val projectId: Long) :
     ViewModel() {
 
     private val _modules: Flow<List<ModuleState>> = flow {
         if (projectId != -1L)
-            emitAll(repository.getAllModuleStateByProjectId(projectId))
+            emitAll(ModuleRepository.getAllModuleStateByProjectId(projectId))
         else
-            emitAll(repository.getAllModuleState())
+            emitAll(ModuleRepository.getAllModuleState())
     }
 
     val modules: LiveData<List<ModuleState>>

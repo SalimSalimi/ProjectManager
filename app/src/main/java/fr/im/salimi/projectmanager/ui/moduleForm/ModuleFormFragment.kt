@@ -13,10 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import fr.im.salimi.projectmanager.R
-import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
 import fr.im.salimi.projectmanager.data.entities.Project
-import fr.im.salimi.projectmanager.data.repositories.ModuleRepository
-import fr.im.salimi.projectmanager.data.repositories.ProjectRepository
 import fr.im.salimi.projectmanager.databinding.ModuleFormFragmentBinding
 import fr.im.salimi.projectmanager.ui.uiUtils.*
 
@@ -25,10 +22,7 @@ class ModuleFormFragment : Fragment() {
     private val args: ModuleFormFragmentArgs by navArgs()
     private lateinit var binding: ModuleFormFragmentBinding
     private val viewModel: ModuleFormViewModel by viewModels {
-        val database = ProjectRoomDatabase.getInstance(requireContext())
-        val repository = ModuleRepository(database.moduleDao())
-        val projectRepository = ProjectRepository(database.projectDao())
-        ModuleFormViewModelFactory(args.moduleId, repository, projectRepository)
+        ModuleFormViewModelFactory(args.moduleId)
     }
 
     private lateinit var spinnerAdapter: ProjectSpinnerAdapter

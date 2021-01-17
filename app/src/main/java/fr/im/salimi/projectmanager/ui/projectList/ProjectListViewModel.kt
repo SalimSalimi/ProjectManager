@@ -7,9 +7,9 @@ import androidx.lifecycle.asLiveData
 import fr.im.salimi.projectmanager.data.entities.subsets.ProjectState
 import fr.im.salimi.projectmanager.data.repositories.ProjectRepository
 
-class ProjectListViewModel(repository: ProjectRepository) : ViewModel() {
+class ProjectListViewModel : ViewModel() {
 
-    private val _projectsList = repository.getAllProjectState()
+    private val _projectsList = ProjectRepository.getAllProjectState()
     val projectsList: LiveData<List<ProjectState>>
         get() = _projectsList.asLiveData()
 

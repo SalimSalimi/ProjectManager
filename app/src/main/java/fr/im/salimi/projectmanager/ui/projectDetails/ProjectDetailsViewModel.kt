@@ -7,11 +7,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
 
-class ProjectDetailsViewModel(private val id: Long, private val projectRepository: ProjectRepository) : ViewModel() {
+class ProjectDetailsViewModel(private val id: Long) : ViewModel() {
 
     private val _projectState: Flow<ProjectState> = flow {
         if (id != -1L)
-            emitAll(projectRepository.getProjectStateById(id))
+            emitAll(ProjectRepository.getProjectStateById(id))
     }
     val projectState: LiveData<ProjectState> = Transformations.map(_projectState.asLiveData()) {
         it

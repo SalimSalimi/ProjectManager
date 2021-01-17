@@ -24,7 +24,7 @@ abstract class ProjectRoomDatabase: RoomDatabase() {
         @Volatile
         private var INSTANCE: ProjectRoomDatabase? = null
 
-        fun getInstance(context: Context): ProjectRoomDatabase {
+        fun createInstance(context: Context): ProjectRoomDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
@@ -34,6 +34,10 @@ abstract class ProjectRoomDatabase: RoomDatabase() {
                 INSTANCE = instance
                 instance
             }
+        }
+
+        fun getInstance(): ProjectRoomDatabase {
+            return INSTANCE!!
         }
     }
 }

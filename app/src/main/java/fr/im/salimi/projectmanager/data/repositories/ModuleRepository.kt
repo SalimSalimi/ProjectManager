@@ -1,19 +1,22 @@
 package fr.im.salimi.projectmanager.data.repositories
 
 import fr.im.salimi.projectmanager.data.daos.ModuleDao
+import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
 import fr.im.salimi.projectmanager.data.entities.Module
 
-class ModuleRepository(private val dao: ModuleDao) : BaseRepository<Module>(dao) {
+object ModuleRepository : BaseRepository<Module>(ProjectRoomDatabase.getInstance().moduleDao()) {
 
+    private val moduleDao = dao as ModuleDao
+    
     fun getAllByProjectId(projectId: Long) =
-            dao.getAllByProjectId(projectId)
+            moduleDao.getAllByProjectId(projectId)
 
     fun getAllModuleState() =
-            dao.getAllModulesState()
+            moduleDao.getAllModulesState()
 
     fun getAllModuleStateByProjectId(projectId: Long) =
-            dao.getAllModuleStateByProjectId(projectId)
+            moduleDao.getAllModuleStateByProjectId(projectId)
 
     fun getModuleById(id: Long) =
-            dao.getModuleStateById(id)
+            moduleDao.getModuleStateById(id)
 }
