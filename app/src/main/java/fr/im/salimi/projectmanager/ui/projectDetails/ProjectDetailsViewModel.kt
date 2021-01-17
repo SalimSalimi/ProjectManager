@@ -28,6 +28,15 @@ class ProjectDetailsViewModel(private val id: Long) : ViewModel() {
         map
     }
 
+    private val _tasksNumberState = FeatureRepository.getNumberStateByProjectId(id)
+    val tasksNumberState: LiveData<Map<State, Int>> = Transformations.map(_tasksNumberState.asLiveData()) { list ->
+        val map = LinkedHashMap<State, Int>()
+        list.forEach { item ->
+            map[item.state] = item.number
+        }
+        map
+    }
+
     private val _getProjectIsDone = MutableLiveData<Boolean>()
     val getProjectIsDone: LiveData<Boolean>
         get() = _getProjectIsDone
