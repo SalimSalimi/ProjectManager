@@ -16,7 +16,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.chip.Chip
 import fr.im.salimi.projectmanager.R
-import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
 import fr.im.salimi.projectmanager.data.entities.Developer
 import fr.im.salimi.projectmanager.databinding.TaskFormFragmentBinding
 import fr.im.salimi.projectmanager.ui.uiUtils.*
@@ -28,9 +27,7 @@ class TaskFormFragment : Fragment() {
     private val args: TaskFormFragmentArgs by navArgs()
     private lateinit var binding: TaskFormFragmentBinding
     private val viewModel: TaskFormViewModel by viewModels {
-        val database = ProjectRoomDatabase.createInstance(requireContext())
-        val dao = database.taskDao()
-        TaskFormViewModelFactory(args.taskId, TaskRepository(dao))
+        TaskFormViewModelFactory(args.taskId)
     }
 
     private lateinit var spinnerAdapter: DevelopersSpinnerAdapter
