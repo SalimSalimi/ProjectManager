@@ -117,21 +117,24 @@
             app:layout_constraintEnd_toStartOf="@+id/textView11"
             app:layout_constraintStart_toStartOf="@+id/guideline4"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="@{viewModel.project.name}" />
+            android:text="@{viewModel.projectState.project.name}"
+            tools:text="Project Name"/>
 
         <TextView
             android:id="@+id/textView11"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:fontFamily="@font/roboto"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textSize="12sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/textView4"
+            android:text="@{viewModel.projectState.state.toString()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView4"
-            app:layout_constraintTop_toTopOf="@+id/textView4"
-            android:text="90days left" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="In Progress" />
 
         <TextView
             android:id="@+id/textView9"
@@ -145,7 +148,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/textView4"
             app:layout_constraintTop_toBottomOf="@+id/textView4"
-            android:text="@{viewModel.project.customer}" />
+            android:text="@{viewModel.projectState.project.customer}"
+            tools:text="Customer Name"/>
 
         <TextView
             android:id="@+id/textView12"
@@ -160,7 +164,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/textView4"
             app:layout_constraintTop_toBottomOf="@+id/textView9"
-            android:text="@{viewModel.project.description}" />
+            android:text="@{viewModel.projectState.project.description}"
+            tools:text="This is the description of the project of the customer"/>
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/feature_cardview"
@@ -385,6 +390,20 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_begin="63dp" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:text=""
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/textView9"
+            app:layout_constraintEnd_toEndOf="@+id/textView11"
+            app:layout_constraintStart_toStartOf="@+id/textView11"
+            app:layout_constraintTop_toBottomOf="@+id/textView11"
+            tools:text="90 days left" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

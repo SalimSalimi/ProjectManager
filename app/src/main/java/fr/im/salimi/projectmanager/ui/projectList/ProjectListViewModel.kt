@@ -4,13 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
-import fr.im.salimi.projectmanager.data.entities.Project
+import fr.im.salimi.projectmanager.data.entities.subsets.ProjectState
 import fr.im.salimi.projectmanager.data.repositories.ProjectRepository
 
 class ProjectListViewModel(repository: ProjectRepository) : ViewModel() {
 
-    private val _projectsList = repository.getAll()
-    val projectsList: LiveData<List<Project>>
+    private val _projectsList = repository.getAllProjectState()
+    val projectsList: LiveData<List<ProjectState>>
         get() = _projectsList.asLiveData()
 
     private val _navigateToProjectForm = MutableLiveData<Boolean>()
