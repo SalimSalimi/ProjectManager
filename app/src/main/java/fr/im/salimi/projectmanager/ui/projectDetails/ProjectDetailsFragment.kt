@@ -10,7 +10,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import fr.im.salimi.projectmanager.R
-import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
 import fr.im.salimi.projectmanager.databinding.ProjectDetailsFragmentBinding
 import fr.im.salimi.projectmanager.ui.uiUtils.setBackgroundColorText
 
@@ -20,9 +19,7 @@ class ProjectDetailsFragment : Fragment() {
     private var id = -1L
     private lateinit var binding: ProjectDetailsFragmentBinding
     private val viewModel: ProjectDetailsViewModel by viewModels {
-        val projectDao = ProjectRoomDatabase.createInstance(requireContext()).projectDao()
-        val repository = ProjectRepository(projectDao)
-        ProjectDetailsViewModelFactory(args.projectId, repository)
+        ProjectDetailsViewModelFactory(args.projectId)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
