@@ -7,6 +7,7 @@ import androidx.room.Transaction
 import fr.im.salimi.projectmanager.data.entities.Feature
 import fr.im.salimi.projectmanager.data.entities.relations.FeatureWithTasks
 import fr.im.salimi.projectmanager.data.entities.subsets.FeatureState
+import fr.im.salimi.projectmanager.data.entities.subsets.NumberByState
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -45,4 +46,7 @@ abstract class FeatureDao: BaseDao<Feature> {
             "FROM tasks t, features f WHERE " +
             "t.feature_id_fk = :id")
     abstract fun getFeatureStateById(id: Long): LiveData<FeatureState>
+
+    @Query("SELECT t.state as state, COUNT(t.state) as number FROM tasks t, features f WHERE t.feature_id_fk = f.feature_id AND f.project_id_fk = :projectId GROUP BY t.state")
+    abstract fun getNumberStateByProjectId(projectId: Long): Flow<List<NumberByState>>
 }

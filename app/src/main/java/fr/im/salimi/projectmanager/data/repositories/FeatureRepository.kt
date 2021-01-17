@@ -16,4 +16,7 @@ class FeatureRepository(private val dao: FeatureDao): BaseRepository<Feature>(da
 
     fun getAllFeatureStateByProjectId(projectId: Long) =
             dao.getAllFeatureStateByProjectId(projectId)
+
+    fun getNumberStateByProjectId(projectId: Long) =
+            dao.getNumberStateByProjectId(projectId)
 }
