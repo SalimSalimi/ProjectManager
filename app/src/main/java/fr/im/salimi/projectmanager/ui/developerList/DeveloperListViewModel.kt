@@ -9,13 +9,13 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 
 
-class DeveloperListViewModel (private val projectId: Long, private val repository: DeveloperRepository) : ViewModel() {
+class DeveloperListViewModel (private val projectId: Long) : ViewModel() {
 
     private val _listDevelopers: Flow<List<Developer>> = flow {
         if (projectId != -1L)
-            emitAll(repository.getAllByProjectId(projectId))
+            emitAll(DeveloperRepository.getAllByProjectId(projectId))
         else
-            emitAll(repository.getAll())
+            emitAll(DeveloperRepository.getAll())
     }
     val listDevelopers: LiveData<List<Developer>>
         get() = _listDevelopers.asLiveData()
@@ -30,7 +30,7 @@ class DeveloperListViewModel (private val projectId: Long, private val repositor
 
     fun deleteDeveloper(developer: Developer) {
         viewModelScope.launch {
-            repository.delete(developer)
+            DeveloperRepository.delete(developer)
         }
     }
 

@@ -11,9 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import fr.im.salimi.projectmanager.R
-import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
 import fr.im.salimi.projectmanager.data.entities.Module
-import fr.im.salimi.projectmanager.data.repositories.ModuleRepository
 import fr.im.salimi.projectmanager.databinding.ModuleListFragmentBinding
 import fr.im.salimi.projectmanager.ui.uiUtils.ClickListenersCallback
 import fr.im.salimi.projectmanager.ui.uiUtils.FabButtonStates
@@ -25,9 +23,7 @@ class ModuleListFragment : Fragment(), ClickListenersCallback<Module> {
     private lateinit var moduleAdapter: ModuleListAdapter
     private lateinit var binding: ModuleListFragmentBinding
     private val viewModel: ModuleListViewModel by viewModels {
-        val database = ProjectRoomDatabase.getInstance(requireContext())
-        val dao = database.moduleDao()
-        ModuleListViewModelFactory(args.projectId, ModuleRepository(dao))
+        ModuleListViewModelFactory(args.projectId)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

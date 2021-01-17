@@ -1,18 +1,21 @@
 package fr.im.salimi.projectmanager.data.repositories
 
 import fr.im.salimi.projectmanager.data.daos.TaskDao
+import fr.im.salimi.projectmanager.data.database.ProjectRoomDatabase
 import fr.im.salimi.projectmanager.data.entities.Task
 import fr.im.salimi.projectmanager.data.entities.TaskAssignments
 
-class TaskRepository(private val dao: TaskDao): BaseRepository<Task>(dao) {
+object TaskRepository: BaseRepository<Task>(ProjectRoomDatabase.getInstance().taskDao()) {
 
+    private val taskDao = dao as TaskDao
+    
     suspend fun insertTaskAssignments(taskAssignments: List<TaskAssignments>) {
-        dao.assignTask(*taskAssignments.map { it }.toTypedArray())
+        taskDao.assignTask(*taskAssignments.map { it }.toTypedArray())
     }
 
     suspend fun getTaskAssignmentsByTaskId(id: Long) =
-            dao.getTaskWithDevelopersByTaskId(id)
+            taskDao.getTaskWithDevelopersByTaskId(id)
 
     fun getAllByProjectId(projectId: Long) =
-            dao.getAllByProjectId(projectId)
+            taskDao.getAllByProjectId(projectId)
 }

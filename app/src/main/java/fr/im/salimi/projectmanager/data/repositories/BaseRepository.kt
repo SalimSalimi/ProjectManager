@@ -3,7 +3,7 @@ package fr.im.salimi.projectmanager.data.repositories
 import fr.im.salimi.projectmanager.data.daos.BaseDao
 import kotlinx.coroutines.flow.Flow
 
-abstract class BaseRepository<T>(private val dao: BaseDao<T>) {
+abstract class BaseRepository<T>(val dao: BaseDao<T>) {
 
     suspend fun insert(entity: T): Long {
         return dao.insert(entity)

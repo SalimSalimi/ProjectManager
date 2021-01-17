@@ -10,8 +10,7 @@ import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.collections.ArrayList
 
-class TaskFormViewModel(private val id: Long, private val repository: TaskRepository,
-                        developerRepository: DeveloperRepository) : ViewModel() {
+class TaskFormViewModel(private val id: Long) : ViewModel() {
 
     private val _task = MutableLiveData<Task>()
     val task: LiveData<Task>
@@ -25,7 +24,7 @@ class TaskFormViewModel(private val id: Long, private val repository: TaskReposi
     val addFabBtnClickEvent: LiveData<Boolean>
         get() = _addFabBtnClickEvent
 
-    private val _developersList = developerRepository.getAll()
+    private val _developersList = DeveloperRepository.getAll()
     val developersList: LiveData<List<Developer>>
         get() = _developersList.asLiveData()
 
@@ -91,7 +90,7 @@ class TaskFormViewModel(private val id: Long, private val repository: TaskReposi
 
     private fun getTaskById() {
         viewModelScope.launch {
-            val taskWithAssignments = repository.getTaskAssignmentsByTaskId(id)
+            val taskWithAssignments = TaskRepository.getTaskAssignmentsByTaskId(id)
             _task.value = taskWithAssignments.task
             //TODO Remove it after when implementing function choose
             _task.value!!.featureId = 1L
@@ -102,14 +101,14 @@ class TaskFormViewModel(private val id: Long, private val repository: TaskReposi
 
     private fun insert() {
         viewModelScope.launch {
-            _task.value!!.id = repository.insert(_task.value!!)
+            _task.value!!.id = TaskRepository.insert(_task.value!!)
             insertAssignments()
         }
     }
 
     private fun update() {
         viewModelScope.launch {
-            repository.update(_task.value!!)
+            TaskRepository.update(_task.value!!)
             insertAssignments()
         }
     }
@@ -117,7 +116,7 @@ class TaskFormViewModel(private val id: Long, private val repository: TaskReposi
     private suspend fun insertAssignments() {
         val assignments = createTaskAssignments()
         if (!assignments.isNullOrEmpty()) {
-            repository.insertTaskAssignments(assignments)
+            TaskRepository.insertTaskAssignments(assignments)
         }
     }
 

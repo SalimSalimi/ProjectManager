@@ -1,12 +1,15 @@
 package fr.im.salimi.projectmanager.ui.developerEdit
 
 import android.util.Log
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import fr.im.salimi.projectmanager.data.entities.Developer
 import fr.im.salimi.projectmanager.data.repositories.DeveloperRepository
 import kotlinx.coroutines.launch
 
-class DeveloperEditViewModel(private val id: Long, private val repository: DeveloperRepository) : ViewModel() {
+class DeveloperEditViewModel(private val id: Long) : ViewModel() {
 
     private val _developer = MutableLiveData<Developer>()
     val developer: LiveData<Developer>
@@ -30,9 +33,9 @@ class DeveloperEditViewModel(private val id: Long, private val repository: Devel
 
     private fun upsert(developer: Developer) = viewModelScope.launch {
         if (id == -1L) {
-            repository.insert(developer)
+            DeveloperRepository.insert(developer)
         } else {
-            repository.update(developer)
+            DeveloperRepository.update(developer)
         }
         _showSnackbarConfirm.value = true
         _navigateToList.value = true
@@ -40,7 +43,7 @@ class DeveloperEditViewModel(private val id: Long, private val repository: Devel
 
     private fun getDeveloperById(id: Long) {
         viewModelScope.launch {
-            val developer = repository.getById(id)
+            val developer = DeveloperRepository.getById(id)
             _developer.postValue(developer)
             Log.d("DeveloperEditViewModel", "Get developers by id executed ${_developer.value?.firstName}")
         }
