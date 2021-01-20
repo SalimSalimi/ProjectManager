@@ -28,6 +28,6 @@ abstract class TaskDao: BaseDao<Task> {
     @Query("SELECT * FROM tasks WHERE task_id = :id")
     abstract suspend fun getTaskWithDevelopersByTaskId(id: Long): TaskWithDevelopers
 
-    @Query("SELECT t.state, COUNT(t.state) as number FROM tasks t WHERE t.project_id_fk = :projectId")
+    @Query("SELECT t.state, COUNT(t.state) as number FROM tasks t WHERE t.project_id_fk = :projectId GROUP BY t.state")
     abstract fun getNumberStateByProjectId(projectId: Long): Flow<List<NumberByState>>
 }
