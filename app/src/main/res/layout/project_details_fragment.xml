@@ -317,20 +317,33 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/card_modules_image"
                     app:layout_constraintTop_toBottomOf="@+id/card_modules_header"
-                    android:text="modules done: 57" />
+                    android:text="@{`Modules done:` + viewModel.modulesNumberState.get(State.DONE)}"
+                    tools:text="Modules done: 5"/>
 
                 <TextView
                     android:id="@+id/card_modules_left"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:layout_marginBottom="16dp"
                     android:fontFamily="@font/roboto"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:text="@{`Modules in progress:` + viewModel.modulesNumberState.get(State.IN_PROGRESS)}"
                     app:layout_constraintEnd_toEndOf="@+id/card_modules_done"
                     app:layout_constraintStart_toStartOf="@+id/card_modules_image"
                     app:layout_constraintTop_toBottomOf="@+id/card_modules_done"
-                    android:text="modules left: 23" />
+                    tools:text="Modules in progress: 5" />
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/card_modules_left"
+                    app:layout_constraintStart_toStartOf="@+id/card_modules_left"
+                    app:layout_constraintTop_toBottomOf="@+id/card_modules_left"
+                    android:text="@{`Modules overdue:` + viewModel.modulesNumberState.get(State.OVERDUE)}"
+                    tools:text="Modules overdue: 5"/>
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

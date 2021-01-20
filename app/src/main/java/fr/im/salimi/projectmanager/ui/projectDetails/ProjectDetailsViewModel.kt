@@ -4,7 +4,9 @@ import androidx.lifecycle.*
 import fr.im.salimi.projectmanager.data.entities.subsets.ProjectState
 import fr.im.salimi.projectmanager.data.helpers.State
 import fr.im.salimi.projectmanager.data.repositories.FeatureRepository
+import fr.im.salimi.projectmanager.data.repositories.ModuleRepository
 import fr.im.salimi.projectmanager.data.repositories.ProjectRepository
+import fr.im.salimi.projectmanager.data.repositories.TaskRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
@@ -28,8 +30,17 @@ class ProjectDetailsViewModel(private val id: Long) : ViewModel() {
         map
     }
 
-    private val _tasksNumberState = FeatureRepository.getNumberStateByProjectId(id)
+    private val _tasksNumberState = TaskRepository.getNumberStateByProjectId(id)
     val tasksNumberState: LiveData<Map<State, Int>> = Transformations.map(_tasksNumberState.asLiveData()) { list ->
+        val map = LinkedHashMap<State, Int>()
+        list.forEach { item ->
+            map[item.state] = item.number
+        }
+        map
+    }
+
+    private val _modulesNumberState = ModuleRepository.getNumberStateByProjectId(id)
+    val modulesNumberState: LiveData<Map<State, Int>> = Transformations.map(_modulesNumberState.asLiveData()) { list ->
         val map = LinkedHashMap<State, Int>()
         list.forEach { item ->
             map[item.state] = item.number
