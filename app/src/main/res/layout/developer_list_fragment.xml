@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <import type="fr.im.salimi.projectmanager.data.helpers.Post"/>
+        <variable
+            name="viewModel"
+            type="fr.im.salimi.projectmanager.ui.developerList.DeveloperListViewModel"/>
+    </data>
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -25,7 +32,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/panel_background_form"
-                    app:singleLine="true">
+                    app:singleLine="true"
+                    app:singleSelection="true">
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/filter_all"
@@ -33,24 +41,28 @@
                         android:layout_height="wrap_content"
                         android:checked="true"
                         android:layout_marginStart="2dp"
+                        android:onClick="@{() -> viewModel.setFilter(Post.NONE)}"
                         android:text="@string/all" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/filter_web"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:onClick="@{() -> viewModel.setFilter(Post.WEB_DEVELOPER)}"
                         android:text="@string/web_developer" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/filter_mobile"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:onClick="@{() -> viewModel.setFilter(Post.MOBILE_DEVELOPER)}"
                         android:text="@string/mobile_designer" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/filter_ui_ux"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:onClick="@{() -> viewModel.setFilter(Post.UI_UX_DESIGNER)}"
                         android:text="@string/ui_ux_designer"
                         android:layout_marginEnd="2dp"/>
 
