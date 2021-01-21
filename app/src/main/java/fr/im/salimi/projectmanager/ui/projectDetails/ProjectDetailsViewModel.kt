@@ -2,11 +2,9 @@ package fr.im.salimi.projectmanager.ui.projectDetails
 
 import androidx.lifecycle.*
 import fr.im.salimi.projectmanager.data.entities.subsets.ProjectState
+import fr.im.salimi.projectmanager.data.helpers.Post
 import fr.im.salimi.projectmanager.data.helpers.State
-import fr.im.salimi.projectmanager.data.repositories.FeatureRepository
-import fr.im.salimi.projectmanager.data.repositories.ModuleRepository
-import fr.im.salimi.projectmanager.data.repositories.ProjectRepository
-import fr.im.salimi.projectmanager.data.repositories.TaskRepository
+import fr.im.salimi.projectmanager.data.repositories.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
@@ -44,6 +42,16 @@ class ProjectDetailsViewModel(private val id: Long) : ViewModel() {
         val map = LinkedHashMap<State, Int>()
         list.forEach { item ->
             map[item.state] = item.number
+        }
+        map
+    }
+
+    private val _developersNumberPost = DeveloperRepository.getNumberDevelopersByPostByProjectId(id)
+    val developersNumberPost: LiveData<Map<Post, Int>> = Transformations.map(_developersNumberPost.asLiveData()) { list ->
+        val map = LinkedHashMap<Post, Int>()
+        list.forEach { item ->
+            if (item.post != Post.NONE)
+                map[item.post] = item.number
         }
         map
     }
