@@ -15,6 +15,7 @@ import fr.im.salimi.projectmanager.data.entities.Module
 import fr.im.salimi.projectmanager.databinding.ModuleListFragmentBinding
 import fr.im.salimi.projectmanager.ui.uiUtils.ClickListenersCallback
 import fr.im.salimi.projectmanager.ui.uiUtils.FabButtonStates
+import fr.im.salimi.projectmanager.ui.uiUtils.createSnackbar
 import fr.im.salimi.projectmanager.ui.uiUtils.setFabBtnBehaviour
 
 class ModuleListFragment : Fragment(), ClickListenersCallback<Module> {
@@ -72,11 +73,16 @@ class ModuleListFragment : Fragment(), ClickListenersCallback<Module> {
     }
 
     override fun onClick(view: View, entity: Module) {
-
+        navigateToModuleForm(entity.id)
     }
 
     override fun onLongClick(view: View, entity: Module): Boolean {
-        navigateToModuleForm(entity.id)
+        createSnackbar(text = R.string.delete_developer_confirm)
+                .setAction(getString(R.string.confirm)) {
+                    viewModel.deleteModule(entity)
+                    moduleAdapter.notifyDataSetChanged()
+                }
+                .show()
         return true
     }
 

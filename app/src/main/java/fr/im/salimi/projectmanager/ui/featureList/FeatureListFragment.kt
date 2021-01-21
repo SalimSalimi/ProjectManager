@@ -15,6 +15,7 @@ import fr.im.salimi.projectmanager.data.entities.Feature
 import fr.im.salimi.projectmanager.databinding.FeatureListFragmentBinding
 import fr.im.salimi.projectmanager.ui.uiUtils.ClickListenersCallback
 import fr.im.salimi.projectmanager.ui.uiUtils.FabButtonStates
+import fr.im.salimi.projectmanager.ui.uiUtils.createSnackbar
 import fr.im.salimi.projectmanager.ui.uiUtils.setFabBtnBehaviour
 
 class FeatureListFragment : Fragment(), ClickListenersCallback<Feature> {
@@ -78,12 +79,17 @@ class FeatureListFragment : Fragment(), ClickListenersCallback<Feature> {
     }
 
     override fun onClick(view: View, entity: Feature) {
-        //Add something here
+        sendingID = entity.featureId
+        viewModel.navigateToFeatureFormEventTriggered()
     }
 
     override fun onLongClick(view: View, entity: Feature): Boolean {
-        sendingID = entity.featureId
-        viewModel.navigateToFeatureFormEventTriggered()
+        createSnackbar(text = R.string.delete_developer_confirm)
+                .setAction(getString(R.string.confirm)) {
+                    viewModel.deleteFeature(entity)
+                    myAdapter.notifyDataSetChanged()
+                }
+                .show()
         return true
     }
 }

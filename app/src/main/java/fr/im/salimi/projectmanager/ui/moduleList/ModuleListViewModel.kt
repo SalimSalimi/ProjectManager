@@ -1,14 +1,13 @@
 package fr.im.salimi.projectmanager.ui.moduleList
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
+import androidx.lifecycle.*
+import fr.im.salimi.projectmanager.data.entities.Module
 import fr.im.salimi.projectmanager.data.entities.subsets.ModuleState
 import fr.im.salimi.projectmanager.data.repositories.ModuleRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.launch
 
 class ModuleListViewModel(private val projectId: Long) :
     ViewModel() {
@@ -45,5 +44,11 @@ class ModuleListViewModel(private val projectId: Long) :
 
     private fun initModules() {
         _modules
+    }
+
+    fun deleteModule(module: Module) {
+        viewModelScope.launch {
+            ModuleRepository.delete(module)
+        }
     }
 }
