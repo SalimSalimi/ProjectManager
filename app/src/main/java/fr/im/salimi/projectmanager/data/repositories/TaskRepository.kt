@@ -18,4 +18,7 @@ object TaskRepository: BaseRepository<Task>(ProjectRoomDatabase.getInstance().ta
 
     fun getAllByProjectId(projectId: Long) =
             taskDao.getAllByProjectId(projectId)
+
+    fun getNumberStateByProjectId(projectId: Long) =
+            taskDao.getNumberStateByProjectId(projectId)
 }

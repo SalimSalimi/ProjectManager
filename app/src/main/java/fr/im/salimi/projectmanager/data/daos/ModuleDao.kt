@@ -7,6 +7,7 @@ import androidx.room.Transaction
 import fr.im.salimi.projectmanager.data.entities.Module
 import fr.im.salimi.projectmanager.data.entities.relations.ModuleWithFeatures
 import fr.im.salimi.projectmanager.data.entities.subsets.ModuleState
+import fr.im.salimi.projectmanager.data.entities.subsets.NumberByState
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -48,4 +49,7 @@ abstract class ModuleDao: BaseDao<Module> {
             "WHERE t.project_id_fk = :projectId " +
             "AND m.project_id_fk = :projectId")
     abstract fun getAllModuleStateByProjectId(projectId: Long): Flow<List<ModuleState>>
+
+    @Query("SELECT state AS state, COUNT(t.state) AS number FROM tasks t WHERE state = (SELECT min(state) FROM tasks tt WHERE tt.feature_id_fk = t.feature_id_fk) AND t.project_id_fk = :projectId GROUP BY feature_id_fk")
+    abstract fun getNumberStateByProjectId(projectId: Long): Flow<List<NumberByState>>
 }

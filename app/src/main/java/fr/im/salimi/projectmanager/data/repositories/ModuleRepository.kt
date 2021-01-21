@@ -19,4 +19,7 @@ object ModuleRepository : BaseRepository<Module>(ProjectRoomDatabase.getInstance
 
     fun getModuleById(id: Long) =
             moduleDao.getModuleStateById(id)
+
+    fun getNumberStateByProjectId(projectId: Long) =
+            moduleDao.getNumberStateByProjectId(projectId)
 }

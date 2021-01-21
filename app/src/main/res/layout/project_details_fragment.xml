@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="fr.im.salimi.projectmanager.data.helpers.Post"/>
+        <import type="fr.im.salimi.projectmanager.data.helpers.State"/>
         <variable
             name="viewModel"
             type="fr.im.salimi.projectmanager.ui.projectDetails.ProjectDetailsViewModel"/>
@@ -65,20 +67,33 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/card_tasks_image"
                     app:layout_constraintTop_toBottomOf="@+id/card_tasks_header"
-                    android:text="modules done: 57" />
+                    android:text="@{`Tasks done:` + viewModel.tasksNumberState.get(State.DONE)}"
+                    tools:text="Tasks done: 6"/>
 
                 <TextView
                     android:id="@+id/card_tasks_left"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:layout_marginBottom="16dp"
                     android:fontFamily="@font/roboto"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:text="@{`Tasks in progress:` + viewModel.tasksNumberState.get(State.IN_PROGRESS)}"
                     app:layout_constraintEnd_toEndOf="@+id/card_tasks_done"
                     app:layout_constraintStart_toStartOf="@+id/card_tasks_image"
                     app:layout_constraintTop_toBottomOf="@+id/card_tasks_done"
-                    android:text="modules left: 23" />
+                    tools:text="Tasks in progress: 6" />
+
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:text="@{`Tasks done:` + viewModel.tasksNumberState.get(State.OVERDUE)}"
+                    tools:text="Tasks overdue: 6"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/card_tasks_left"
+                    app:layout_constraintStart_toStartOf="@+id/card_tasks_left"
+                    app:layout_constraintTop_toBottomOf="@+id/card_tasks_left" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -218,20 +233,35 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/card_feature_image"
                     app:layout_constraintTop_toBottomOf="@+id/card_feature_header"
-                    android:text="modules done: 57" />
+                    android:text="@{`Features done:` + viewModel.featureNumberState.get(State.DONE)}"
+                    tools:text="Features done: 5"/>
 
                 <TextView
                     android:id="@+id/card_feature_left"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:layout_marginBottom="16dp"
                     android:fontFamily="@font/roboto"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/textView5"
                     app:layout_constraintEnd_toEndOf="@+id/card_feature_done"
                     app:layout_constraintStart_toStartOf="@+id/card_feature_image"
                     app:layout_constraintTop_toBottomOf="@+id/card_feature_done"
-                    android:text="modules left: 23" />
+                    android:text="@{`Features in progress:` + viewModel.featureNumberState.get(State.IN_PROGRESS)}"
+                    tools:text="Overdue in progress: 5"/>
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:fontFamily="@font/roboto"
+                    android:text="@{`Features overdue:` + viewModel.featureNumberState.get(State.OVERDUE)}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/card_feature_left"
+                    app:layout_constraintStart_toStartOf="@+id/card_feature_left"
+                    app:layout_constraintTop_toBottomOf="@+id/card_feature_left"
+                    tools:text="Overdue features: 5"/>
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -288,20 +318,33 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/card_modules_image"
                     app:layout_constraintTop_toBottomOf="@+id/card_modules_header"
-                    android:text="modules done: 57" />
+                    android:text="@{`Modules done:` + viewModel.modulesNumberState.get(State.DONE)}"
+                    tools:text="Modules done: 5"/>
 
                 <TextView
                     android:id="@+id/card_modules_left"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:layout_marginBottom="16dp"
                     android:fontFamily="@font/roboto"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:text="@{`Modules in progress:` + viewModel.modulesNumberState.get(State.IN_PROGRESS)}"
                     app:layout_constraintEnd_toEndOf="@+id/card_modules_done"
                     app:layout_constraintStart_toStartOf="@+id/card_modules_image"
                     app:layout_constraintTop_toBottomOf="@+id/card_modules_done"
-                    android:text="modules left: 23" />
+                    tools:text="Modules in progress: 5" />
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/card_modules_left"
+                    app:layout_constraintStart_toStartOf="@+id/card_modules_left"
+                    app:layout_constraintTop_toBottomOf="@+id/card_modules_left"
+                    android:text="@{`Modules overdue:` + viewModel.modulesNumberState.get(State.OVERDUE)}"
+                    tools:text="Modules overdue: 5"/>
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -356,20 +399,33 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/card_developers_image"
                     app:layout_constraintTop_toBottomOf="@+id/card_developers_header"
-                    android:text="modules done: 57" />
+                    android:text="@{`Mobile Developers:` + viewModel.developersNumberPost.get(Post.MOBILE_DEVELOPER)}"
+                    tools:text="Mobile developers: 12"/>
 
                 <TextView
                     android:id="@+id/card_developers_left"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:layout_marginBottom="16dp"
                     android:fontFamily="@font/roboto"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:text="@{`Web Developers:` + viewModel.developersNumberPost.get(Post.WEB_DEVELOPER)}"
                     app:layout_constraintEnd_toEndOf="@+id/card_developers_done"
                     app:layout_constraintStart_toStartOf="@+id/card_developers_image"
                     app:layout_constraintTop_toBottomOf="@+id/card_developers_done"
-                    android:text="modules left: 23" />
+                    tools:text="Web Developers: 23"/>
+
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:text="@{`UI/UX Developers:` + viewModel.developersNumberPost.get(Post.UI_UX_DESIGNER)}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/card_developers_left"
+                    app:layout_constraintStart_toStartOf="@+id/card_developers_left"
+                    app:layout_constraintTop_toBottomOf="@+id/card_developers_left"
+                    tools:text="UI/UX Developers: 23"/>
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -403,7 +459,7 @@
             app:layout_constraintEnd_toEndOf="@+id/textView11"
             app:layout_constraintStart_toStartOf="@+id/textView11"
             app:layout_constraintTop_toBottomOf="@+id/textView11"
-            tools:text="90 days left" />
+            tools:text="90 days left"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
