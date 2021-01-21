@@ -1,6 +1,7 @@
 package fr.im.salimi.projectmanager.ui.developerList
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import fr.im.salimi.projectmanager.R
 import fr.im.salimi.projectmanager.data.entities.Developer
+import fr.im.salimi.projectmanager.data.helpers.Post
 import fr.im.salimi.projectmanager.databinding.DeveloperListFragmentBinding
 import fr.im.salimi.projectmanager.ui.uiUtils.*
 
@@ -42,7 +44,7 @@ class DeveloperListFragment : Fragment(), ClickListenersCallback<Developer> {
         }
         initObservers()
         initRecycler()
-
+        filters()
     }
     private fun initRecycler() {
         binding.developersList.apply {
@@ -56,6 +58,7 @@ class DeveloperListFragment : Fragment(), ClickListenersCallback<Developer> {
     private fun initObservers() {
         viewModel.listDevelopers.observe(viewLifecycleOwner) {
             myAdapter.submitList(it)
+            Log.d("DeveloperListFragment", "yaaaw")
         }
 
         viewModel.onAddBtnClickEvent.observe(viewLifecycleOwner) {
@@ -80,5 +83,18 @@ class DeveloperListFragment : Fragment(), ClickListenersCallback<Developer> {
                     myAdapter.notifyDataSetChanged()
                 }
                 .show()
+    }
+
+   private fun filters() {
+        binding.filterGroup.setOnCheckedChangeListener { group, checkedIp ->
+            if (checkedIp == -1)
+                return@setOnCheckedChangeListener
+            when(checkedIp) {
+                binding.filterAll.id -> viewModel.setFilter(Post.NONE)
+                binding.filterMobile.id -> viewModel.setFilter(Post.MOBILE_DEVELOPER)
+                binding.filterWeb.id -> viewModel.setFilter(Post.WEB_DEVELOPER)
+                binding.filterUiUx.id -> viewModel.setFilter(Post.UI_UX_DESIGNER)
+            }
+        }
     }
 }
