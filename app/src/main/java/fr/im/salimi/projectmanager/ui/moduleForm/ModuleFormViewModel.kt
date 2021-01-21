@@ -27,9 +27,8 @@ class ModuleFormViewModel(private val id: Long)
     val addBtnClickEvent: LiveData<Boolean>
         get() = _addBtnClickEvent
 
-    private val _projects = MutableLiveData<List<Project>>()
     val projects: LiveData<List<Project>>
-        get() = _projects
+        get() = ProjectRepository.getAll()
 
     private val _projectSelected = MutableLiveData<Project>()
     val projectSelected: LiveData<Project>
@@ -37,7 +36,6 @@ class ModuleFormViewModel(private val id: Long)
 
     init {
         initModule()
-        _projects.value = ProjectRepository.getAll().value
         _dateClickEvent.value = false
         _addBtnClickEvent.value = false
     }
