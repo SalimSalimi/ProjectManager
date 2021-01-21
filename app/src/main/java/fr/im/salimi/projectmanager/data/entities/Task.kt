@@ -12,12 +12,14 @@ import java.util.*
             ForeignKey(
                     entity = Feature::class,
                     parentColumns = ["feature_id"],
-                    childColumns = ["feature_id_fk"]
+                    childColumns = ["feature_id_fk"],
+                    onDelete = ForeignKey.CASCADE
             ),
             ForeignKey(
                     entity = Project::class,
                     parentColumns = ["project_id"],
-                    childColumns = ["project_id_fk"]
+                    childColumns = ["project_id_fk"],
+                    onDelete = ForeignKey.CASCADE
             )
         ]
 )
