@@ -1,14 +1,13 @@
 package fr.im.salimi.projectmanager.ui.featureList
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
+import androidx.lifecycle.*
+import fr.im.salimi.projectmanager.data.entities.Feature
 import fr.im.salimi.projectmanager.data.entities.subsets.FeatureState
 import fr.im.salimi.projectmanager.data.repositories.FeatureRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.launch
 
 class FeatureListViewModel(private val projectId: Long) : ViewModel() {
 
@@ -36,5 +35,11 @@ class FeatureListViewModel(private val projectId: Long) : ViewModel() {
 
     fun navigateToFeatureFormEventDone() {
         _navigateToFeatureFormEvent.value = false
+    }
+
+    fun deleteFeature(feature: Feature) {
+        viewModelScope.launch {
+            FeatureRepository.delete(feature)
+        }
     }
 }

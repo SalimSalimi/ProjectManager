@@ -15,6 +15,7 @@ import fr.im.salimi.projectmanager.data.entities.Task
 import fr.im.salimi.projectmanager.databinding.TaskListFragmentBinding
 import fr.im.salimi.projectmanager.ui.uiUtils.ClickListenersCallback
 import fr.im.salimi.projectmanager.ui.uiUtils.FabButtonStates
+import fr.im.salimi.projectmanager.ui.uiUtils.createSnackbar
 import fr.im.salimi.projectmanager.ui.uiUtils.setFabBtnBehaviour
 
 class TaskListFragment : Fragment(), ClickListenersCallback<Task> {
@@ -81,11 +82,16 @@ class TaskListFragment : Fragment(), ClickListenersCallback<Task> {
     }
 
     override fun onClick(view: View, entity: Task) {
-
+        navigateToTaskForm(entity.taskId)
     }
 
     override fun onLongClick(view: View, entity: Task): Boolean {
-        navigateToTaskForm(entity.taskId)
+        createSnackbar(text = R.string.delete_developer_confirm)
+                .setAction(getString(R.string.confirm)) {
+                    viewModel.deleteFeature(entity)
+                    myAdapter.notifyDataSetChanged()
+                }
+                .show()
         return true
     }
 

@@ -10,7 +10,8 @@ import java.util.*
         foreignKeys = [ForeignKey(
                 entity = Project::class,
                 childColumns = ["project_id_fk"],
-                parentColumns = ["project_id"]
+                parentColumns = ["project_id"],
+                onDelete = ForeignKey.CASCADE
         )])
 data class Module (
         @PrimaryKey(autoGenerate = true)

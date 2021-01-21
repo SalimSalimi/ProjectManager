@@ -1,14 +1,12 @@
 package fr.im.salimi.projectmanager.ui.taskList
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
+import androidx.lifecycle.*
 import fr.im.salimi.projectmanager.data.entities.Task
 import fr.im.salimi.projectmanager.data.repositories.TaskRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.launch
 
 class TaskListViewModel(private val projectId: Long) : ViewModel() {
 
@@ -36,5 +34,11 @@ class TaskListViewModel(private val projectId: Long) : ViewModel() {
 
     fun navigateToTaskFormEventDone() {
         _navigateToTaskFormEvent.value = false
+    }
+
+    fun deleteFeature(task: Task) {
+        viewModelScope.launch {
+            TaskRepository.delete(task)
+        }
     }
 }
