@@ -1,7 +1,6 @@
 package fr.im.salimi.projectmanager.data.repositories
 
 import fr.im.salimi.projectmanager.data.daos.BaseDao
-import kotlinx.coroutines.flow.Flow
 
 abstract class BaseRepository<T>(val dao: BaseDao<T>) {
 
@@ -17,9 +16,4 @@ abstract class BaseRepository<T>(val dao: BaseDao<T>) {
         dao.update(entity)
     }
 
-    fun getAll(): Flow<List<T>> =
-            dao.getAll()
-
-    suspend fun getById(id: Long): T =
-            dao.getById(id)
 }

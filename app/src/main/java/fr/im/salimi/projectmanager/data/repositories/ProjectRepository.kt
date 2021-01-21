@@ -8,6 +8,12 @@ object ProjectRepository: BaseRepository<Project>(ProjectRoomDatabase.getInstanc
 
     private val projectDao = dao as ProjectDao
 
+    fun getAll() =
+            projectDao.getAll()
+
+    suspend fun getById(id: Long) =
+            projectDao.getById(id)
+
     fun getAllProjectState() =
             projectDao.getAllProjectState()
 

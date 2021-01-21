@@ -7,7 +7,7 @@ import fr.im.salimi.projectmanager.data.entities.Feature
 import fr.im.salimi.projectmanager.data.helpers.State
 
 data class FeatureState(
-        @Embedded val feature: Feature,
+        @Embedded val feature: Feature?,
         @ColumnInfo(name = "state")
-        val state: State
-): BaseEntity(feature.featureId)
+        val state: State?
+): BaseEntity(feature!!.featureId)

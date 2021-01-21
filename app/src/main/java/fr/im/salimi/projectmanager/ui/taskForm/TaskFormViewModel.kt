@@ -1,6 +1,9 @@
 package fr.im.salimi.projectmanager.ui.taskForm
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import fr.im.salimi.projectmanager.data.entities.Developer
 import fr.im.salimi.projectmanager.data.entities.Task
 import fr.im.salimi.projectmanager.data.entities.TaskAssignments
@@ -26,7 +29,7 @@ class TaskFormViewModel(private val id: Long) : ViewModel() {
 
     private val _developersList = DeveloperRepository.getAll()
     val developersList: LiveData<List<Developer>>
-        get() = _developersList.asLiveData()
+        get() = _developersList
 
     private val mutableAssignedDevelopersList = ArrayList<Developer>()
 

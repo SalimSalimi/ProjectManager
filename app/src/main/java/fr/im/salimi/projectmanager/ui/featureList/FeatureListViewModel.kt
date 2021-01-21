@@ -2,30 +2,26 @@ package fr.im.salimi.projectmanager.ui.featureList
 
 import androidx.lifecycle.*
 import fr.im.salimi.projectmanager.data.entities.Feature
-import fr.im.salimi.projectmanager.data.entities.subsets.FeatureState
 import fr.im.salimi.projectmanager.data.repositories.FeatureRepository
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emitAll
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 
 class FeatureListViewModel(private val projectId: Long) : ViewModel() {
 
-    private val _featuresList: Flow<List<FeatureState>> = flow {
-        if (projectId == -1L)
-            emitAll(FeatureRepository.getAllFeaturesState())
-        else
-            emitAll(FeatureRepository.getAllFeatureStateByProjectId(projectId))
-    }
+    private val _id = MutableLiveData<Long>()
 
-    val featuresList: LiveData<List<FeatureState>>
-        get() = _featuresList.asLiveData()
+    val featuresList: LiveData<List<Feature>> = Transformations.switchMap(_id) { projectId ->
+        if (projectId == -1L)
+            FeatureRepository.getAll()
+        else
+            FeatureRepository.geAllByProjectId(projectId)
+    }
 
     private val _navigateToFeatureFormEvent = MutableLiveData<Boolean>()
     val navigateToFeatureFormEvent: LiveData<Boolean>
         get() = _navigateToFeatureFormEvent
 
     init {
+        _id.value = projectId
         _navigateToFeatureFormEvent.value = false
     }
 

@@ -17,7 +17,10 @@ class DeveloperListViewModel(private val projectId: Long) : ViewModel() {
             else
                 DeveloperRepository.getDevelopersByPost(it)
         } else {
-            DeveloperRepository.getAlll()
+            if (projectId == -1L)
+                DeveloperRepository.getAll()
+            else
+                DeveloperRepository.getAllByProjectId(projectId)
         }
     }
 

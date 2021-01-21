@@ -169,6 +169,7 @@ class TaskFormFragment : Fragment() {
                 }
             }
 
+            @Suppress("UNCHECKED_CAST")
             override fun publishResults(constraint: CharSequence?, results: FilterResults) {
                 val filterList = results.values as? List<Developer>
                 if (results.count > 0) {

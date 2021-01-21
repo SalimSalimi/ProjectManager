@@ -72,7 +72,7 @@ class ProjectDetailsFragment : Fragment() {
 
         viewModel.getProjectIsDone.observe(viewLifecycleOwner) {
             if (it) {
-                binding.roundedLetter.setBackgroundColorText(viewModel.projectState.value!!.project.name)
+                binding.roundedLetter.setBackgroundColorText(viewModel.projectState.value!!.project!!.name)
                 viewModel.onGetProjectDone()
             }
         }

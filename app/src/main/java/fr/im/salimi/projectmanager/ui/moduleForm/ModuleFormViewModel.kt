@@ -1,7 +1,10 @@
 package fr.im.salimi.projectmanager.ui.moduleForm
 
 import androidx.core.util.Pair
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import fr.im.salimi.projectmanager.data.entities.Module
 import fr.im.salimi.projectmanager.data.entities.Project
 import fr.im.salimi.projectmanager.data.repositories.ModuleRepository
@@ -24,9 +27,9 @@ class ModuleFormViewModel(private val id: Long)
     val addBtnClickEvent: LiveData<Boolean>
         get() = _addBtnClickEvent
 
-    private val _projects = ProjectRepository.getAll()
+    private val _projects = MutableLiveData<List<Project>>()
     val projects: LiveData<List<Project>>
-        get() = _projects.asLiveData()
+        get() = _projects
 
     private val _projectSelected = MutableLiveData<Project>()
     val projectSelected: LiveData<Project>
@@ -34,6 +37,7 @@ class ModuleFormViewModel(private val id: Long)
 
     init {
         initModule()
+        _projects.value = ProjectRepository.getAll().value
         _dateClickEvent.value = false
         _addBtnClickEvent.value = false
     }

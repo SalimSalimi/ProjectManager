@@ -8,7 +8,13 @@ import fr.im.salimi.projectmanager.data.entities.TaskAssignments
 object TaskRepository: BaseRepository<Task>(ProjectRoomDatabase.getInstance().taskDao()) {
 
     private val taskDao = dao as TaskDao
-    
+
+    fun getAll() =
+            taskDao.getAll()
+
+    suspend fun getById(id: Long) =
+            taskDao.getById(id)
+
     suspend fun insertTaskAssignments(taskAssignments: List<TaskAssignments>) {
         taskDao.assignTask(*taskAssignments.map { it }.toTypedArray())
     }

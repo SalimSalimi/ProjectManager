@@ -1,6 +1,9 @@
 package fr.im.salimi.projectmanager.ui.featureForm
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import fr.im.salimi.projectmanager.data.entities.Feature
 import fr.im.salimi.projectmanager.data.entities.Module
 import fr.im.salimi.projectmanager.data.repositories.FeatureRepository
@@ -24,7 +27,7 @@ class FeatureFormViewModel(private val id: Long) : ViewModel() {
 
     private val _modulesList = ModuleRepository.getAll()
     val modulesList: LiveData<List<Module>>
-        get() = _modulesList.asLiveData()
+        get() = _modulesList
 
     private val _module = MutableLiveData<Module>()
     val module: LiveData<Module>

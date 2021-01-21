@@ -86,7 +86,7 @@ class DeveloperListFragment : Fragment(), ClickListenersCallback<Developer> {
     }
 
    private fun filters() {
-        binding.filterGroup.setOnCheckedChangeListener { group, checkedIp ->
+        binding.filterGroup.setOnCheckedChangeListener { _, checkedIp ->
             if (checkedIp == -1)
                 return@setOnCheckedChangeListener
             when(checkedIp) {

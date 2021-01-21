@@ -7,7 +7,13 @@ import fr.im.salimi.projectmanager.data.entities.Module
 object ModuleRepository : BaseRepository<Module>(ProjectRoomDatabase.getInstance().moduleDao()) {
 
     private val moduleDao = dao as ModuleDao
-    
+
+    fun getAll() =
+            moduleDao.getAll()
+
+    suspend fun getById(id: Long) =
+            moduleDao.getById(id)
+
     fun getAllByProjectId(projectId: Long) =
             moduleDao.getAllByProjectId(projectId)
 

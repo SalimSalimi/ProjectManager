@@ -14,10 +14,10 @@ import kotlinx.coroutines.flow.Flow
 abstract class TaskDao: BaseDao<Task> {
 
     @Query("SELECT * FROM tasks")
-    abstract override fun getAll(): Flow<List<Task>>
+    abstract fun getAll(): Flow<List<Task>>
 
     @Query("SELECT * FROM tasks WHERE task_id = :id")
-    abstract override suspend fun getById(id: Long): Task
+    abstract suspend fun getById(id: Long): Task
 
     @Query("SELECT * FROM tasks WHERE project_id_fk = :projectId")
     abstract fun getAllByProjectId(projectId: Long): Flow<List<Task>>
