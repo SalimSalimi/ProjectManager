@@ -27,6 +27,7 @@ class ProjectDetailsFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater ,R.layout.project_details_fragment, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
+
         return binding.root
     }
 
@@ -72,7 +73,7 @@ class ProjectDetailsFragment : Fragment() {
 
         viewModel.getProjectIsDone.observe(viewLifecycleOwner) {
             if (it) {
-                binding.roundedLetter.setBackgroundColorText(viewModel.projectState.value!!.project!!.name)
+                binding.roundedLetter.setBackgroundColorText(viewModel.project.value!!.name)
                 viewModel.onGetProjectDone()
             }
         }

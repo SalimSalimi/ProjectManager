@@ -1,17 +1,17 @@
 package fr.im.salimi.projectmanager.ui.projectDetails
 
 import androidx.lifecycle.*
-import fr.im.salimi.projectmanager.data.entities.subsets.ProjectState
+import fr.im.salimi.projectmanager.data.entities.Project
 import fr.im.salimi.projectmanager.data.helpers.Post
 import fr.im.salimi.projectmanager.data.helpers.State
 import fr.im.salimi.projectmanager.data.repositories.*
+import kotlinx.coroutines.launch
 
 class ProjectDetailsViewModel(private val id: Long) : ViewModel() {
 
-    private val _id = MutableLiveData<Long>()
-    val projectState: LiveData<ProjectState> = Transformations.switchMap(_id) {
-        ProjectRepository.getProjectStateById(it)
-    }
+    private val _project = MutableLiveData<Project>()
+    val project: LiveData<Project>
+        get() = _project
 
     private val _featureNumberState = FeatureRepository.getNumberStateByProjectId(id)
     val featureNumberState: LiveData<Map<State?, Int?>> = Transformations.map(_featureNumberState) { list ->
@@ -23,7 +23,7 @@ class ProjectDetailsViewModel(private val id: Long) : ViewModel() {
     }
 
     private val _tasksNumberState = TaskRepository.getNumberStateByProjectId(id)
-    val tasksNumberState: LiveData<Map<State?, Int?>> = Transformations.map(_tasksNumberState.asLiveData()) { list ->
+    val tasksNumberState: LiveData<Map<State?, Int?>> = Transformations.map(_tasksNumberState) { list ->
         val map = LinkedHashMap<State?, Int?>()
         list.forEach { item ->
             map[item.state] = item.number
@@ -73,6 +73,7 @@ class ProjectDetailsViewModel(private val id: Long) : ViewModel() {
 
 
     init {
+        initProject()
         initEvents()
     }
 
@@ -112,7 +113,14 @@ class ProjectDetailsViewModel(private val id: Long) : ViewModel() {
         _developersClickEvent.value = false
     }
 
+    private fun initProject() {
+        viewModelScope.launch {
+            _project.value = ProjectRepository.getById(id)
+        }
+    }
+
     private fun initEvents() {
+
         _getProjectIsDone.value = false
         _modulesClickEvent.value = false
         _featuresClickEvent.value = false
