@@ -5,7 +5,7 @@ import fr.im.salimi.projectmanager.data.helpers.Post
 
 data class NumberByPost (
     @ColumnInfo(name = "post")
-    val post: Post,
+    val post: Post?,
     @ColumnInfo(name = "number")
-    val number: Int
+    val number: Int?
 )

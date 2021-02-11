@@ -1,27 +1,21 @@
 package fr.im.salimi.projectmanager.ui.projectDetails
 
 import androidx.lifecycle.*
-import fr.im.salimi.projectmanager.data.entities.subsets.ProjectState
+import fr.im.salimi.projectmanager.data.entities.Project
 import fr.im.salimi.projectmanager.data.helpers.Post
 import fr.im.salimi.projectmanager.data.helpers.State
 import fr.im.salimi.projectmanager.data.repositories.*
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emitAll
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.launch
 
 class ProjectDetailsViewModel(private val id: Long) : ViewModel() {
 
-    private val _projectState: Flow<ProjectState> = flow {
-        if (id != -1L)
-            emitAll(ProjectRepository.getProjectStateById(id))
-    }
-    val projectState: LiveData<ProjectState> = Transformations.map(_projectState.asLiveData()) {
-        it
-    }
+    private val _project = MutableLiveData<Project>()
+    val project: LiveData<Project>
+        get() = _project
 
     private val _featureNumberState = FeatureRepository.getNumberStateByProjectId(id)
-    val featureNumberState: LiveData<Map<State, Int>> = Transformations.map(_featureNumberState.asLiveData()) { list ->
-        val map = LinkedHashMap<State, Int>()
+    val featureNumberState: LiveData<Map<State?, Int?>> = Transformations.map(_featureNumberState) { list ->
+        val map = LinkedHashMap<State?, Int?>()
         list.forEach { item ->
             map[item.state] = item.number
         }
@@ -29,17 +23,18 @@ class ProjectDetailsViewModel(private val id: Long) : ViewModel() {
     }
 
     private val _tasksNumberState = TaskRepository.getNumberStateByProjectId(id)
-    val tasksNumberState: LiveData<Map<State, Int>> = Transformations.map(_tasksNumberState.asLiveData()) { list ->
-        val map = LinkedHashMap<State, Int>()
+    val tasksNumberState: LiveData<Map<State?, Int?>> = Transformations.map(_tasksNumberState) { list ->
+        val map = LinkedHashMap<State?, Int?>()
         list.forEach { item ->
             map[item.state] = item.number
         }
+
         map
     }
 
     private val _modulesNumberState = ModuleRepository.getNumberStateByProjectId(id)
-    val modulesNumberState: LiveData<Map<State, Int>> = Transformations.map(_modulesNumberState.asLiveData()) { list ->
-        val map = LinkedHashMap<State, Int>()
+    val modulesNumberState: LiveData<Map<State?, Int?>> = Transformations.map(_modulesNumberState) { list ->
+        val map = LinkedHashMap<State?, Int?>()
         list.forEach { item ->
             map[item.state] = item.number
         }
@@ -47,8 +42,8 @@ class ProjectDetailsViewModel(private val id: Long) : ViewModel() {
     }
 
     private val _developersNumberPost = DeveloperRepository.getNumberDevelopersByPostByProjectId(id)
-    val developersNumberPost: LiveData<Map<Post, Int>> = Transformations.map(_developersNumberPost.asLiveData()) { list ->
-        val map = LinkedHashMap<Post, Int>()
+    val developersNumberPost: LiveData<Map<Post?, Int?>> = Transformations.map(_developersNumberPost) { list ->
+        val map = LinkedHashMap<Post?, Int?>()
         list.forEach { item ->
             if (item.post != Post.NONE)
                 map[item.post] = item.number
@@ -78,13 +73,14 @@ class ProjectDetailsViewModel(private val id: Long) : ViewModel() {
 
 
     init {
+        initProject()
         initEvents()
     }
-    
+
     fun onGetProjectDone() {
         _getProjectIsDone.value = false
     }
-    
+
     fun onModulesClick() {
         _modulesClickEvent.value = true
     }
@@ -117,7 +113,14 @@ class ProjectDetailsViewModel(private val id: Long) : ViewModel() {
         _developersClickEvent.value = false
     }
 
+    private fun initProject() {
+        viewModelScope.launch {
+            _project.value = ProjectRepository.getById(id)
+        }
+    }
+
     private fun initEvents() {
+
         _getProjectIsDone.value = false
         _modulesClickEvent.value = false
         _featuresClickEvent.value = false

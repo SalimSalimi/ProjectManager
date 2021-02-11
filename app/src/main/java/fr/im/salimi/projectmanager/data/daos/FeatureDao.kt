@@ -8,38 +8,37 @@ import fr.im.salimi.projectmanager.data.entities.Feature
 import fr.im.salimi.projectmanager.data.entities.relations.FeatureWithTasks
 import fr.im.salimi.projectmanager.data.entities.subsets.FeatureState
 import fr.im.salimi.projectmanager.data.entities.subsets.NumberByState
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 abstract class FeatureDao: BaseDao<Feature> {
 
     @Query("SELECT * FROM features")
-    abstract override fun getAll(): Flow<List<Feature>>
+    abstract fun getAll(): LiveData<List<Feature>>
 
     @Query("SELECT * FROM features WHERE feature_id= :id")
-    abstract override suspend fun getById(id: Long): Feature
+    abstract suspend fun getById(id: Long): Feature
 
     @Query("SELECT * FROM features WHERE project_id_fk = :projectId")
-    abstract fun getAllByProjectId(projectId: Long): Flow<List<Feature>>
+    abstract fun getAllByProjectId(projectId: Long): LiveData<List<Feature>>
 
     @Query("SELECT * FROM features WHERE feature_id = :id")
     @Transaction
-    abstract fun getByIdWithTasks(id: Long): Flow<FeatureWithTasks>
+    abstract fun getByIdWithTasks(id: Long): LiveData<FeatureWithTasks>
 
     @Query("SELECT * FROM features")
     @Transaction
-    abstract fun getAllWithTasks(): Flow<FeatureWithTasks>
+    abstract fun getAllWithTasks(): LiveData<FeatureWithTasks>
 
     @Query("SELECT f.feature_id, f.name, f.description, f.starting_date, f.finishing_date, f.project_id_fk, " +
             "f.module_id_fk ,MIN(t.state) as state " +
             "FROM tasks t, features f")
-    abstract fun getAllFeaturesState(): Flow<List<FeatureState>>
+    abstract fun getAllFeaturesState(): LiveData<List<FeatureState>>
 
     @Query("SELECT f.feature_id, f.name, f.description, f.starting_date, f.finishing_date, " +
             "f.project_id_fk, f.module_id_fk, MIN(t.state) as state " +
             "FROM tasks t, features f " +
             "WHERE f.project_id_fk = :projectId")
-    abstract fun getAllFeatureStateByProjectId(projectId: Long): Flow<List<FeatureState>>
+    abstract fun getAllFeatureStateByProjectId(projectId: Long): LiveData<List<FeatureState>>
 
     @Query("SELECT f.feature_id, f.name, f.description, f.starting_date, f.finishing_date, " +
             "f.project_id_fk, f.module_id_fk ,MIN(t.state) as state " +
@@ -55,5 +54,5 @@ abstract class FeatureDao: BaseDao<Feature> {
             "WHERE tt.feature_id_fk = t.feature_id_fk) " +
             "AND t.project_id_fk = :projectId " +
             "GROUP BY feature_id_fk")
-    abstract fun getNumberStateByProjectId(projectId: Long): Flow<List<NumberByState>>
+    abstract fun getNumberStateByProjectId(projectId: Long): LiveData<List<NumberByState>>
 }

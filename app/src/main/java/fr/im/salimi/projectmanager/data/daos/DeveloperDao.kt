@@ -8,19 +8,15 @@ import fr.im.salimi.projectmanager.data.entities.Developer
 import fr.im.salimi.projectmanager.data.entities.relations.DeveloperWithTasks
 import fr.im.salimi.projectmanager.data.entities.subsets.NumberByPost
 import fr.im.salimi.projectmanager.data.helpers.Post
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 abstract class DeveloperDao: BaseDao<Developer> {
 
     @Query("SELECT * FROM developers")
-    abstract fun getAlll(): LiveData<List<Developer>>
-
-    @Query("SELECT * FROM developers")
-    abstract override fun getAll(): Flow<List<Developer>>
+    abstract fun getAll(): LiveData<List<Developer>>
 
     @Query("SELECT * FROM developers WHERE developer_id = :id")
-    abstract override suspend fun getById(id: Long): Developer
+    abstract suspend fun getById(id: Long): Developer
 
     @Query("SELECT d.developer_id, d.first_name, d.last_name, d.city, d.country, d.email, d.phone_number, " +
             "d.post, d.postalCode, d.roadName, d.roadNumber " +
@@ -37,7 +33,7 @@ abstract class DeveloperDao: BaseDao<Developer> {
 
     @Query("SELECT post, COUNT(post) as number FROM developers d WHERE developer_id = (SELECT d.developer_id FROM tasks_assignments ta, tasks t WHERE d.developer_id = ta.developer_id AND ta.task_id = t.task_id AND t.project_id_fk = :projectId) GROUP BY post")
     @Transaction
-    abstract fun getNumberDevelopersByPostByProjectId(projectId: Long): Flow<List<NumberByPost>>
+    abstract fun getNumberDevelopersByPostByProjectId(projectId: Long): LiveData<List<NumberByPost>>
 
     @Query("SELECT * FROM developers WHERE post = :post")
     abstract fun getDevelopersByPost(post: Post): LiveData<List<Developer>>

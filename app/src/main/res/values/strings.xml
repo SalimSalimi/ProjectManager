@@ -58,4 +58,5 @@
     <string name="features_done_placeholder">Features done: %1$d</string>
     <string name="features_progress_placeholder">Features in progress: %1$d</string>
     <string name="features_overdue_placeholder">Features overdue: %1$d</string>
+    <string name="choose_a_project">Choose a project</string>
 </resources>

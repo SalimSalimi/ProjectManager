@@ -8,6 +8,12 @@ object FeatureRepository : BaseRepository<Feature>(ProjectRoomDatabase.getInstan
 
     private val featureDao = dao as FeatureDao
 
+    fun getAll() =
+            featureDao.getAll()
+
+    suspend fun getById(id: Long) =
+            featureDao.getById(id)
+
     fun geAllByProjectId(projectId: Long) =
             featureDao.getAllByProjectId(projectId)
 

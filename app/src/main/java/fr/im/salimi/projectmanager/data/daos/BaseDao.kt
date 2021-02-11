@@ -3,7 +3,6 @@ package fr.im.salimi.projectmanager.data.daos
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Update
-import kotlinx.coroutines.flow.Flow
 
 interface BaseDao<T> {
     @Insert
@@ -15,7 +14,4 @@ interface BaseDao<T> {
     @Update
     suspend fun update(entity: T)
 
-    suspend fun getById(id: Long): T
-
-    fun getAll(): Flow<List<T>>
 }

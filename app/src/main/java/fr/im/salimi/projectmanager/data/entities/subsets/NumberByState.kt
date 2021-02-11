@@ -5,7 +5,7 @@ import fr.im.salimi.projectmanager.data.helpers.State
 
 data class NumberByState(
         @ColumnInfo(name = "state")
-        val state: State,
+        val state: State?,
         @ColumnInfo(name = "number")
-        val number: Int
+        val number: Int?
 )

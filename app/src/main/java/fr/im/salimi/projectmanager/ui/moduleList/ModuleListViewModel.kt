@@ -2,31 +2,27 @@ package fr.im.salimi.projectmanager.ui.moduleList
 
 import androidx.lifecycle.*
 import fr.im.salimi.projectmanager.data.entities.Module
-import fr.im.salimi.projectmanager.data.entities.subsets.ModuleState
 import fr.im.salimi.projectmanager.data.repositories.ModuleRepository
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emitAll
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 
 class ModuleListViewModel(private val projectId: Long) :
     ViewModel() {
 
-    private val _modules: Flow<List<ModuleState>> = flow {
-        if (projectId != -1L)
-            emitAll(ModuleRepository.getAllModuleStateByProjectId(projectId))
-        else
-            emitAll(ModuleRepository.getAllModuleState())
-    }
+    private val _id = MutableLiveData<Long>()
 
-    val modules: LiveData<List<ModuleState>>
-        get() = _modules.asLiveData()
+    val modules: LiveData<List<Module>> = Transformations.switchMap(_id) {
+        if (projectId != -1L)
+            ModuleRepository.getAllByProjectId(projectId)
+        else
+            ModuleRepository.getAll()
+    }
 
     private val _navigateToModuleFormEvent = MutableLiveData<Boolean>()
     val navigateToModuleFormEvent
         get() = _navigateToModuleFormEvent
 
     init {
+        _id.value = projectId
         _navigateToModuleFormEvent.value = false
     }
 
@@ -40,10 +36,6 @@ class ModuleListViewModel(private val projectId: Long) :
 
     private fun onNavigateToModuleFormEvent() {
         _navigateToModuleFormEvent.value = true
-    }
-
-    private fun initModules() {
-        _modules
     }
 
     fun deleteModule(module: Module) {
