@@ -1,9 +1,11 @@
 package fr.im.salimi.projectmanager.ui.projectList
 
+import android.app.NotificationManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -15,6 +17,7 @@ import fr.im.salimi.projectmanager.databinding.ProjectListFragmentBinding
 import fr.im.salimi.projectmanager.ui.uiUtils.ClickListenersCallback
 import fr.im.salimi.projectmanager.ui.uiUtils.FabButtonStates
 import fr.im.salimi.projectmanager.ui.uiUtils.setFabBtnBehaviour
+import fr.im.salimi.projectmanager.utils.sendNotification
 
 class ProjectListFragment : Fragment(), ClickListenersCallback<Project> {
 
@@ -40,6 +43,11 @@ class ProjectListFragment : Fragment(), ClickListenersCallback<Project> {
 
         initObservers()
         initAdapter()
+
+        val notificationManager =
+            ContextCompat.getSystemService(requireContext(), NotificationManager::class.java) as NotificationManager
+
+        notificationManager.sendNotification(requireContext(), "Hello World!")
     }
 
     private fun initObservers() {

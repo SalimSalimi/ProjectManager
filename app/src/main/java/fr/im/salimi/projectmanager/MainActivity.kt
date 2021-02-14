@@ -1,5 +1,9 @@
 package fr.im.salimi.projectmanager
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -26,6 +30,25 @@ class MainActivity : AppCompatActivity() {
         bottomNavigation.setupWithNavController(navController)
 
         ProjectRoomDatabase.createInstance(applicationContext)
+        createNotificationChannel(applicationContext.getString(R.string.notification_tasks_channel_id),
+                applicationContext.getString(R.string.notification_tasks_name))
     }
 
+    private fun createNotificationChannel(channelID: String, channelDescription: String) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val notificationChannel = NotificationChannel(
+                    channelID,
+                    channelDescription,
+                    NotificationManager.IMPORTANCE_HIGH
+            )
+            with(notificationChannel) {
+                enableLights(true)
+                enableVibration(true)
+                lightColor = Color.RED
+                description = applicationContext.getString(R.string.notification_tasks_description)
+            }
+            val notificationManager = applicationContext.getSystemService(NotificationManager::class.java) as NotificationManager
+            notificationManager.createNotificationChannel(notificationChannel)
+        }
+    }
 }
