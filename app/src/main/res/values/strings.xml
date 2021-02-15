@@ -59,4 +59,7 @@
     <string name="features_progress_placeholder">Features in progress: %1$d</string>
     <string name="features_overdue_placeholder">Features overdue: %1$d</string>
     <string name="choose_a_project">Choose a project</string>
+    <string name="notification_tasks_channel_id" translatable="false">notification_tasks_channel_id</string>
+    <string name="notification_tasks_name" translatable="false">Tasks notifications</string>
+    <string name="notification_tasks_description" translatable="false">Notifications that triggers about tasks</string>
 </resources>

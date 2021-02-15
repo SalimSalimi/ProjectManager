@@ -27,7 +27,7 @@ class TaskFormFragment : Fragment() {
     private val args: TaskFormFragmentArgs by navArgs()
     private lateinit var binding: TaskFormFragmentBinding
     private val viewModel: TaskFormViewModel by viewModels {
-        TaskFormViewModelFactory(args.taskId)
+        TaskFormViewModelFactory(requireActivity().application, args.taskId)
     }
 
     private lateinit var spinnerAdapter: DevelopersSpinnerAdapter
