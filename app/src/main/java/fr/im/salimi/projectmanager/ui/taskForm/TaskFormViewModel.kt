@@ -1,8 +1,9 @@
 package fr.im.salimi.projectmanager.ui.taskForm
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import fr.im.salimi.projectmanager.data.entities.Developer
 import fr.im.salimi.projectmanager.data.entities.Task
@@ -13,7 +14,7 @@ import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.collections.ArrayList
 
-class TaskFormViewModel(private val id: Long) : ViewModel() {
+class TaskFormViewModel(application: Application, private val id: Long) : AndroidViewModel(application) {
 
     private val _task = MutableLiveData<Task>()
     val task: LiveData<Task>

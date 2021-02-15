@@ -1,25 +1,27 @@
 package fr.im.salimi.projectmanager.ui.taskList
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import fr.im.salimi.projectmanager.data.entities.Task
 import fr.im.salimi.projectmanager.data.repositories.TaskRepository
 import kotlinx.coroutines.launch
 
 class TaskListViewModel(private val projectId: Long) : ViewModel() {
 
-    private val _tasksList = MutableLiveData<List<Task>>()
-    val tasksList: LiveData<List<Task>>
-        get() = _tasksList
+    private val _id = MutableLiveData<Long>()
+
+    val tasksList: LiveData<List<Task>> = Transformations.map(_id) {
+        if (it != -1L)
+            TaskRepository.getAllByProjectId(it).value
+        else
+            TaskRepository.getAll().value
+    }
 
     private val _navigateToTaskFormEvent = MutableLiveData<Boolean>()
     val navigateToTaskFormEvent: LiveData<Boolean>
         get () = _navigateToTaskFormEvent
 
     init {
-        initTaskList()
+        _id.value = projectId
         _navigateToTaskFormEvent.value = false
     }
 
@@ -35,12 +37,5 @@ class TaskListViewModel(private val projectId: Long) : ViewModel() {
         viewModelScope.launch {
             TaskRepository.delete(task)
         }
-    }
-
-    private fun initTaskList() {
-        if (projectId != -1L)
-            _tasksList.value = TaskRepository.getAllByProjectId(projectId).value
-        else
-            _tasksList.value = TaskRepository.getAll().value
     }
 }
